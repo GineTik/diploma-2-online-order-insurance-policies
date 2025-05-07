@@ -3,10 +3,9 @@ import { UserDto } from './dtos/user.dto';
 
 @Injectable()
 export class UsersService {
-  async isNotExists(userId: string) {
-    return true;
-  }
+	async isNotExists(userId: string) {
+		return true;
+	}
 
-  async create(user: UserDto) {
-  }
+	async create(user: UserDto) {}
 }

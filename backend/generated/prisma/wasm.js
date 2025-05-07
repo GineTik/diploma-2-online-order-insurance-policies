@@ -153,6 +153,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   policyCompanyId: 'policyCompanyId',
   policySlug: 'policySlug',
   policyVersion: 'policyVersion',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

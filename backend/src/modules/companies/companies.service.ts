@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { PrismaService } from '@shared/prisma';
-import { USER_NOT_FOUND } from '@modules/users';
-import { USER_ALREADY_HAVE_COMPANY } from './constants/errors.constants';
+import { USER_NOT_FOUND, USER_ALREADY_HAVE_COMPANY } from '@shared/errors';
 
 @Injectable()
 export class CompaniesService {
@@ -14,7 +13,7 @@ export class CompaniesService {
 
 	async create(userId: string, body: CreateCompanyDto) {
 		if (!(await this.isUserExists(userId))) {
-			throw new BadRequestException(USER_NOT_FOUND);
+			throw new BadRequestException(USER_NOT_FOUND(userId));
 		}
 
 		if (await this.isUserHaveCompany(userId)) {
@@ -27,12 +26,20 @@ export class CompaniesService {
 			},
 		});
 
+		await this.prisma.userCompany.create({
+			data: {
+				userId,
+				companyId: company.id,
+				isAdmin: true,
+			},
+		});
+
 		return company;
 	}
 
 	async delete(companyId: string, userId: string) {
 		if (!(await this.userIsCompanyAdmin(userId, companyId))) {
-			throw new BadRequestException(USER_NOT_FOUND);
+			throw new BadRequestException(USER_NOT_FOUND(userId));
 		}
 
 		return await this.prisma.company.delete({

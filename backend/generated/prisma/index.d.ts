@@ -1297,10 +1297,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     companies: number
+    orders: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     companies?: boolean | UserCountOutputTypeCountCompaniesArgs
+    orders?: boolean | UserCountOutputTypeCountOrdersArgs
   }
 
   // Custom InputTypes
@@ -1319,6 +1321,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserCompanyWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
   }
 
 
@@ -1569,6 +1578,7 @@ export namespace Prisma {
     id?: boolean
     sub?: boolean
     companies?: boolean | User$companiesArgs<ExtArgs>
+    orders?: boolean | User$ordersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1582,6 +1592,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sub", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     companies?: boolean | User$companiesArgs<ExtArgs>
+    orders?: boolean | User$ordersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1589,6 +1600,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       companies: Prisma.$UserCompanyPayload<ExtArgs>[]
+      orders: Prisma.$OrderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1957,6 +1969,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     companies<T extends User$companiesArgs<ExtArgs> = {}>(args?: Subset<T, User$companiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2379,6 +2392,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * User.orders
+   */
+  export type User$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
   }
 
   /**
@@ -6461,6 +6498,7 @@ export namespace Prisma {
     policyCompanyId: string | null
     policySlug: string | null
     policyVersion: number | null
+    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6471,6 +6509,7 @@ export namespace Prisma {
     policyCompanyId: string | null
     policySlug: string | null
     policyVersion: number | null
+    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6481,6 +6520,7 @@ export namespace Prisma {
     policyCompanyId: number
     policySlug: number
     policyVersion: number
+    userId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6501,6 +6541,7 @@ export namespace Prisma {
     policyCompanyId?: true
     policySlug?: true
     policyVersion?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6511,6 +6552,7 @@ export namespace Prisma {
     policyCompanyId?: true
     policySlug?: true
     policyVersion?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6521,6 +6563,7 @@ export namespace Prisma {
     policyCompanyId?: true
     policySlug?: true
     policyVersion?: true
+    userId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6618,6 +6661,7 @@ export namespace Prisma {
     policyCompanyId: string
     policySlug: string
     policyVersion: number
+    userId: string
     createdAt: Date
     updatedAt: Date
     _count: OrderCountAggregateOutputType | null
@@ -6647,9 +6691,11 @@ export namespace Prisma {
     policyCompanyId?: boolean
     policySlug?: boolean
     policyVersion?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     policy?: boolean | PolicyDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
 
@@ -6660,19 +6706,22 @@ export namespace Prisma {
     policyCompanyId?: boolean
     policySlug?: boolean
     policyVersion?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "policyCompanyId" | "policySlug" | "policyVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "policyCompanyId" | "policySlug" | "policyVersion" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     policy?: boolean | PolicyDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Order"
     objects: {
       policy: Prisma.$PolicyPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6680,6 +6729,7 @@ export namespace Prisma {
       policyCompanyId: string
       policySlug: string
       policyVersion: number
+      userId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["order"]>
@@ -7046,6 +7096,7 @@ export namespace Prisma {
   export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     policy<T extends PolicyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PolicyDefaultArgs<ExtArgs>>): Prisma__PolicyClient<$Result.GetResult<Prisma.$PolicyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7080,6 +7131,7 @@ export namespace Prisma {
     readonly policyCompanyId: FieldRef<"Order", 'String'>
     readonly policySlug: FieldRef<"Order", 'String'>
     readonly policyVersion: FieldRef<"Order", 'Int'>
+    readonly userId: FieldRef<"Order", 'String'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
   }
@@ -7529,6 +7581,7 @@ export namespace Prisma {
     policyCompanyId: 'policyCompanyId',
     policySlug: 'policySlug',
     policyVersion: 'policyVersion',
+    userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7644,12 +7697,14 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     sub?: StringFilter<"User"> | string
     companies?: UserCompanyListRelationFilter
+    orders?: OrderListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     sub?: SortOrder
     companies?: UserCompanyOrderByRelationAggregateInput
+    orders?: OrderOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7659,6 +7714,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     companies?: UserCompanyListRelationFilter
+    orders?: OrderListRelationFilter
   }, "id" | "sub">
 
   export type UserOrderByWithAggregationInput = {
@@ -7906,9 +7962,11 @@ export namespace Prisma {
     policyCompanyId?: StringFilter<"Order"> | string
     policySlug?: StringFilter<"Order"> | string
     policyVersion?: IntFilter<"Order"> | number
+    userId?: StringFilter<"Order"> | string
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     policy?: XOR<PolicyScalarRelationFilter, PolicyWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type OrderOrderByWithRelationInput = {
@@ -7917,9 +7975,11 @@ export namespace Prisma {
     policyCompanyId?: SortOrder
     policySlug?: SortOrder
     policyVersion?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     policy?: PolicyOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
@@ -7931,9 +7991,11 @@ export namespace Prisma {
     policyCompanyId?: StringFilter<"Order"> | string
     policySlug?: StringFilter<"Order"> | string
     policyVersion?: IntFilter<"Order"> | number
+    userId?: StringFilter<"Order"> | string
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     policy?: XOR<PolicyScalarRelationFilter, PolicyWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type OrderOrderByWithAggregationInput = {
@@ -7942,6 +8004,7 @@ export namespace Prisma {
     policyCompanyId?: SortOrder
     policySlug?: SortOrder
     policyVersion?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrderCountOrderByAggregateInput
@@ -7960,6 +8023,7 @@ export namespace Prisma {
     policyCompanyId?: StringWithAggregatesFilter<"Order"> | string
     policySlug?: StringWithAggregatesFilter<"Order"> | string
     policyVersion?: IntWithAggregatesFilter<"Order"> | number
+    userId?: StringWithAggregatesFilter<"Order"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
   }
@@ -7968,22 +8032,26 @@ export namespace Prisma {
     id?: string
     sub: string
     companies?: UserCompanyCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     sub: string
     companies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8204,6 +8272,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     policy: PolicyCreateNestedOneWithoutOrdersInput
+    user: UserCreateNestedOneWithoutOrdersInput
   }
 
   export type OrderUncheckedCreateInput = {
@@ -8212,6 +8281,7 @@ export namespace Prisma {
     policyCompanyId: string
     policySlug: string
     policyVersion: number
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8221,6 +8291,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     policy?: PolicyUpdateOneRequiredWithoutOrdersNestedInput
+    user?: UserUpdateOneRequiredWithoutOrdersNestedInput
   }
 
   export type OrderUncheckedUpdateInput = {
@@ -8228,6 +8299,7 @@ export namespace Prisma {
     policyCompanyId?: StringFieldUpdateOperationsInput | string
     policySlug?: StringFieldUpdateOperationsInput | string
     policyVersion?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8238,6 +8310,7 @@ export namespace Prisma {
     policyCompanyId: string
     policySlug: string
     policyVersion: number
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8253,6 +8326,7 @@ export namespace Prisma {
     policyCompanyId?: StringFieldUpdateOperationsInput | string
     policySlug?: StringFieldUpdateOperationsInput | string
     policyVersion?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8278,7 +8352,17 @@ export namespace Prisma {
     none?: UserCompanyWhereInput
   }
 
+  export type OrderListRelationFilter = {
+    every?: OrderWhereInput
+    some?: OrderWhereInput
+    none?: OrderWhereInput
+  }
+
   export type UserCompanyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8419,16 +8503,6 @@ export namespace Prisma {
     isNot?: PolicyCategoryWhereInput
   }
 
-  export type OrderListRelationFilter = {
-    every?: OrderWhereInput
-    some?: OrderWhereInput
-    none?: OrderWhereInput
-  }
-
-  export type OrderOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type PolicyCompanyIdSlugVersionCompoundUniqueInput = {
     companyId: string
     slug: string
@@ -8555,6 +8629,7 @@ export namespace Prisma {
     policyCompanyId?: SortOrder
     policySlug?: SortOrder
     policyVersion?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8569,6 +8644,7 @@ export namespace Prisma {
     policyCompanyId?: SortOrder
     policySlug?: SortOrder
     policyVersion?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8579,6 +8655,7 @@ export namespace Prisma {
     policyCompanyId?: SortOrder
     policySlug?: SortOrder
     policyVersion?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8618,11 +8695,25 @@ export namespace Prisma {
     connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
   }
 
+  export type OrderCreateNestedManyWithoutUserInput = {
+    create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
+    createMany?: OrderCreateManyUserInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
   export type UserCompanyUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
     createMany?: UserCompanyCreateManyUserInputEnvelope
     connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
+    createMany?: OrderCreateManyUserInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8643,6 +8734,20 @@ export namespace Prisma {
     deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
   }
 
+  export type OrderUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutUserInput | OrderUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OrderCreateManyUserInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutUserInput | OrderUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutUserInput | OrderUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
   export type UserCompanyUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
@@ -8655,6 +8760,20 @@ export namespace Prisma {
     update?: UserCompanyUpdateWithWhereUniqueWithoutUserInput | UserCompanyUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserCompanyUpdateManyWithWhereWithoutUserInput | UserCompanyUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+  }
+
+  export type OrderUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutUserInput | OrderUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OrderCreateManyUserInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutUserInput | OrderUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutUserInput | OrderUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
   export type UserCompanyCreateNestedManyWithoutCompanyInput = {
@@ -8916,6 +9035,12 @@ export namespace Prisma {
     connect?: PolicyWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutOrdersInput = {
+    create?: XOR<UserCreateWithoutOrdersInput, UserUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrdersInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type EnumOrderStatusFieldUpdateOperationsInput = {
     set?: $Enums.OrderStatus
   }
@@ -8930,6 +9055,14 @@ export namespace Prisma {
     upsert?: PolicyUpsertWithoutOrdersInput
     connect?: PolicyWhereUniqueInput
     update?: XOR<XOR<PolicyUpdateToOneWithWhereWithoutOrdersInput, PolicyUpdateWithoutOrdersInput>, PolicyUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
+    create?: XOR<UserCreateWithoutOrdersInput, UserUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOrdersInput
+    upsert?: UserUpsertWithoutOrdersInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOrdersInput, UserUpdateWithoutOrdersInput>, UserUncheckedUpdateWithoutOrdersInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9093,6 +9226,33 @@ export namespace Prisma {
     data: UserCompanyCreateManyUserInput | UserCompanyCreateManyUserInput[]
   }
 
+  export type OrderCreateWithoutUserInput = {
+    id?: string
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    policy: PolicyCreateNestedOneWithoutOrdersInput
+  }
+
+  export type OrderUncheckedCreateWithoutUserInput = {
+    id?: string
+    status?: $Enums.OrderStatus
+    policyCompanyId: string
+    policySlug: string
+    policyVersion: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderCreateOrConnectWithoutUserInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput>
+  }
+
+  export type OrderCreateManyUserInputEnvelope = {
+    data: OrderCreateManyUserInput | OrderCreateManyUserInput[]
+  }
+
   export type UserCompanyUpsertWithWhereUniqueWithoutUserInput = {
     where: UserCompanyWhereUniqueInput
     update: XOR<UserCompanyUpdateWithoutUserInput, UserCompanyUncheckedUpdateWithoutUserInput>
@@ -9117,6 +9277,36 @@ export namespace Prisma {
     userId?: StringFilter<"UserCompany"> | string
     companyId?: StringFilter<"UserCompany"> | string
     isAdmin?: BoolFilter<"UserCompany"> | boolean
+  }
+
+  export type OrderUpsertWithWhereUniqueWithoutUserInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutUserInput, OrderUncheckedUpdateWithoutUserInput>
+    create: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutUserInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutUserInput, OrderUncheckedUpdateWithoutUserInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutUserInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type OrderScalarWhereInput = {
+    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    OR?: OrderScalarWhereInput[]
+    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    id?: StringFilter<"Order"> | string
+    status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
+    policyCompanyId?: StringFilter<"Order"> | string
+    policySlug?: StringFilter<"Order"> | string
+    policyVersion?: IntFilter<"Order"> | number
+    userId?: StringFilter<"Order"> | string
+    createdAt?: DateTimeFilter<"Order"> | Date | string
+    updatedAt?: DateTimeFilter<"Order"> | Date | string
   }
 
   export type UserCompanyCreateWithoutCompanyInput = {
@@ -9223,11 +9413,13 @@ export namespace Prisma {
   export type UserCreateWithoutCompaniesInput = {
     id?: string
     sub: string
+    orders?: OrderCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCompaniesInput = {
     id?: string
     sub: string
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCompaniesInput = {
@@ -9265,10 +9457,12 @@ export namespace Prisma {
 
   export type UserUpdateWithoutCompaniesInput = {
     sub?: StringFieldUpdateOperationsInput | string
+    orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCompaniesInput = {
     sub?: StringFieldUpdateOperationsInput | string
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CompanyUpsertWithoutUsersInput = {
@@ -9329,11 +9523,13 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutOrdersInput
   }
 
   export type OrderUncheckedCreateWithoutPolicyInput = {
     id?: string
     status?: $Enums.OrderStatus
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9401,19 +9597,6 @@ export namespace Prisma {
   export type OrderUpdateManyWithWhereWithoutPolicyInput = {
     where: OrderScalarWhereInput
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutPolicyInput>
-  }
-
-  export type OrderScalarWhereInput = {
-    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
-    OR?: OrderScalarWhereInput[]
-    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
-    id?: StringFilter<"Order"> | string
-    status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
-    policyCompanyId?: StringFilter<"Order"> | string
-    policySlug?: StringFilter<"Order"> | string
-    policyVersion?: IntFilter<"Order"> | number
-    createdAt?: DateTimeFilter<"Order"> | Date | string
-    updatedAt?: DateTimeFilter<"Order"> | Date | string
   }
 
   export type PolicyCreateWithoutCategoryInput = {
@@ -9494,6 +9677,23 @@ export namespace Prisma {
     create: XOR<PolicyCreateWithoutOrdersInput, PolicyUncheckedCreateWithoutOrdersInput>
   }
 
+  export type UserCreateWithoutOrdersInput = {
+    id?: string
+    sub: string
+    companies?: UserCompanyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOrdersInput = {
+    id?: string
+    sub: string
+    companies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOrdersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrdersInput, UserUncheckedCreateWithoutOrdersInput>
+  }
+
   export type PolicyUpsertWithoutOrdersInput = {
     update: XOR<PolicyUpdateWithoutOrdersInput, PolicyUncheckedUpdateWithoutOrdersInput>
     create: XOR<PolicyCreateWithoutOrdersInput, PolicyUncheckedCreateWithoutOrdersInput>
@@ -9527,10 +9727,41 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserUpsertWithoutOrdersInput = {
+    update: XOR<UserUpdateWithoutOrdersInput, UserUncheckedUpdateWithoutOrdersInput>
+    create: XOR<UserCreateWithoutOrdersInput, UserUncheckedCreateWithoutOrdersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOrdersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOrdersInput, UserUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type UserUpdateWithoutOrdersInput = {
+    sub?: StringFieldUpdateOperationsInput | string
+    companies?: UserCompanyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOrdersInput = {
+    sub?: StringFieldUpdateOperationsInput | string
+    companies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCompanyCreateManyUserInput = {
     id?: string
     companyId: string
     isAdmin?: boolean
+  }
+
+  export type OrderCreateManyUserInput = {
+    id?: string
+    status?: $Enums.OrderStatus
+    policyCompanyId: string
+    policySlug: string
+    policyVersion: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserCompanyUpdateWithoutUserInput = {
@@ -9546,6 +9777,31 @@ export namespace Prisma {
   export type UserCompanyUncheckedUpdateManyWithoutUserInput = {
     companyId?: StringFieldUpdateOperationsInput | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OrderUpdateWithoutUserInput = {
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    policy?: PolicyUpdateOneRequiredWithoutOrdersNestedInput
+  }
+
+  export type OrderUncheckedUpdateWithoutUserInput = {
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    policyCompanyId?: StringFieldUpdateOperationsInput | string
+    policySlug?: StringFieldUpdateOperationsInput | string
+    policyVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateManyWithoutUserInput = {
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    policyCompanyId?: StringFieldUpdateOperationsInput | string
+    policySlug?: StringFieldUpdateOperationsInput | string
+    policyVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCompanyCreateManyCompanyInput = {
@@ -9615,6 +9871,7 @@ export namespace Prisma {
   export type OrderCreateManyPolicyInput = {
     id?: string
     status?: $Enums.OrderStatus
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9623,16 +9880,19 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutOrdersNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutPolicyInput = {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderUncheckedUpdateManyWithoutPolicyInput = {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
