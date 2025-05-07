@@ -1,3 +1,4 @@
 export type OrderFiltersDto = {
-	userId: string;
+	userId?: string;
+	companyId?: string;
 };

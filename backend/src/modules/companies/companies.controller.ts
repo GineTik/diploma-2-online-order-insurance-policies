@@ -3,12 +3,14 @@ import { CompaniesService } from './companies.service';
 import { Auth, UserId } from '@shared/auth';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { PoliciesService } from '@modules/policies';
+import { OrdersService } from '@modules/orders';
 
 @Controller('companies')
 export class CompaniesController {
 	constructor(
 		private readonly companiesService: CompaniesService,
 		private readonly policiesService: PoliciesService,
+		private readonly ordersService: OrdersService,
 	) {}
 
 	@Get()
@@ -31,5 +33,10 @@ export class CompaniesController {
 	@Auth()
 	async delete(@Param('id') id: string, @UserId() userId: string) {
 		return await this.companiesService.delete(id, userId);
+	}
+
+	@Get(':id/orders')
+	async getOrders(@Param('id') id: string) {
+		return await this.ordersService.getFiltered({ companyId: id });
 	}
 }

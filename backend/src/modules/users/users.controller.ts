@@ -1,10 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
-import { Auth, UserId } from '@shared/auth';
+import { Controller, Get, Param } from '@nestjs/common';
+import { Auth, PERMISSIONS, UserId } from '@shared/auth';
 import { OrdersService } from '@modules/orders';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-	constructor(private ordersService: OrdersService) {}
+	constructor(
+		private ordersService: OrdersService,
+		private usersService: UsersService,
+	) {}
 
 	@Get('my-orders')
 	@Auth()
@@ -12,5 +16,15 @@ export class UsersController {
 		return await this.ordersService.getFiltered({
 			userId,
 		});
+	}
+
+	@Get('permissions')
+	async getAllPermissions() {
+		return Object.values(PERMISSIONS);
+	}
+
+	@Get(':userId/permissions')
+	async getUserPermissions(@Param('userId') userId: string) {
+		return await this.usersService.getUserPermissions(userId);
 	}
 }

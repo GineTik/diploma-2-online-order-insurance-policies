@@ -1449,34 +1449,28 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
-    sub: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
-    sub: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
-    sub: number
     _all: number
   }
 
 
   export type UserMinAggregateInputType = {
     id?: true
-    sub?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
-    sub?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
-    sub?: true
     _all?: true
   }
 
@@ -1554,7 +1548,6 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    sub: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1576,7 +1569,6 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sub?: boolean
     companies?: boolean | User$companiesArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1586,10 +1578,9 @@ export namespace Prisma {
 
   export type UserSelectScalar = {
     id?: boolean
-    sub?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sub", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     companies?: boolean | User$companiesArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
@@ -1604,7 +1595,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      sub: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2000,7 +1990,6 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
-    readonly sub: FieldRef<"User", 'String'>
   }
     
 
@@ -2219,7 +2208,7 @@ export namespace Prisma {
     /**
      * The data needed to create a User.
      */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+    data?: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
@@ -7527,8 +7516,7 @@ export namespace Prisma {
    */
 
   export const UserScalarFieldEnum: {
-    id: 'id',
-    sub: 'sub'
+    id: 'id'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7695,31 +7683,27 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    sub?: StringFilter<"User"> | string
     companies?: UserCompanyListRelationFilter
     orders?: OrderListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    sub?: SortOrder
     companies?: UserCompanyOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    sub?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     companies?: UserCompanyListRelationFilter
     orders?: OrderListRelationFilter
-  }, "id" | "sub">
+  }, "id">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    sub?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -7730,7 +7714,6 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    sub?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type CompanyWhereInput = {
@@ -8030,41 +8013,36 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
-    sub: string
     companies?: UserCompanyCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
-    sub: string
     companies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
-    sub: string
   }
 
   export type UserUpdateManyMutationInput = {
-    sub?: StringFieldUpdateOperationsInput | string
+
   }
 
   export type UserUncheckedUpdateManyInput = {
-    sub?: StringFieldUpdateOperationsInput | string
+
   }
 
   export type CompanyCreateInput = {
@@ -8368,17 +8346,14 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    sub?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    sub?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    sub?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8716,10 +8691,6 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
   export type UserCompanyUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
@@ -8802,6 +8773,10 @@ export namespace Prisma {
     connectOrCreate?: PolicyCreateOrConnectWithoutCompanyInput | PolicyCreateOrConnectWithoutCompanyInput[]
     createMany?: PolicyCreateManyCompanyInputEnvelope
     connect?: PolicyWhereUniqueInput | PolicyWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type UserCompanyUpdateManyWithoutCompanyNestedInput = {
@@ -9412,13 +9387,11 @@ export namespace Prisma {
 
   export type UserCreateWithoutCompaniesInput = {
     id?: string
-    sub: string
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCompaniesInput = {
     id?: string
-    sub: string
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -9456,12 +9429,10 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCompaniesInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCompaniesInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -9679,13 +9650,11 @@ export namespace Prisma {
 
   export type UserCreateWithoutOrdersInput = {
     id?: string
-    sub: string
     companies?: UserCompanyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
     id?: string
-    sub: string
     companies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -9739,12 +9708,10 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutOrdersInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
-    sub?: StringFieldUpdateOperationsInput | string
     companies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
   }
 

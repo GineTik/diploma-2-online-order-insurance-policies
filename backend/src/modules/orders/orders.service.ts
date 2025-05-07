@@ -1,8 +1,13 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+} from '@nestjs/common';
 import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
 import { Order } from 'generated/prisma';
+import { ORDER_NOT_FOUND } from '@shared/errors';
 import { FORBIDDEN_GENERATE_PDF } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
@@ -15,12 +20,17 @@ export class OrdersService {
 		private readonly policiesService: PoliciesService,
 	) {}
 
-	async getFiltered({ userId }: OrderFiltersDto) {
-		return await this.prisma.order.findMany({
-			where: {
-				userId,
-			},
-		});
+	async getFiltered({ userId, companyId }: OrderFiltersDto) {
+		return await this.prisma.order
+			.findMany({
+				where: {
+					userId,
+					policyCompanyId: companyId,
+				},
+			})
+			.catch((error) => {
+				throw new BadRequestException(ORDER_NOT_FOUND);
+			});
 	}
 
 	async create(dto: CreateOrderDto) {

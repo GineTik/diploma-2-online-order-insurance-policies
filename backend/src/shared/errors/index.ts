@@ -10,3 +10,8 @@ export const FORBIDDEN_GENERATE_PDF =
 export const USER_ALREADY_HAVE_COMPANY = 'User already have a company';
 
 export const USER_NOT_FOUND = (userId: string) => `User not found by ${userId}`;
+
+export const ORDER_NOT_FOUND = 'Order not found';
+
+export const CATEGORY_NOT_FOUND_ERROR = (id: string) =>
+	`Category not found by ${id}`;

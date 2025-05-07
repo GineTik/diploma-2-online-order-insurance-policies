@@ -5,10 +5,14 @@ import {
 	COMPANY_NOT_FOUND_ERROR,
 	POLICY_NOT_FOUND_ERROR,
 } from '@shared/errors';
+import { CategoriesService } from './categories';
 
 @Injectable()
 export class PoliciesService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly categoriesService: CategoriesService,
+	) {}
 
 	async getFiltered({ companyId }: PolicyFiltersDto) {
 		return await this.prisma.policy
@@ -29,5 +33,10 @@ export class PoliciesService {
 			.catch((err) => {
 				throw new BadRequestException(POLICY_NOT_FOUND_ERROR(slug));
 			});
+	}
+
+	async getCategory(slug: string) {
+		const policy = await this.getLastVersion(slug);
+		return await this.categoriesService.getById(policy.categoryId);
 	}
 }
