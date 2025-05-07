@@ -11,6 +11,20 @@ export class CompaniesService {
 		return await this.prisma.userCompany.findMany();
 	}
 
+	async getByAdminId(userId: string) {
+		const userCompany = await this.prisma.userCompany.findFirst({
+			where: {
+				userId,
+				isAdmin: true,
+			},
+			include: {
+				company: true,
+			},
+		});
+
+		return userCompany?.company;
+	}
+
 	async create(userId: string, body: CreateCompanyDto) {
 		if (!(await this.isUserExists(userId))) {
 			throw new BadRequestException(USER_NOT_FOUND(userId));
