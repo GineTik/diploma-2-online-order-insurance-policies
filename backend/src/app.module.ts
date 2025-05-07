@@ -4,16 +4,9 @@ import { OrdersModule } from '@modules/orders';
 import { PoliciesModule } from '@modules/policies';
 import { UsersModule, AddUserIfNotExistsMiddleware } from '@modules/users';
 import { JwtDecoratorMiddleware } from '@shared/auth';
-import { MongoModule } from '@shared/mongo';
 
 @Module({
-	imports: [
-		CompaniesModule,
-		UsersModule,
-		OrdersModule,
-		PoliciesModule,
-		MongoModule,
-	],
+	imports: [CompaniesModule, UsersModule, OrdersModule, PoliciesModule],
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {

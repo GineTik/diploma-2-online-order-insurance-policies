@@ -163,7 +163,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/ds/Projects/diploma/2-online-insurence/backend/src/shared/generated/prisma",
+      "value": "/home/ds/Projects/diploma/2-online-insurence/backend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -181,25 +181,26 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": "../../.env"
   },
-  "relativePath": "../../prisma",
+  "relativePath": "../../src/shared/prisma",
   "clientVersion": "6.7.0",
   "engineVersion": "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "mongodb",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "MONGO_CONNECTION",
-        "value": "mongodb://mongo:nrdhTSJYLkXRxCzgwbFatCcmmKagaYNQ@switchyard.proxy.rlwy.net:31227/test?authSource=admin&retryWrites=true&w=majority"
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_CONNECTION\")\n}\n\nmodel User {\n  id  String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  sub String @unique\n\n  companies UserCompany[]\n}\n\nmodel Company {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n\n  users    UserCompany[]\n  policies Policy[]\n}\n\nmodel UserCompany {\n  id String @id @default(auto()) @map(\"_id\") @db.ObjectId\n\n  user   User   @relation(fields: [userId], references: [id])\n  userId String @db.ObjectId\n\n  company   Company @relation(fields: [companyId], references: [id])\n  companyId String  @db.ObjectId\n\n  isAdmin Boolean @default(false)\n}\n\nmodel Policy {\n  id          String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  slug        String\n  version     Int      @default(1)\n  name        String\n  description String\n  price       Float\n  options     String[]\n\n  company   Company @relation(fields: [companyId], references: [id])\n  companyId String  @db.ObjectId\n\n  category   PolicyCategory @relation(fields: [categoryId], references: [id])\n  categoryId String         @db.ObjectId\n\n  orders Order[]\n\n  @@unique([companyId, slug, version])\n}\n\nmodel PolicyCategory {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n\n  policies Policy[]\n}\n\nenum OrderStatus {\n  PENDING\n  COMPLETED\n  CANCELLED\n}\n\nmodel Order {\n  id     String      @id @default(auto()) @map(\"_id\") @db.ObjectId\n  status OrderStatus @default(PENDING)\n\n  policy          Policy @relation(fields: [policyCompanyId, policySlug, policyVersion], references: [companyId, slug, version])\n  policyCompanyId String @db.ObjectId\n  policySlug      String\n  policyVersion   Int\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "77f308550c935897270c1cf568d0673e70c912d751cd9531babbe5e7660fa1b8",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_CONNECTION\")\n}\n\nmodel User {\n  id  String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  sub String @unique\n\n  companies UserCompany[]\n}\n\nmodel Company {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n\n  users    UserCompany[]\n  policies Policy[]\n}\n\nmodel UserCompany {\n  id String @id @default(auto()) @map(\"_id\") @db.ObjectId\n\n  user   User   @relation(fields: [userId], references: [id])\n  userId String @db.ObjectId\n\n  company   Company @relation(fields: [companyId], references: [id])\n  companyId String  @db.ObjectId\n\n  isAdmin Boolean @default(false)\n}\n\nmodel Policy {\n  id          String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  slug        String\n  version     Int      @default(1)\n  name        String\n  description String\n  price       Float\n  options     String[]\n\n  company   Company @relation(fields: [companyId], references: [id])\n  companyId String  @db.ObjectId\n\n  category   PolicyCategory @relation(fields: [categoryId], references: [id])\n  categoryId String         @db.ObjectId\n\n  orders Order[]\n\n  @@unique([companyId, slug, version])\n}\n\nmodel PolicyCategory {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n\n  policies Policy[]\n}\n\nenum OrderStatus {\n  PENDING\n  COMPLETED\n  CANCELLED\n}\n\nmodel Order {\n  id     String      @id @default(auto()) @map(\"_id\") @db.ObjectId\n  status OrderStatus @default(PENDING)\n\n  policy          Policy @relation(fields: [policyCompanyId, policySlug, policyVersion], references: [companyId, slug, version])\n  policyCompanyId String @db.ObjectId\n  policySlug      String\n  policyVersion   Int\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchemaHash": "8000c6a7be027770b5195c3d579423a6f0237c68f703be209744d3e0a7287d4b",
   "copyEngine": true
 }
 config.dirname = '/'
