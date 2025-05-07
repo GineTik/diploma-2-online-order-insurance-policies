@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_CONNECTION")
+}
+
+model User {  
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+	sub       String   @unique
+
+  companies UserCompany[]
+}
+
+model Company {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+	name      String
+
+  users     UserCompany[]
+  policies  Policy[]
+}
+
+model UserCompany {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+	
+  user      User @relation(fields: [userId], references: [id])
+	userId    String @db.ObjectId
+	
+  company   Company @relation(fields: [companyId], references: [id])
+	companyId String @db.ObjectId
+
+  isAdmin   Boolean @default(false)
+}
+
+model Policy {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String
+  version   Int      @default(1)
+  name      String
+  description String
+  price     Float
+  options   String[]
+	
+  company   Company  @relation(fields: [companyId], references: [id])
+	companyId String   @db.ObjectId
+	
+  category  PolicyCategory @relation(fields: [categoryId], references: [id])
+	categoryId String   @db.ObjectId
+
+  orders    Order[]
+
+  @@unique([companyId, slug, version])
+}
+
+model PolicyCategory {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+	name      String
+	
+  policies  Policy[]
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+model Order {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  status    OrderStatus @default(PENDING)
+	
+  policy          Policy   @relation(fields: [policyCompanyId, policySlug, policyVersion], references: [companyId, slug, version])
+	policyCompanyId String @db.ObjectId
+	policySlug      String
+	policyVersion   Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
