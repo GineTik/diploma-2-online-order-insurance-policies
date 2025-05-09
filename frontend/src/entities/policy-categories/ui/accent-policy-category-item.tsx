@@ -3,6 +3,7 @@ import { PolicyCategory } from '../types';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { ROUTES } from '@/shared/constants/routes';
 
 type AccentPolicyCategoryItemProps = {
 	category: PolicyCategory;
@@ -21,7 +22,7 @@ export const AccentPolicyCategoryItem = ({
 				'p-5 rounded-lg flex flex-col gap-2 h-[300px] hover:scale-[102%] transition-all duration-300',
 				className,
 			)}
-			href={`/policy-categories/${category.id}`}
+			href={ROUTES.POLICY_LIST(category.slug)}
 		>
 			<H2>{category.name}</H2>
 			<Badge variant="card">{badge}</Badge>

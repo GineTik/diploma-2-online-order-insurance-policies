@@ -114,7 +114,8 @@ Prisma.NullTypes = {
  */
 
 exports.Prisma.UserScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  sub: 'sub'
 };
 
 exports.Prisma.CompanyScalarFieldEnum = {

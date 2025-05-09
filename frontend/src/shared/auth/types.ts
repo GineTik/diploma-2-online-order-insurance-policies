@@ -1,1 +1,1 @@
-export type AuthToken = string;
+export type AuthToken = string | null;

@@ -9,5 +9,6 @@ import { PoliciesModule } from '@modules/policies';
 	controllers: [CompaniesController],
 	providers: [CompaniesService],
 	imports: [PrismaModule, OrdersModule, PoliciesModule],
+	exports: [CompaniesService],
 })
 export class CompaniesModule {}

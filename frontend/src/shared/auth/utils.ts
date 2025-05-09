@@ -1,7 +1,9 @@
 import { AuthToken } from './types';
 
-export const getAuthHeader = (token: AuthToken) => {
+export const getAuthHeaders = (token: AuthToken) => {
 	return {
-		Authorization: `Bearer ${token}`,
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
 	};
 };

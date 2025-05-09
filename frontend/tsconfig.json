@@ -28,6 +28,6 @@
       "@app/*": ["./src/app/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/features/manage-companies/ui/create-company-button.tss", "src/features/policy-categories/ui/category-form-inputs.tss"],
   "exclude": ["node_modules"]
 }

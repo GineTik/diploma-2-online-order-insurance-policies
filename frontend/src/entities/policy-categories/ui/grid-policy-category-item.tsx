@@ -11,7 +11,7 @@ export const GridPolicyCategoryItem = ({
 	icon,
 }: GridPolicyCategoryItemProps) => {
 	return (
-		<div className="bg-card rounded-md p-4 flex gap-4">
+		<div className="bg-surface rounded-md p-4 flex gap-4">
 			<div className="rounded-md bg-background p-2">{icon}</div>
 			<div>
 				<H3>{category.name}</H3>

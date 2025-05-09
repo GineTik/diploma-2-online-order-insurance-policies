@@ -8,18 +8,18 @@ export class UsersService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async isNotExists(userId: string) {
-		const user = await this.prisma.user.findUnique({
+		const count = await this.prisma.user.count({
 			where: {
-				id: userId,
+				sub: userId,
 			},
 		});
-		return !user;
+		return count === 0;
 	}
 
 	async create(user: CreateUserDto) {
 		return await this.prisma.user.create({
 			data: {
-				id: user.userId,
+				sub: user.userId,
 			},
 		});
 	}

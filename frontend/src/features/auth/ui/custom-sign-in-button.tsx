@@ -1,5 +1,10 @@
-import { SignInButton } from "@clerk/nextjs"
+import { Button } from '@/shared/ui';
+import { SignInButton } from '@clerk/nextjs';
 
 export const CustomSignInButton = () => {
-	return <SignInButton />;
+	return (
+		<Button variant="card" size="sm">
+			<SignInButton />
+		</Button>
+	);
 };

@@ -1,7 +1,7 @@
 import { H1 } from '@/shared/ui';
 import { PolicyCategoryGrid } from '@/widgets/policy-categories';
 
-export default function MainPage() {
+export const MainPage = () => {
 	return (
 		<div className="p-5">
 			<div className="text-center space-y-4 mb-10">
@@ -13,4 +13,4 @@ export default function MainPage() {
 			<PolicyCategoryGrid />
 		</div>
 	);
-}
+};

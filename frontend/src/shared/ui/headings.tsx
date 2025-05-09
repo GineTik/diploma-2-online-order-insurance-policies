@@ -1,11 +1,32 @@
-export const H1 = ({ children }: { children: React.ReactNode }) => {
-	return <h1 className="text-5xl font-bold">{children}</h1>;
+import { cn } from '../lib/utils';
+
+type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
+	children: React.ReactNode;
 };
 
-export const H2 = ({ children }: { children: React.ReactNode }) => {
-	return <h2 className="text-3xl font-bold">{children}</h2>;
+export const H1 = ({ children, className, ...props }: HeadingProps) => {
+	return (
+		<h1 className={cn('text-5xl font-bold', className)} {...props}>
+			{children}
+		</h1>
+	);
 };
 
-export const H3 = ({ children }: { children: React.ReactNode }) => {
-	return <h3 className="text-[18px] font-bold">{children}</h3>;
+export const H2 = ({ children, className, ...props }: HeadingProps) => {
+	return (
+		<h2
+			className={cn('text-3xl font-normal leading-tight', className)}
+			{...props}
+		>
+			{children}
+		</h2>
+	);
+};
+
+export const H3 = ({ children, className, ...props }: HeadingProps) => {
+	return (
+		<h3 className={cn('text-[18px] font-normal', className)} {...props}>
+			{children}
+		</h3>
+	);
 };
