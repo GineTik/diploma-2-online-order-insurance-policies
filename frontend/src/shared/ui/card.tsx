@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '@/shared/lib/utils';
+import { H3, HeadingProps } from './headings';
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
 	return (
@@ -28,9 +29,9 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
 	);
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
+function CardTitle({ className, ...props }: HeadingProps) {
 	return (
-		<div
+		<H3
 			data-slot="card-title"
 			className={cn('leading-none font-semibold', className)}
 			{...props}

@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { companyFormSchema, CompanyFormSchema } from '../types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	FormField,
@@ -13,14 +12,11 @@ import {
 	Form,
 	LoadingButton,
 } from '@/shared/ui';
-import { useCreateCompany } from '@/features/companies';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Card, CardContent } from '@/shared/ui';
+import { CompanyFormSchema, companyFormSchema } from '@/entities/companies';
+import { useCreateCompany } from '../hooks/use-create-company';
 
-type CompanyFormProps = {
-	actions: React.ReactNode;
-};
-
-export const CompanyForm = () => {
+export const CreateCompanyForm = () => {
 	const form = useForm<CompanyFormSchema>({
 		resolver: zodResolver(companyFormSchema),
 		defaultValues: {

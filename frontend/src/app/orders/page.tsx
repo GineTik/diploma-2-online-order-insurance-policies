@@ -1,5 +1,5 @@
 import { H2 } from '@/shared/ui/headings';
-import { OrderList } from '@/widgets/orders';
+import { OrderList } from '@/widgets/order-list';
 
 export default function OrdersPage() {
 	return (

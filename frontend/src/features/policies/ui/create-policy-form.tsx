@@ -1,6 +1,6 @@
 'use client';
 
-import { usePolicyCategories } from '@/entities/policy-categories/hooks/use-policy-categories';
+import { usePolicyCategories } from '@/entities/policy-categories';
 import {
 	CompleteFormFieldInput,
 	CompleteFormFieldSelect,
@@ -11,7 +11,7 @@ import {
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { CreatePolicy } from '../types';
+import { CreatePolicy } from '@/entities/policies';
 
 export const CreatePolicyForm = () => {
 	const form = useForm<CreatePolicy>({

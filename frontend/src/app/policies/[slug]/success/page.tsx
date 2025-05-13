@@ -1,4 +1,4 @@
-import { SuccessOrder } from '@/widgets/policies/ui/success-order';
+import { SuccessOrder } from '@/widgets/success-order';
 
 export default function SuccessOrderPage() {
 	return (

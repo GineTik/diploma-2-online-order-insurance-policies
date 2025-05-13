@@ -1,3 +1,5 @@
+'use client';
+
 import { CompanyCard } from '@/entities/companies';
 import {
 	Button,
@@ -8,9 +10,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/shared/ui';
-import { ChevronDownIcon, SearchIcon } from 'lucide-react';
+import { Loader, SearchIcon } from 'lucide-react';
+import { useCompanies } from './hooks/use-companies';
 
 export const CompanyList = () => {
+	const { companies, isLoadingCompanies } = useCompanies();
+
 	return (
 		<div className="space-y-2">
 			<div className="flex gap-2">
@@ -30,9 +35,12 @@ export const CompanyList = () => {
 					</SelectContent>
 				</Select>
 			</div>
-			<CompanyCard company={{ id: '1', name: 'test' }} />
-			<CompanyCard company={{ id: '2', name: 'test' }} />
-			<CompanyCard company={{ id: '3', name: 'test' }} />
+
+			{isLoadingCompanies ?? <Loader className="animate-spin" />}
+
+			{companies?.map((company) => (
+				<CompanyCard key={company.id} company={company} />
+			))}
 		</div>
 	);
 };

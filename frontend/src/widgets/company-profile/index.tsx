@@ -1,7 +1,7 @@
 'use client';
 
 import { useCompany } from '@/entities/companies';
-import { H2 } from '@/shared/ui';
+import { CardDescription, H2 } from '@/shared/ui';
 import { useParams } from 'next/navigation';
 
 export const CompanyProfile = () => {
@@ -24,11 +24,13 @@ export const CompanyProfile = () => {
 	return (
 		<div className="">
 			<H2>{company?.name}</H2>
-			{company?.description ? (
-				<p>{company?.description}</p>
-			) : (
-				<p className="text-muted-foreground">Немає опису</p>
-			)}
+			<CardDescription>
+				{company?.description ? (
+					<span>{company?.description}</span>
+				) : (
+					<span className="text-muted-foreground">Немає опису</span>
+				)}
+			</CardDescription>
 		</div>
 	);
 };

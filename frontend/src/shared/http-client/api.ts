@@ -10,7 +10,7 @@ api.interceptors.response.use(
 		return response;
 	},
 	(error: any) => {
-		toast.error('Request failed!');
+		toast.error(error.response.data.message);
 		return Promise.reject(error);
 	},
 );

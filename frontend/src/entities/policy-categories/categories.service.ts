@@ -1,5 +1,8 @@
 import { api } from '@/shared/http-client/api';
-import { PolicyCategory } from './types';
+import { CreateCategorySchema, PolicyCategory } from './categories.types';
+import { AuthToken } from '@/shared/auth/types';
+import { getAuthHeaders } from '@/shared/auth/utils';
+import { mapPolicyCategorySchemaToRequest } from './categories.mapper';
 
 export const getPolicyCategories = async () => {
 	const categories = await api.get<PolicyCategory[]>('/categories');
@@ -53,6 +56,17 @@ export const getPolicyCategories = async () => {
 					type: 'string',
 				},
 			],
-		})),
+		})) as PolicyCategory[],
 	};
+};
+
+export const createPolicyCategory = async (
+	category: CreateCategorySchema,
+	token: AuthToken,
+) => {
+	return await api.post(
+		'/categories',
+		mapPolicyCategorySchemaToRequest(category),
+		getAuthHeaders(token),
+	);
 };

@@ -1,6 +1,6 @@
 import { cn } from '../lib/utils';
 
-type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
+export type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
 	children: React.ReactNode;
 };
 

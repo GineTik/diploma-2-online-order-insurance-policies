@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export type PolicyCategory = {
 	id: string;
 	name: string;
@@ -16,3 +18,11 @@ export type PolicyCategoryField = {
 		value: string;
 	}[];
 };
+
+export const createCategorySchema = z.object({
+	name: z.string().min(1),
+	slug: z.string().min(1),
+	description: z.string().min(1),
+});
+
+export type CreateCategorySchema = z.infer<typeof createCategorySchema>;

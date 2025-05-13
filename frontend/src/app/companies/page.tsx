@@ -1,5 +1,5 @@
 import { H2 } from '@/shared/ui';
-import { CompanyList } from '@/widgets/companies';
+import { CompanyList } from '@/widgets/company-list';
 
 export default function Page() {
 	return (

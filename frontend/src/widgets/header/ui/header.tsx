@@ -3,14 +3,9 @@
 import { CustomSignInButton, CustomSignUpButton } from '@/features/auth';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Navbar } from './navbar';
-import { CreateCompanyPageLink } from '@/entities/companies/ui/link-to-create-page';
-import { LinkToCompanyProfile } from '@/entities/companies/ui/link-to-company-profile';
-import { useUserCompany } from '@/entities/companies/hooks/use-user-company';
-import { Skeleton } from '@/shared/ui/skeleton';
+import { ProfileDropdown } from './profile-dropdown';
 
 export const Header = () => {
-	const { company, isCompanyLoading } = useUserCompany();
-
 	return (
 		<div className="flex justify-between items-center p-4 relative">
 			<div className="text-xl font-bold uppercase">best.finance</div>
@@ -19,13 +14,7 @@ export const Header = () => {
 			</div>
 			<div className="flex items-center gap-2 ml-auto">
 				<SignedIn>
-					{isCompanyLoading ? (
-						<Skeleton className="w-26 h-8 rounded-default" />
-					) : company == undefined ? (
-						<CreateCompanyPageLink />
-					) : (
-						<LinkToCompanyProfile />
-					)}
+					<ProfileDropdown />
 					<UserButton />
 				</SignedIn>
 				<SignedOut>

@@ -1,4 +1,5 @@
-import { PolicyListByCategory, PolicyFiltration } from '@/widgets/policies';
+import { PolicyFiltration } from '@/features/policies';
+import { PolicyListByCategory } from '@/widgets/policy-list';
 
 export default function Page({ params }: { params: { category: string } }) {
 	return (

@@ -1,8 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { createPolicyCategory } from '../services';
-import { CreateCategorySchema } from '../types';
 import { useAuth } from '@clerk/nextjs';
 import { queryClient } from '@/app/layout';
+import {
+	CreateCategorySchema,
+	createPolicyCategory,
+} from '@/entities/policy-categories';
 
 export const useCreatePolicyCategory = () => {
 	const { getToken } = useAuth();

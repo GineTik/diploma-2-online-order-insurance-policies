@@ -1,4 +1,4 @@
-import { PolicyCategory } from '../types';
+import { PolicyCategory } from '../categories.types';
 
 export const usePolicyCategory = (categoryId?: string) => {
 	return {

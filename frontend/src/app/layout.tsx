@@ -7,6 +7,7 @@ import { Header } from '@/widgets/header';
 import { cn } from '@/shared/lib/utils';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/shared/ui/tooltip';
+import { Toaster } from '@/shared/ui';
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({
 						<ClerkProvider>
 							<Header />
 							{children}
+							<Toaster />
 						</ClerkProvider>
 					</QueryClientProvider>
 				</TooltipProvider>

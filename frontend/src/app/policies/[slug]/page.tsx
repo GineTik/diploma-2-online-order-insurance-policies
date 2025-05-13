@@ -3,7 +3,7 @@
 import { usePolicy } from '@/entities/policies';
 import { useParams } from 'next/navigation';
 import { H2 } from '@/shared/ui/headings';
-import { OrderForm } from '@/widgets/policies';
+import { OrderForm } from '@/features/order';
 import { Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/shared/ui/card';
 

@@ -10,3 +10,10 @@ export type Policy = {
 	updatedAt: Date;
 	categoryId: string;
 };
+
+export type CreatePolicy = {
+	name: string;
+	description: string;
+	price: number;
+	categoryId: string;
+};

@@ -6,4 +6,5 @@ export const ROUTES = {
 	POLICY_LIST: (category: string) => `/${category}/offers`,
 	POLICY: (slug: string) => `/policies/${slug}`,
 	SUCCESS_ORDER: (slug: string) => `/policies/${slug}/success`,
+	ORDERS: '/orders',
 };

@@ -1,5 +1,5 @@
 import { H2, Button, Badge } from '@/shared/ui';
-import { PolicyCategory } from '../types';
+import { PolicyCategory } from '../categories.types';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
@@ -19,7 +19,7 @@ export const AccentPolicyCategoryCard = ({
 	return (
 		<Link
 			className={cn(
-				'p-5 rounded-lg flex flex-col gap-2 h-[300px] hover:scale-[102%] transition-all duration-300',
+				'p-5 flex flex-col gap-2 h-[300px] hover:scale-[102%] transition-all duration-300 rounded-xl',
 				className,
 			)}
 			href={ROUTES.POLICY_LIST(category.slug)}

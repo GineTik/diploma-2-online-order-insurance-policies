@@ -1,6 +1,6 @@
-import { Company, CompanyFormSchema } from '@/entities/companies';
+import { CompanyFormSchema } from '@/entities/companies';
 import { useMutation } from '@tanstack/react-query';
-import { createCompany } from '../services';
+import { createCompany } from '@/entities/companies';
 import { useAuth } from '@clerk/nextjs';
 
 export const useCreateCompany = () => {

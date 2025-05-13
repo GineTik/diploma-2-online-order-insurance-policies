@@ -1,6 +1,8 @@
 import { H3 } from '@/shared/ui';
-import { PolicyCategory } from '../types';
+import { PolicyCategory } from '../categories.types';
 import { Card, CardContent } from '@/shared/ui/card';
+import Link from 'next/link';
+import { ROUTES } from '@/shared/constants/routes';
 
 type GridPolicyCategoryCardProps = {
 	category: PolicyCategory;
@@ -12,14 +14,16 @@ export const GridPolicyCategoryCard = ({
 	icon,
 }: GridPolicyCategoryCardProps) => {
 	return (
-		<Card className="">
-			<CardContent className="flex gap-4 items-center">
-				<div className="rounded-md bg-background p-2">{icon}</div>
-				<div>
-					<H3 className="leading-tight">{category.name}</H3>
-					<p className="text-sm text-foreground/80">Опис страхування</p>
-				</div>
-			</CardContent>
-		</Card>
+		<Link href={ROUTES.POLICY_LIST(category.slug)}>
+			<Card className="rounded-xl hover:scale-[103%] transition-all duration-300">
+				<CardContent className="flex gap-4 items-center">
+					<div className="rounded-md bg-background p-2">{icon}</div>
+					<div>
+						<H3 className="leading-tight">{category.name}</H3>
+						<p className="text-sm text-foreground/80">{category.description}</p>
+					</div>
+				</CardContent>
+			</Card>
+		</Link>
 	);
 };
