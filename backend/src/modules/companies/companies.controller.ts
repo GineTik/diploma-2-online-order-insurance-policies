@@ -18,6 +18,11 @@ export class CompaniesController {
 		return await this.companiesService.getAll();
 	}
 
+	@Get(':id')
+	async getOne(@Param('id') id: string) {
+		return await this.companiesService.getOne(id);
+	}
+
 	@Post()
 	@Auth()
 	async create(@Body() body: CreateCompanyDto, @UserId() userId: string) {

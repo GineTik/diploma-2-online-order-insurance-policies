@@ -1,8 +1,11 @@
 export const POLICY_NOT_FOUND_ERROR = (slug: string) =>
 	`Policy not found by ${slug}`;
 
-export const COMPANY_NOT_FOUND_ERROR = (companyId: string) =>
+export const COMPANY_NOT_FOUND = (companyId: string) =>
 	`Company not found by ${companyId}`;
+
+export const COMPANY_NOT_FOUND_BY_ADMIN_ID = (clerkId: string) =>
+	`Company not found by admin ${clerkId}`;
 
 export const FORBIDDEN_GENERATE_PDF =
 	'You are not allowed to generate this PDF';

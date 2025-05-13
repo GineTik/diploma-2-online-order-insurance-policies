@@ -1,13 +1,15 @@
 'use client';
 
-import { PolicyListItem } from '@/entities/policies';
+import { PolicyCard } from '@/entities/policies';
 import { usePolicies } from '@/entities/policies/hooks/use-policies';
 
-type PolicyListProps = {
+type PolicyListByCategoryProps = {
 	category: string;
 };
 
-export const PolicyList = ({ category }: PolicyListProps) => {
+export const PolicyListByCategory = ({
+	category,
+}: PolicyListByCategoryProps) => {
 	const { policies } = usePolicies();
 
 	if (policies?.length === 0) {
@@ -19,7 +21,7 @@ export const PolicyList = ({ category }: PolicyListProps) => {
 	return (
 		<div className="space-y-2">
 			{policies?.map((policy) => (
-				<PolicyListItem key={policy.id} policy={policy} />
+				<PolicyCard key={policy.id} policy={policy} />
 			))}
 		</div>
 	);

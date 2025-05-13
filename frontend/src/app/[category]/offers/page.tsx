@@ -1,10 +1,10 @@
-import { PolicyList, PolicyFiltration } from '@/widgets/policies';
+import { PolicyListByCategory, PolicyFiltration } from '@/widgets/policies';
 
 export default function Page({ params }: { params: { category: string } }) {
 	return (
 		<div className="space-y-2 max-w-[800px] mx-auto w-full">
 			<PolicyFiltration />
-			<PolicyList category={params.category} />
+			<PolicyListByCategory category={params.category} />
 		</div>
 	);
 }

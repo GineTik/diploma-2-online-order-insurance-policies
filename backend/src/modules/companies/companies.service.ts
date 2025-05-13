@@ -1,20 +1,32 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { PrismaService } from '@shared/prisma';
-import { USER_NOT_FOUND, USER_ALREADY_HAVE_COMPANY } from '@shared/errors';
+import {
+	USER_NOT_FOUND,
+	USER_ALREADY_HAVE_COMPANY,
+	COMPANY_NOT_FOUND_BY_ADMIN_ID,
+} from '@shared/errors';
 
 @Injectable()
 export class CompaniesService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll() {
-		return await this.prisma.userCompany.findMany();
+		return await this.prisma.company.findMany();
 	}
 
-	async getByAdminId(userId: string) {
+	async getOne(id: string) {
+		return await this.prisma.company.findUnique({
+			where: { id },
+		});
+	}
+
+	async getByAdminId(clerkId: string) {
 		const userCompany = await this.prisma.userCompany.findFirst({
 			where: {
-				userId,
+				user: {
+					sub: clerkId,
+				},
 				isAdmin: true,
 			},
 			include: {
@@ -22,15 +34,23 @@ export class CompaniesService {
 			},
 		});
 
+		if (!userCompany)
+			throw new BadRequestException(COMPANY_NOT_FOUND_BY_ADMIN_ID(clerkId));
+
 		return userCompany?.company;
 	}
 
-	async create(userId: string, body: CreateCompanyDto) {
-		if (!(await this.isUserExists(userId))) {
-			throw new BadRequestException(USER_NOT_FOUND(userId));
-		}
+	async create(clerkId: string, body: CreateCompanyDto) {
+		const user = await this.prisma.user.findFirst({
+			where: {
+				sub: clerkId,
+			},
+		});
 
-		if (await this.isUserHaveCompany(userId)) {
+		if (!user) {
+			throw new BadRequestException(USER_NOT_FOUND(clerkId));
+		}
+		if (await this.isUserHaveCompany(user.id)) {
 			throw new BadRequestException(USER_ALREADY_HAVE_COMPANY);
 		}
 
@@ -42,7 +62,7 @@ export class CompaniesService {
 
 		await this.prisma.userCompany.create({
 			data: {
-				userId,
+				userId: user.id,
 				companyId: company.id,
 				isAdmin: true,
 			},
@@ -64,9 +84,9 @@ export class CompaniesService {
 	}
 
 	private async isUserExists(userId: string) {
-		const user = await this.prisma.user.findUnique({
+		const user = await this.prisma.user.findFirst({
 			where: {
-				id: userId,
+				sub: userId,
 			},
 		});
 

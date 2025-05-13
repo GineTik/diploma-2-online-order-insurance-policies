@@ -5,38 +5,35 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/shared/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
 import { H3 } from '@/shared/ui/headings';
 import { CheckIcon, DownloadIcon } from 'lucide-react';
 
-export const OrderItem = () => {
+export const OrderCard = () => {
 	return (
-		<div className="bg-surface rounded-default divide-y divide-border">
-			<div className="p-5 flex items-center gap-2">
-				<ItemHeader />
-			</div>
-			<div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-2">
-				<PoliceDetails />
-			</div>
+		<Card className="divide-y divide-border *:py-3 py-0">
+			<ItemHeader />
+			<PoliceDetails />
 			<ItemFooter />
-		</div>
+		</Card>
 	);
 };
 
 const ItemHeader = () => {
 	return (
-		<>
+		<CardHeader className="flex items-center gap-2">
 			<H3>Замовлення №1234567890</H3>
-			<Badge variant="secondary">Підтверджено</Badge>
+			<Badge variant="outline">Підтверджено</Badge>
 			<p className="text-sm text-muted-foreground ml-auto">
 				Замовлено 12.05.2025
 			</p>
-		</>
+		</CardHeader>
 	);
 };
 
 const PoliceDetails = () => {
 	return (
-		<>
+		<CardContent className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
 			<div>
 				<span className="text-sm text-muted-foreground">Поліс</span>
 				<H3>Страхування життя</H3>
@@ -54,13 +51,13 @@ const PoliceDetails = () => {
 					)}
 				</ul>
 			</div>
-		</>
+		</CardContent>
 	);
 };
 
 const ItemFooter = () => {
 	return (
-		<div className="flex md:items-center gap-2 p-5 md:flex-row flex-col">
+		<CardFooter className="flex md:items-center gap-2 md:flex-row flex-col">
 			<InactiveDownloadButton />
 			<p className="text-sm text-muted-foreground">Сума замовлення: 1000 грн</p>
 			<p className="text-sm text-muted-foreground md:ml-auto">
@@ -69,7 +66,7 @@ const ItemFooter = () => {
 					OVOA
 				</Button>
 			</p>
-		</div>
+		</CardFooter>
 	);
 };
 
@@ -86,7 +83,7 @@ const InactiveDownloadButton = () => {
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
-				<Button variant="secondary" className="cursor-default">
+				<Button variant="outline" className="cursor-default">
 					<DownloadIcon className="size-4 mr-2" />
 					Завантажити документ
 				</Button>

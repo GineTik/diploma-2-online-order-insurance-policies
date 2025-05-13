@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 	subsets: ['latin'],
 });
 
+export const queryClient = new QueryClient();
+
 export default function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const queryClient = new QueryClient();
-
 	return (
 		<html lang="en">
 			<head>

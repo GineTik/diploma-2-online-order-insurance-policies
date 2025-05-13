@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@clerk/nextjs';
-import { getUserCompany } from '../service';
+import { getUserCompany } from '../services';
 import { useQuery } from '@tanstack/react-query';
 
 export const useUserCompany = () => {

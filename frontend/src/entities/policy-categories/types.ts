@@ -14,5 +14,5 @@ export type PolicyCategoryField = {
 	values?: {
 		label: string;
 		value: string;
-	};
+	}[];
 };

@@ -5,7 +5,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Navbar } from './navbar';
 import { CreateCompanyPageLink } from '@/entities/companies/ui/link-to-create-page';
 import { LinkToCompanyProfile } from '@/entities/companies/ui/link-to-company-profile';
-import { useUserCompany } from '@/entities/companies/hooks/get-user-company';
+import { useUserCompany } from '@/entities/companies/hooks/use-user-company';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 export const Header = () => {

@@ -1,4 +1,4 @@
-import { CompanyListItem } from '@/entities/companies';
+import { CompanyCard } from '@/entities/companies';
 import {
 	Button,
 	Input,
@@ -30,9 +30,9 @@ export const CompanyList = () => {
 					</SelectContent>
 				</Select>
 			</div>
-			<CompanyListItem company={{ id: '1', name: 'test' }} />
-			<CompanyListItem company={{ id: '2', name: 'test' }} />
-			<CompanyListItem company={{ id: '3', name: 'test' }} />
+			<CompanyCard company={{ id: '1', name: 'test' }} />
+			<CompanyCard company={{ id: '2', name: 'test' }} />
+			<CompanyCard company={{ id: '3', name: 'test' }} />
 		</div>
 	);
 };

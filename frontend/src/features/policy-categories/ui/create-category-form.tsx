@@ -8,11 +8,22 @@ import {
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useCreatePolicyCategory } from '../hooks/use-create-policy-category';
+import { CreateCategorySchema } from '../types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createCategorySchema } from '../types';
 
 export const CreatePolicyCategoryForm = () => {
-	const form = useForm({
-		defaultValues: {},
+	const form = useForm<CreateCategorySchema>({
+		defaultValues: {
+			name: '',
+			slug: '',
+			description: '',
+		},
+		resolver: zodResolver(createCategorySchema),
 	});
+
+	const { createCategory, isCreatingCategory } = useCreatePolicyCategory();
 
 	return (
 		<Form {...form}>
@@ -37,7 +48,11 @@ export const CreatePolicyCategoryForm = () => {
 					label="Опис категорії"
 					placeholder="Введіть опис категорії"
 				/>
-				<LoadingButton isLoading={false} type="submit" className="w-full">
+				<LoadingButton
+					isLoading={isCreatingCategory}
+					className="w-full"
+					onClick={form.handleSubmit((data) => createCategory(data))}
+				>
 					<PlusIcon className="size-4 mr-2" />
 					Створити
 				</LoadingButton>

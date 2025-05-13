@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { H2 } from '@/shared/ui/headings';
 import { OrderForm } from '@/widgets/policies';
 import { Loader2 } from 'lucide-react';
+import { Card, CardContent } from '@/shared/ui/card';
 
 export default function PolicyPage() {
 	const params = useParams<{ slug: string }>();
@@ -19,14 +20,16 @@ export default function PolicyPage() {
 	}
 
 	return (
-		<div className="space-y-2 max-w-[1000px] mx-auto w-full bg-surface rounded-default divide-y divide-border">
-			<div className="px-10 py-5">
-				<H2>{policy.name}</H2>
-				<p>{policy.description}</p>
-			</div>
-			<div className="px-10 py-5">
-				<OrderForm />
-			</div>
-		</div>
+		<Card className="space-y-2 max-w-[1000px] mx-auto w-full divide-y divide-border">
+			<CardContent className="*:px-10 *:py-5">
+				<div className="">
+					<H2>{policy.name}</H2>
+					<p>{policy.description}</p>
+				</div>
+				<div className="">
+					<OrderForm />
+				</div>
+			</CardContent>
+		</Card>
 	);
 }

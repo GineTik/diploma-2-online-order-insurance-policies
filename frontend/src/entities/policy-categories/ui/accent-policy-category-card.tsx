@@ -5,17 +5,17 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { ROUTES } from '@/shared/constants/routes';
 
-type AccentPolicyCategoryItemProps = {
+type AccentPolicyCategoryCardProps = {
 	category: PolicyCategory;
 	badge: string;
 	className?: string;
 };
 
-export const AccentPolicyCategoryItem = ({
+export const AccentPolicyCategoryCard = ({
 	category,
 	badge,
 	className,
-}: AccentPolicyCategoryItemProps) => {
+}: AccentPolicyCategoryCardProps) => {
 	return (
 		<Link
 			className={cn(

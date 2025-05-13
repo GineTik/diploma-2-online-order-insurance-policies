@@ -7,3 +7,7 @@ import { api } from '@/shared/http-client/api';
 export const getUserCompany = async (token: AuthToken) => {
 	return await api.get('users/company', getAuthHeaders(token));
 };
+
+export const getCompany = async (id: string) => {
+	return await api.get(`companies/${id}`);
+};

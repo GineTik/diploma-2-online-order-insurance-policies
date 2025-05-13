@@ -8,7 +8,7 @@ type OrderActionProps = {
 
 export const OrderAction = ({ slug }: OrderActionProps) => {
 	return (
-		<Button variant="accent" className="w-full font-bold" asChild>
+		<Button variant="default" className="w-full font-bold" asChild>
 			<Link href={ROUTES.SUCCESS_ORDER(slug)}>КУПИТИ ОНЛАЙН</Link>
 		</Button>
 	);

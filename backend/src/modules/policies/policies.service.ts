@@ -1,10 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PolicyFiltersDto } from './dtos/policy-filters.dto';
 import { PrismaService } from '@shared/prisma';
-import {
-	COMPANY_NOT_FOUND_ERROR,
-	POLICY_NOT_FOUND_ERROR,
-} from '@shared/errors';
+import { COMPANY_NOT_FOUND, POLICY_NOT_FOUND_ERROR } from '@shared/errors';
 import { CategoriesService } from './categories';
 
 @Injectable()
@@ -20,7 +17,7 @@ export class PoliciesService {
 				where: { companyId },
 			})
 			.catch((err) => {
-				throw new BadRequestException(COMPANY_NOT_FOUND_ERROR(companyId));
+				throw new BadRequestException(COMPANY_NOT_FOUND(companyId));
 			});
 	}
 
