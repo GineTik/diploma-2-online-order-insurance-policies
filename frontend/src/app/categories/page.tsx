@@ -1,6 +1,9 @@
+'use client';
+
 import { CreatePolicyCategoryForm } from '@/features/policy-categories';
 import { H2 } from '@/shared/ui';
 import { PolicyCategoryList } from '@/widgets/policy-category-list';
+import { PERMISSIONS, UnderPermission } from '@/shared/auth';
 
 export default function PolicyCategoriesPage() {
 	return (
@@ -9,7 +12,9 @@ export default function PolicyCategoriesPage() {
 				<H2>Усі категорії</H2>
 				<PolicyCategoryList />
 			</div>
-			<CreatePolicyCategoryForm />
+			<UnderPermission permission={PERMISSIONS.MANAGE_POLICY_CATEGORIES}>
+				<CreatePolicyCategoryForm />
+			</UnderPermission>
 		</div>
 	);
 }
