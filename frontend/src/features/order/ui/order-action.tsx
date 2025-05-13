@@ -7,7 +7,7 @@ import { UseFormHandleSubmit } from 'react-hook-form';
 
 type OrderActionProps = {
 	slug: string;
-	handleSubmit: UseFormHandleSubmit<Record<string, string>, any>;
+	handleSubmit: UseFormHandleSubmit<Record<string, string>>;
 };
 
 export const OrderAction = ({ slug, handleSubmit }: OrderActionProps) => {

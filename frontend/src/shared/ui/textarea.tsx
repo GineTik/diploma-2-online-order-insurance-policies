@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/shared/lib/utils';
 import { PolicyCategoryField } from '@/entities/policy-categories';
-import { Control } from 'react-hook-form';
+import { Control, Path } from 'react-hook-form';
 import {
 	FormField,
 	FormItem,
@@ -24,18 +24,20 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
 	);
 }
 
-export const CompleteFormFieldTextarea = ({
+export const CompleteFormFieldTextarea = <
+	T extends Record<string, string | number | string[] | undefined>,
+>({
 	control,
 	name,
 	label,
 	placeholder,
 }: {
-	control: Control<any, any, any>;
+	control: Control<T>;
 } & Omit<PolicyCategoryField, 'type'>) => {
 	return (
 		<FormField
 			control={control}
-			name={name}
+			name={name as Path<T>}
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>

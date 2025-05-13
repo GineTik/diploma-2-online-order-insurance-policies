@@ -11,6 +11,6 @@ export const MENU = {
 	},
 	allCategories: {
 		label: 'Усі категорії',
-		href: undefined,
+		href: ROUTES.CATEGORIES,
 	},
 };

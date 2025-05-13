@@ -6,12 +6,11 @@ import { useParams } from 'next/navigation';
 
 export const CompanyProfile = () => {
 	const params = useParams<{ id: string }>();
+	const { company, isCompanyLoading } = useCompany(params.id);
 
 	if (!params?.id) {
 		return <div>Company not found</div>;
 	}
-
-	const { company, isCompanyLoading } = useCompany(params.id);
 
 	if (isCompanyLoading) {
 		return <div>Loading...</div>;

@@ -6,7 +6,7 @@ import { CompleteFormFieldSelect } from '@/shared/ui/select';
 import { PolicyCategoryField } from '@/entities/policy-categories';
 
 type OrderFormInputsProps = {
-	form: UseFormReturn<any>;
+	form: UseFormReturn<Record<string, string>>;
 	fields: PolicyCategoryField[];
 	actions: React.ReactNode;
 };
@@ -31,9 +31,9 @@ export const OrderFormInputs = ({
 	);
 };
 
-const getFieldComponent = (
+const getFieldComponent = <T extends Record<string, string>>(
 	key: string,
-	control: Control<any, any, any>,
+	control: Control<T>,
 	field: PolicyCategoryField,
 ) => {
 	const dictionary = {

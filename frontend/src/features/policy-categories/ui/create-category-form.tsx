@@ -7,6 +7,7 @@ import {
 	CompleteFormFieldTextarea,
 	Card,
 	CardContent,
+	H3,
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -33,6 +34,7 @@ export const CreatePolicyCategoryForm = () => {
 		<Form {...form}>
 			<Card>
 				<CardContent className="space-y-4 w-[300px]">
+					<H3>Створити категорію</H3>
 					<CompleteFormFieldInput
 						control={form.control}
 						name="name"

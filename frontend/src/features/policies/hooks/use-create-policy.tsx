@@ -1,4 +1,4 @@
-import { CreatePolicy, Policy } from '@/entities/policies';
+import { CreatePolicy } from '@/entities/policies';
 import { createPolicy } from '@/entities/policies/policies.services';
 import { useAuth } from '@clerk/nextjs';
 import { useMutation } from '@tanstack/react-query';

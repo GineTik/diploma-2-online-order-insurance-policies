@@ -1,6 +1,6 @@
 import { PolicyCategory } from '../categories.types';
 
-export const usePolicyCategory = (categoryId?: string) => {
+export const usePolicyCategory = () => {
 	return {
 		category: {
 			name: 'Автогражданка',

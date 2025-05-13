@@ -4,7 +4,7 @@ import { PolicyCategoryList } from '@/widgets/policy-category-list';
 
 export default function PolicyCategoriesPage() {
 	return (
-		<div className="flex gap-4 max-w-[1000px] mx-auto w-full flex-col-reverse md:flex-row">
+		<div className="flex items-start gap-4 max-w-[1000px] mx-auto w-full flex-col-reverse md:flex-row">
 			<div className="flex-1 space-y-4">
 				<H2>Усі категорії</H2>
 				<PolicyCategoryList />

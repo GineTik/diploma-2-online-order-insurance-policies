@@ -10,6 +10,7 @@ import {
 	CompleteFormFieldTextarea,
 	Form,
 	LoadingButton,
+	H3,
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -40,6 +41,7 @@ export const CreatePolicyForm = () => {
 	return (
 		<Form {...form}>
 			<div className="space-y-4">
+				<H3>Створити поліс</H3>
 				<CompleteFormFieldInput
 					control={form.control}
 					name="name"

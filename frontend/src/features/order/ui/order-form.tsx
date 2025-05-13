@@ -1,6 +1,5 @@
 'use client';
 
-import { usePolicy } from '@/entities/policies';
 import { usePolicyCategory } from '@/entities/policy-categories';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -13,8 +12,7 @@ export const OrderForm = () => {
 		defaultValues: {},
 	});
 
-	const { policy } = usePolicy(params?.slug ?? '');
-	const { category } = usePolicyCategory(policy?.categoryId);
+	const { category } = usePolicyCategory();
 
 	return (
 		<>

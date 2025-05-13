@@ -8,30 +8,32 @@ import { cn } from '@/shared/lib/utils';
 import { FormControl, FormMessage } from './form';
 import { FormLabel } from './form';
 import { FormItem } from './form';
-import { Control } from 'react-hook-form';
+import { Control, Path } from 'react-hook-form';
 import { FormField } from './form';
 import { PolicyCategoryField } from '@/entities/policy-categories';
 
-export const CompleteFormFieldSelect = ({
+export const CompleteFormFieldSelect = <
+	T extends Record<string, string | number | undefined>,
+>({
 	control,
 	name,
 	label,
 	values,
 	placeholder,
 }: {
-	control: Control<any, any, any>;
+	control: Control<T>;
 } & Omit<PolicyCategoryField, 'type'>) => {
 	return (
 		<FormField
 			control={control}
-			name={name}
+			name={name as Path<T>}
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
 						<Select
 							{...field}
-							value={field.value}
+							value={field.value as string}
 							onValueChange={field.onChange}
 							name={field.name}
 						>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { FormControl, FormField, FormLabel, FormMessage } from './form';
 import { FormItem } from './form';
-import { Control } from 'react-hook-form';
+import { Control, Path } from 'react-hook-form';
 import { PolicyCategoryField } from '@/entities/policy-categories';
 
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
@@ -22,19 +22,21 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
 	);
 }
 
-export const CompleteFormFieldInput = ({
+export const CompleteFormFieldInput = <
+	T extends Record<string, string | number | undefined>,
+>({
 	control,
 	name,
 	label,
 	type,
 	placeholder,
 }: {
-	control: Control<any, any, any>;
+	control: Control<T>;
 } & PolicyCategoryField) => {
 	return (
 		<FormField
 			control={control}
-			name={name}
+			name={name as Path<T>}
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>

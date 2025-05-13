@@ -114,7 +114,7 @@ const InactiveDownloadButton = ({ companyName }: { companyName: string }) => {
 			</TooltipTrigger>
 			<TooltipContent>
 				<p>
-					Документ буде доступний після обробки компранією "{companyName}",
+					Документ буде доступний після обробки компранією {companyName},
 					зачекайте трохи
 				</p>
 			</TooltipContent>

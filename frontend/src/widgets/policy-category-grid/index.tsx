@@ -27,7 +27,7 @@ export const PolicyCategoryGrid = () => {
 				))}
 			</div>
 			<div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-				{categories?.slice(3)?.map((category, _) => (
+				{categories?.slice(3)?.map((category) => (
 					<GridPolicyCategoryCard
 						key={category.id}
 						category={category}

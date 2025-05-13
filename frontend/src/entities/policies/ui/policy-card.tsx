@@ -1,4 +1,3 @@
-import { H3 } from '@/shared/ui/headings';
 import { Policy } from '../policies.types';
 import { Button } from '@/shared/ui/button';
 import { HandCoinsIcon, CheckIcon } from 'lucide-react';
