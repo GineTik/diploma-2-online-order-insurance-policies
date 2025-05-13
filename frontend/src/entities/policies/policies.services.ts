@@ -1,11 +1,13 @@
 import { api } from '@/shared/http-client/api';
-import { CreatePolicy, Policy } from './policies.types';
+import { CreatePolicy, Policy, PolicyFilters } from './policies.types';
 import { AuthToken } from '@/shared/auth/types';
 import { getAuthHeaders } from '@/shared/auth/utils';
 import { mapFromPolicySchemaToRequest } from './policies.mapper';
 
-export const getPolicies = async () => {
-	return await api.get<Policy[]>('/policies');
+export const getPolicies = async (filters: PolicyFilters) => {
+	return await api.get<Policy[]>('/policies', {
+		params: filters,
+	});
 };
 
 export const getPolicy = async (slug: string) => {

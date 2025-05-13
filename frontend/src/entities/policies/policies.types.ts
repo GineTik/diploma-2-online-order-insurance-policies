@@ -18,3 +18,10 @@ export type CreatePolicy = {
 	price: number;
 	categoryId: string;
 };
+
+export type PolicyFilters = {
+	companyId?: string;
+	categorySlug?: string;
+	sort?: string;
+	search?: string;
+};

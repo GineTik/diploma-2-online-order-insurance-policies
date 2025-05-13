@@ -1,19 +1,27 @@
 'use client';
 
-import { PolicyCard, usePolicies } from '@/entities/policies';
+import { PolicyCard, PolicyFilters, usePolicies } from '@/entities/policies';
+import { Loader2 } from 'lucide-react';
 
-type PolicyListByCategoryProps = {
-	category: string;
+type PolicyListProps = {
+	filters?: PolicyFilters;
+	notFoundMessage?: React.ReactNode;
 };
 
-export const PolicyListByCategory = ({
-	category,
-}: PolicyListByCategoryProps) => {
-	const { policies } = usePolicies();
+export const PolicyList = ({ filters, notFoundMessage }: PolicyListProps) => {
+	const { policies, isPoliciesLoading } = usePolicies(filters);
 
 	if (policies?.length === 0) {
 		return (
-			<div className="text-center p-5">Не знайдено полісів для {category}</div>
+			<div className="text-center p-5">{notFoundMessage || 'Не знайдено'}</div>
+		);
+	}
+
+	if (isPoliciesLoading) {
+		return (
+			<div className="flex justify-center items-center h-full">
+				<Loader2 className="w-10 h-10 animate-spin" />
+			</div>
 		);
 	}
 

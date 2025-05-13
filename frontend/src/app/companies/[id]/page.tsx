@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { Card, CardContent, H2 } from '@/shared/ui';
 import { CreatePolicyForm } from '@/features/policies';
 import { CompanyProfile } from '@/widgets/company-profile';
-import { PolicyListByCategory } from '@/widgets/policy-list';
+import { PolicyList } from '@/widgets/policy-list';
 
 export default function CompanyPage() {
 	const params = useParams<{ id: string }>();
@@ -28,7 +28,10 @@ export default function CompanyPage() {
 				</CardContent>
 			</Card>
 			<H2>Поліси</H2>
-			<PolicyListByCategory category="company" />
+			<PolicyList
+				filters={{ companyId: params.id }}
+				notFoundMessage={`Не знайдено полісів цієї компанії`}
+			/>
 		</div>
 	);
 }

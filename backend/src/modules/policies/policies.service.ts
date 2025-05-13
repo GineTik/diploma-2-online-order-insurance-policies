@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PolicyFiltersDto } from './dtos/policy-filters.dto';
+import { PolicyFiltersDto, PolicySort } from './dtos/policy-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import {
-	COMPANY_NOT_FOUND,
 	POLICY_ALREADY_EXISTS,
 	POLICY_NOT_FOUND_ERROR,
 	USER_HAS_NO_COMPANY,
@@ -19,13 +18,35 @@ export class PoliciesService {
 		private readonly companyService: CompaniesService,
 	) {}
 
-	async getFiltered({ companyId }: PolicyFiltersDto) {
+	async getFiltered({
+		companyId,
+		categorySlug,
+		sort,
+		search,
+	}: PolicyFiltersDto) {
 		return await this.prisma.policy
 			.findMany({
-				where: { companyId },
+				where: {
+					companyId,
+					category: {
+						slug: categorySlug,
+					},
+					name: {
+						contains: search,
+						mode: 'insensitive',
+					},
+				},
+				orderBy: {
+					price:
+						sort !== undefined
+							? sort === PolicySort.PRICE_ASC
+								? 'asc'
+								: 'desc'
+							: undefined,
+				},
 			})
 			.catch((err) => {
-				throw new BadRequestException(COMPANY_NOT_FOUND(companyId));
+				return [];
 			});
 	}
 

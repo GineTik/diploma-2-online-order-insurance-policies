@@ -10,14 +10,24 @@ import {
 import { PoliciesService } from './policies.service';
 import { CreatePolicyDto } from './dtos/create-policy.dto';
 import { Auth, UserId } from '@shared/auth';
-
+import { PolicySort } from './dtos/policy-filters.dto';
 @Controller('policies')
 export class PoliciesController {
 	constructor(private readonly policiesService: PoliciesService) {}
 
 	@Get()
-	async getFiltered(@Query('companyId') companyId: string) {
-		return await this.policiesService.getFiltered({ companyId });
+	async getFiltered(
+		@Query('companyId') companyId: string,
+		@Query('categorySlug') categorySlug: string,
+		@Query('sort') sort: PolicySort,
+		@Query('search') search: string,
+	) {
+		return await this.policiesService.getFiltered({
+			companyId,
+			categorySlug,
+			sort,
+			search,
+		});
 	}
 
 	@Get(':slug')
