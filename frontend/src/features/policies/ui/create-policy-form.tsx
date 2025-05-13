@@ -1,6 +1,9 @@
 'use client';
 
-import { usePolicyCategories } from '@/entities/policy-categories';
+import {
+	createCategorySchema,
+	usePolicyCategories,
+} from '@/entities/policy-categories';
 import {
 	CompleteFormFieldInput,
 	CompleteFormFieldSelect,
@@ -10,8 +13,9 @@ import {
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 import { CreatePolicy } from '@/entities/policies';
+import { useCreatePolicy } from '../hooks/use-create-policy';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export const CreatePolicyForm = () => {
 	const form = useForm<CreatePolicy>({
@@ -20,17 +24,18 @@ export const CreatePolicyForm = () => {
 			description: '',
 			price: 0,
 			categoryId: '',
+			slug: '',
 		},
+		resolver: zodResolver(createCategorySchema),
 	});
 
 	const { categories, isCategoriesLoading } = usePolicyCategories();
+	const { createPolicy, isCreatingPolicy } = useCreatePolicy();
 
-	useEffect(() => {
-		const subscription = form.watch((value) => {
-			console.log('Form values:', value);
-		});
-		return () => subscription.unsubscribe();
-	}, [form]);
+	const submit = (data: CreatePolicy) => {
+		createPolicy(data);
+		form.reset();
+	};
 
 	return (
 		<Form {...form}>
@@ -42,19 +47,26 @@ export const CreatePolicyForm = () => {
 					placeholder="Назва полісу"
 					type="text"
 				/>
+				<CompleteFormFieldInput
+					control={form.control}
+					name="slug"
+					label="Slug"
+					placeholder="slug-policy"
+					type="text"
+				/>
 				<CompleteFormFieldTextarea
 					control={form.control}
 					name="description"
 					label="Опис"
 					placeholder="Опис полісу"
 				/>
-				<div className="flex gap-4 *:w-full">
+				<div className="flex items-start gap-4 *:w-full">
 					<CompleteFormFieldInput
 						control={form.control}
 						name="price"
 						label="Ціна"
 						placeholder="Ціна полісу"
-						type="text"
+						type="number"
 					/>
 					{!isCategoriesLoading && (
 						<CompleteFormFieldSelect
@@ -69,7 +81,11 @@ export const CreatePolicyForm = () => {
 						/>
 					)}
 				</div>
-				<LoadingButton isLoading={false} className="w-full">
+				<LoadingButton
+					isLoading={isCreatingPolicy}
+					className="w-full"
+					onClick={form.handleSubmit(submit)}
+				>
 					<PlusIcon />
 					Створити
 				</LoadingButton>

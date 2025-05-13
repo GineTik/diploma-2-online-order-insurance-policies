@@ -63,8 +63,10 @@ model Policy {
 }
 
 model PolicyCategory {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String
+  description String
 
   policies Policy[]
 }

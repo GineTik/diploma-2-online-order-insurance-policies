@@ -7,16 +7,7 @@ import { cn } from '@/shared/lib/utils';
 import { CarIcon } from 'lucide-react';
 
 export const PolicyCategoryGrid = () => {
-	const category = {
-		id: '1',
-		name: 'Автоцивілка онлайн з вигодою',
-		slug: 'auto-insurance',
-		description: 'Автоцивілка онлайн з вигодою',
-		fields: [],
-	};
-
 	const barge = 10;
-
 	const { categories } = usePolicyCategories();
 
 	return (
@@ -36,7 +27,7 @@ export const PolicyCategoryGrid = () => {
 				))}
 			</div>
 			<div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-				{categories?.slice(3)?.map((category, index) => (
+				{categories?.slice(3)?.map((category, _) => (
 					<GridPolicyCategoryCard
 						key={category.id}
 						category={category}

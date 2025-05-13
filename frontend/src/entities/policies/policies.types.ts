@@ -13,6 +13,7 @@ export type Policy = {
 
 export type CreatePolicy = {
 	name: string;
+	slug: string;
 	description: string;
 	price: number;
 	categoryId: string;

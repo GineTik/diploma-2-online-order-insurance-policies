@@ -5513,16 +5513,22 @@ export namespace Prisma {
   export type PolicyCategoryMinAggregateOutputType = {
     id: string | null
     name: string | null
+    slug: string | null
+    description: string | null
   }
 
   export type PolicyCategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    slug: string | null
+    description: string | null
   }
 
   export type PolicyCategoryCountAggregateOutputType = {
     id: number
     name: number
+    slug: number
+    description: number
     _all: number
   }
 
@@ -5530,16 +5536,22 @@ export namespace Prisma {
   export type PolicyCategoryMinAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
+    description?: true
   }
 
   export type PolicyCategoryMaxAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
+    description?: true
   }
 
   export type PolicyCategoryCountAggregateInputType = {
     id?: true
     name?: true
+    slug?: true
+    description?: true
     _all?: true
   }
 
@@ -5618,6 +5630,8 @@ export namespace Prisma {
   export type PolicyCategoryGroupByOutputType = {
     id: string
     name: string
+    slug: string
+    description: string
     _count: PolicyCategoryCountAggregateOutputType | null
     _min: PolicyCategoryMinAggregateOutputType | null
     _max: PolicyCategoryMaxAggregateOutputType | null
@@ -5640,6 +5654,8 @@ export namespace Prisma {
   export type PolicyCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    slug?: boolean
+    description?: boolean
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["policyCategory"]>
@@ -5649,9 +5665,11 @@ export namespace Prisma {
   export type PolicyCategorySelectScalar = {
     id?: boolean
     name?: boolean
+    slug?: boolean
+    description?: boolean
   }
 
-  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["policyCategory"]>
+  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description", ExtArgs["result"]["policyCategory"]>
   export type PolicyCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -5665,6 +5683,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      slug: string
+      description: string
     }, ExtArgs["result"]["policyCategory"]>
     composites: {}
   }
@@ -6060,6 +6080,8 @@ export namespace Prisma {
   interface PolicyCategoryFieldRefs {
     readonly id: FieldRef<"PolicyCategory", 'String'>
     readonly name: FieldRef<"PolicyCategory", 'String'>
+    readonly slug: FieldRef<"PolicyCategory", 'String'>
+    readonly description: FieldRef<"PolicyCategory", 'String'>
   }
     
 
@@ -7569,7 +7591,9 @@ export namespace Prisma {
 
   export const PolicyCategoryScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    slug: 'slug',
+    description: 'description'
   };
 
   export type PolicyCategoryScalarFieldEnum = (typeof PolicyCategoryScalarFieldEnum)[keyof typeof PolicyCategoryScalarFieldEnum]
@@ -7919,12 +7943,16 @@ export namespace Prisma {
     NOT?: PolicyCategoryWhereInput | PolicyCategoryWhereInput[]
     id?: StringFilter<"PolicyCategory"> | string
     name?: StringFilter<"PolicyCategory"> | string
+    slug?: StringFilter<"PolicyCategory"> | string
+    description?: StringFilter<"PolicyCategory"> | string
     policies?: PolicyListRelationFilter
   }
 
   export type PolicyCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
     policies?: PolicyOrderByRelationAggregateInput
   }
 
@@ -7934,12 +7962,16 @@ export namespace Prisma {
     OR?: PolicyCategoryWhereInput[]
     NOT?: PolicyCategoryWhereInput | PolicyCategoryWhereInput[]
     name?: StringFilter<"PolicyCategory"> | string
+    slug?: StringFilter<"PolicyCategory"> | string
+    description?: StringFilter<"PolicyCategory"> | string
     policies?: PolicyListRelationFilter
   }, "id">
 
   export type PolicyCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
     _count?: PolicyCategoryCountOrderByAggregateInput
     _max?: PolicyCategoryMaxOrderByAggregateInput
     _min?: PolicyCategoryMinOrderByAggregateInput
@@ -7951,6 +7983,8 @@ export namespace Prisma {
     NOT?: PolicyCategoryScalarWhereWithAggregatesInput | PolicyCategoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"PolicyCategory"> | string
     name?: StringWithAggregatesFilter<"PolicyCategory"> | string
+    slug?: StringWithAggregatesFilter<"PolicyCategory"> | string
+    description?: StringWithAggregatesFilter<"PolicyCategory"> | string
   }
 
   export type OrderWhereInput = {
@@ -8234,36 +8268,50 @@ export namespace Prisma {
   export type PolicyCategoryCreateInput = {
     id?: string
     name: string
+    slug: string
+    description: string
     policies?: PolicyCreateNestedManyWithoutCategoryInput
   }
 
   export type PolicyCategoryUncheckedCreateInput = {
     id?: string
     name: string
+    slug: string
+    description: string
     policies?: PolicyUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type PolicyCategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     policies?: PolicyUpdateManyWithoutCategoryNestedInput
   }
 
   export type PolicyCategoryUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     policies?: PolicyUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type PolicyCategoryCreateManyInput = {
     id?: string
     name: string
+    slug: string
+    description: string
   }
 
   export type PolicyCategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type PolicyCategoryUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type OrderCreateInput = {
@@ -8588,16 +8636,22 @@ export namespace Prisma {
   export type PolicyCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
   }
 
   export type PolicyCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
   }
 
   export type PolicyCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
+    description?: SortOrder
   }
 
   export type EnumOrderStatusFilter<$PrismaModel = never> = {
@@ -9506,11 +9560,15 @@ export namespace Prisma {
   export type PolicyCategoryCreateWithoutPoliciesInput = {
     id?: string
     name: string
+    slug: string
+    description: string
   }
 
   export type PolicyCategoryUncheckedCreateWithoutPoliciesInput = {
     id?: string
     name: string
+    slug: string
+    description: string
   }
 
   export type PolicyCategoryCreateOrConnectWithoutPoliciesInput = {
@@ -9577,10 +9635,14 @@ export namespace Prisma {
 
   export type PolicyCategoryUpdateWithoutPoliciesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type PolicyCategoryUncheckedUpdateWithoutPoliciesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type OrderUpsertWithWhereUniqueWithoutPolicyInput = {

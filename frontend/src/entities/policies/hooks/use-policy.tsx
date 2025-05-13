@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPolicy } from '../services';
+import { getPolicy } from '../policies.services';
 
 export const usePolicy = (slug: string) => {
 	const { data, isLoading, error } = useQuery({

@@ -23,6 +23,12 @@ export class CategoriesService {
 	}
 
 	async create(dto: CreateCategoryDto) {
+		const category = await this.getBySlug(dto.slug);
+
+		if (category) {
+			throw new BadRequestException('Category with currentslug already exists');
+		}
+
 		return await this.prisma.policyCategory.create({
 			data: {
 				...dto,
@@ -41,6 +47,14 @@ export class CategoriesService {
 			where: { id },
 			data: {
 				...dto,
+			},
+		});
+	}
+
+	async getBySlug(slug: string) {
+		return await this.prisma.policyCategory.findFirst({
+			where: {
+				slug,
 			},
 		});
 	}

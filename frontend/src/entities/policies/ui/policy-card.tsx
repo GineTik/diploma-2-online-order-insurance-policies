@@ -1,5 +1,5 @@
 import { H3 } from '@/shared/ui/headings';
-import { Policy } from '../types';
+import { Policy } from '../policies.types';
 import { Button } from '@/shared/ui/button';
 import { HandCoinsIcon, CheckIcon } from 'lucide-react';
 import Link from 'next/link';

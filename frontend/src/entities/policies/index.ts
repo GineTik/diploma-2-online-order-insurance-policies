@@ -1,3 +1,3 @@
 export * from './ui/policy-card';
 export * from './hooks/use-policy';
-export * from './types';
+export * from './policies.types';

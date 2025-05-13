@@ -1,5 +1,8 @@
 import { api } from '@/shared/http-client/api';
-import { Policy } from './types';
+import { CreatePolicy, Policy } from './policies.types';
+import { AuthToken } from '@/shared/auth/types';
+import { getAuthHeaders } from '@/shared/auth/utils';
+import { mapFromPolicySchemaToRequest } from './policies.mapper';
 
 export const getPolicies = async () => {
 	//return await api.get<Policy[]>('/policies');
@@ -39,4 +42,12 @@ export const getPolicy = async (slug: string) => {
 			options: ['Option 1', 'Option 2', 'Option 3'],
 		} as Policy,
 	});
+};
+
+export const createPolicy = async (policy: CreatePolicy, token: AuthToken) => {
+	return await api.post(
+		'/policies',
+		mapFromPolicySchemaToRequest(policy),
+		getAuthHeaders(token),
+	);
 };

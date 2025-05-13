@@ -18,3 +18,9 @@ export const ORDER_NOT_FOUND = 'Order not found';
 
 export const CATEGORY_NOT_FOUND_ERROR = (id: string) =>
 	`Category not found by ${id}`;
+
+export const USER_HAS_NO_COMPANY = (userId: string) =>
+	`User has no company by ${userId}`;
+
+export const POLICY_ALREADY_EXISTS = (slug: string) =>
+	`Policy already exists by ${slug}`;
