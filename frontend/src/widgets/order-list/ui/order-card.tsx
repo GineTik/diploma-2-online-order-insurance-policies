@@ -1,0 +1,123 @@
+import {
+	Badge,
+	Button,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from '@/shared/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
+import { H3 } from '@/shared/ui/headings';
+import { CheckIcon, DownloadIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { Order } from '@/entities/orders';
+import Link from 'next/link';
+import { ROUTES } from '@/shared/constants/routes';
+
+type OrderItemProps = {
+	order: Order;
+};
+
+export const OrderCard = (props: OrderItemProps) => {
+	return (
+		<Card className="divide-y divide-border *:py-3 py-0">
+			<ItemHeader {...props} />
+			<PoliceDetails {...props} />
+			<ItemFooter {...props} />
+		</Card>
+	);
+};
+
+const ItemHeader = ({ order }: OrderItemProps) => {
+	return (
+		<CardHeader className="flex items-center gap-2">
+			<H3>№{order.id}</H3>
+			<Badge variant="outline">{order.status}</Badge>
+			<p className="text-sm text-muted-foreground ml-auto">
+				Замовлено {format(new Date(order.createdAt), 'dd.MM.yyyy')}
+			</p>
+		</CardHeader>
+	);
+};
+
+const PoliceDetails = ({ order: { policy } }: OrderItemProps) => {
+	return (
+		<CardContent className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
+			<div>
+				<span className="text-sm text-muted-foreground">Поліс</span>
+				<div className="flex items-center gap-2">
+					<H3>{policy.name}</H3>
+					<Badge variant="outline">Версія {policy.version}</Badge>
+				</div>
+				<p className="">{policy.description}</p>
+			</div>
+			<div>
+				<ul className="space-y-1 list-none mt-2">
+					{policy.options.map((option, index) => (
+						<li key={index} className="flex items-center gap-2 text-sm">
+							<CheckIcon className="size-4 text-emerald-500" />
+							{option}
+						</li>
+					))}
+				</ul>
+			</div>
+		</CardContent>
+	);
+};
+
+const ItemFooter = ({ order: { policy, status } }: OrderItemProps) => {
+	return (
+		<CardFooter className="flex md:items-center gap-2 md:flex-row flex-col">
+			{status === 'COMPLETED' && <ActiveDownloadButton />}
+			{status === 'PENDING' && (
+				<InactiveDownloadButton companyName={policy.company.name} />
+			)}
+
+			<p className="text-sm text-muted-foreground">
+				Сума замовлення: {policy.price} грн
+			</p>
+			<p className="text-sm text-muted-foreground md:ml-auto">
+				У компанії{' '}
+				<Button variant="link" className="text-muted-foreground px-1" asChild>
+					<Link href={ROUTES.COMPANY_PROFILE(policy.company.id)}>
+						{policy.company.name}
+					</Link>
+				</Button>
+			</p>
+		</CardFooter>
+	);
+};
+
+const ActiveDownloadButton = () => {
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button variant="secondary">
+					<DownloadIcon className="size-4 mr-2" />
+					Завантажити документ
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>
+				<p>Функція Завантаження документа ще в розробці</p>
+			</TooltipContent>
+		</Tooltip>
+	);
+};
+
+const InactiveDownloadButton = ({ companyName }: { companyName: string }) => {
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button variant="outline" className="cursor-default">
+					<DownloadIcon className="size-4 mr-2" />
+					Завантажити документ
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>
+				<p>
+					Документ буде доступний після обробки компранією "{companyName}",
+					зачекайте трохи
+				</p>
+			</TooltipContent>
+		</Tooltip>
+	);
+};

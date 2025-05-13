@@ -1,7 +1,6 @@
 'use client';
 
-import { PolicyCard } from '@/entities/policies';
-import { usePolicies } from '@/entities/policies/hooks/use-policies';
+import { PolicyCard, usePolicies } from '@/entities/policies';
 
 type PolicyListByCategoryProps = {
 	category: string;

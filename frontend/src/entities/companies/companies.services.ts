@@ -6,7 +6,7 @@ import { api } from '@/shared/http-client/api';
 import { CompanyFormSchema, Company } from './companies.types';
 
 export const getUserCompany = async (token: AuthToken) => {
-	return await api.get('users/company', getAuthHeaders(token));
+	return await api.get(`users/company`, getAuthHeaders(token));
 };
 
 export const getCompany = async (id: string) => {

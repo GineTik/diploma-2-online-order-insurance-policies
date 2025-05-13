@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Query,
+} from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Auth, UserId } from '@shared/auth';
 import { CreateCompanyDto } from './dtos/create-company.dto';
@@ -8,8 +16,8 @@ export class CompaniesController {
 	constructor(private readonly companiesService: CompaniesService) {}
 
 	@Get()
-	async getAll() {
-		return await this.companiesService.getAll();
+	async getFiltered() {
+		return await this.companiesService.getFiltered();
 	}
 
 	@Get(':id')

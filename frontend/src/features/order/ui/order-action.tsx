@@ -1,15 +1,39 @@
-import { ROUTES } from '@/shared/constants/routes';
-import { Button } from '@/shared/ui';
-import Link from 'next/link';
+'use client';
+
+import { useOrderPolicy } from '@/entities/orders';
+import { LoadingButton } from '@/shared/ui';
+import { useCallback } from 'react';
+import { UseFormHandleSubmit } from 'react-hook-form';
 
 type OrderActionProps = {
 	slug: string;
+	handleSubmit: UseFormHandleSubmit<Record<string, string>, any>;
 };
 
-export const OrderAction = ({ slug }: OrderActionProps) => {
+export const OrderAction = ({ slug, handleSubmit }: OrderActionProps) => {
+	const { order, isOrderLoading } = useOrderPolicy();
+
+	const submit = useCallback(
+		(data: Record<string, string>) => {
+			order({
+				policySlug: slug,
+				information: Object.keys(data).map((key) => ({
+					key,
+					value: data[key],
+				})),
+			});
+		},
+		[order, slug],
+	);
+
 	return (
-		<Button variant="default" className="w-full font-bold" asChild>
-			<Link href={ROUTES.SUCCESS_ORDER(slug)}>КУПИТИ ОНЛАЙН</Link>
-		</Button>
+		<LoadingButton
+			isLoading={isOrderLoading}
+			variant="default"
+			className="w-full font-bold"
+			onClick={handleSubmit(submit)}
+		>
+			КУПИТИ ОНЛАЙН
+		</LoadingButton>
 	);
 };

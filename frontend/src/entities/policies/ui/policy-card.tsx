@@ -7,7 +7,6 @@ import { ROUTES } from '@/shared/constants/routes';
 import {
 	Card,
 	CardContent,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 	CardDescription,
@@ -28,7 +27,7 @@ export const PolicyCard = ({ policy }: PolicyCardProps) => {
 				<CardContent className="flex gap-2">
 					<div className="">
 						<ul className="space-y-1 list-none">
-							{policy.options.map((option) => (
+							{['Обов’язковий', 'Необов’язковий'].map((option) => (
 								<li key={option} className="flex items-center gap-2 text-sm">
 									<CheckIcon className="size-4 text-emerald-500" />
 									{option}

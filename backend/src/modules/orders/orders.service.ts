@@ -7,36 +7,54 @@ import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
 import { Order } from 'generated/prisma';
-import { ORDER_NOT_FOUND } from '@shared/errors';
+import { ORDER_NOT_FOUND, USER_NOT_FOUND } from '@shared/errors';
 import { FORBIDDEN_GENERATE_PDF } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
-
+import { UsersService } from '@modules/users';
 @Injectable()
 export class OrdersService {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly pdfGenerator: PdfGeneratorService,
 		private readonly policiesService: PoliciesService,
+		private readonly usersService: UsersService,
 	) {}
 
 	async getFiltered({ userId, companyId }: OrderFiltersDto) {
+		const user = await this.usersService.getBySub(userId);
+		if (!user) {
+			throw new BadRequestException(USER_NOT_FOUND);
+		}
+
 		return await this.prisma.order
 			.findMany({
 				where: {
-					userId,
+					userId: user.id,
 					policyCompanyId: companyId,
 				},
+				include: {
+					policy: {
+						include: {
+							company: true,
+						},
+					},
+				},
 			})
-			.catch((error) => {
-				throw new BadRequestException(ORDER_NOT_FOUND);
+			.catch(() => {
+				return [];
 			});
 	}
 
-	async create(dto: CreateOrderDto) {
+	async create(dto: CreateOrderDto, userSub: string) {
 		const lastVersionPolicy = await this.policiesService.getLastVersion(
 			dto.policySlug,
 		);
+
+		const user = await this.usersService.getBySub(userSub);
+		if (!user) {
+			throw new BadRequestException(USER_NOT_FOUND);
+		}
 
 		return await this.prisma.order.create({
 			data: {
@@ -47,7 +65,7 @@ export class OrdersService {
 				},
 				user: {
 					connect: {
-						id: dto.userId,
+						id: user.id,
 					},
 				},
 			},

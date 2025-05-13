@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class CreateOrderDto {
 	@ApiProperty({
@@ -11,10 +12,22 @@ export class CreateOrderDto {
 	policySlug: string;
 
 	@ApiProperty({
-		description: 'The unique identifier of the user creating the order',
-		example: '507f1f77bcf86cd799439011',
+		description: 'The fields of the policy',
+		example: [{ key: 'name', value: 'John Doe' }],
 	})
+	@IsArray()
+	@IsNotEmpty()
+	@ValidateNested({ each: true })
+	@Type(() => FieldValueDto)
+	information: FieldValueDto[];
+}
+
+export class FieldValueDto {
 	@IsString()
 	@IsNotEmpty()
-	userId: string;
+	key: string;
+
+	@IsString()
+	@IsNotEmpty()
+	value: string;
 }

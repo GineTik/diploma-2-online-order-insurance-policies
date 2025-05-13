@@ -10,8 +10,9 @@ export class OrdersController {
 	constructor(private readonly ordersService: OrdersService) {}
 
 	@Post()
-	async create(@Body() dto: CreateOrderDto) {
-		return await this.ordersService.create(dto);
+	@Auth()
+	async create(@Body() dto: CreateOrderDto, @UserId() userId: string) {
+		return await this.ordersService.create(dto, userId);
 	}
 
 	@Get(':id/generate/pdf')

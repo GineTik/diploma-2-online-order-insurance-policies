@@ -20,8 +20,8 @@ export default function PolicyPage() {
 	}
 
 	return (
-		<Card className="space-y-2 max-w-[1000px] mx-auto w-full divide-y divide-border">
-			<CardContent className="*:px-10 *:py-5">
+		<Card className="space-y-2 max-w-[1000px] mx-auto w-full p-0">
+			<CardContent className="*:px-10 *:py-5 divide-y divide-border">
 				<div className="">
 					<H2>{policy.name}</H2>
 					<p>{policy.description}</p>

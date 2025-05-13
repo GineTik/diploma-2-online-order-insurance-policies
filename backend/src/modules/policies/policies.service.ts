@@ -51,7 +51,7 @@ export class PoliciesService {
 			throw new BadRequestException(POLICY_ALREADY_EXISTS(dto.slug));
 		}
 
-		const company = await this.companyService.getByAdminId(userId);
+		const company = await this.companyService.getByAdminSub(userId);
 		if (company === null) {
 			throw new BadRequestException(USER_HAS_NO_COMPANY(userId));
 		}

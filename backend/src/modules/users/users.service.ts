@@ -24,6 +24,14 @@ export class UsersService {
 		});
 	}
 
+	async getBySub(sub: string) {
+		return await this.prisma.user.findFirst({
+			where: {
+				sub,
+			},
+		});
+	}
+
 	async getUserPermissions(userId: string) {
 		const user = await clerkClient.users.getUser(userId);
 		return user?.privateMetadata?.permissions;

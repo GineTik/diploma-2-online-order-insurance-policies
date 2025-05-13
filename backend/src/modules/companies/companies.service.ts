@@ -11,7 +11,7 @@ import {
 export class CompaniesService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getAll() {
+	async getFiltered() {
 		return await this.prisma.company.findMany();
 	}
 
@@ -21,11 +21,11 @@ export class CompaniesService {
 		});
 	}
 
-	async getByAdminId(clerkId: string) {
+	async getByAdminSub(sub: string) {
 		const userCompany = await this.prisma.userCompany.findFirst({
 			where: {
 				user: {
-					sub: clerkId,
+					sub,
 				},
 				isAdmin: true,
 			},
@@ -35,7 +35,7 @@ export class CompaniesService {
 		});
 
 		if (!userCompany)
-			throw new BadRequestException(COMPANY_NOT_FOUND_BY_ADMIN_ID(clerkId));
+			throw new BadRequestException(COMPANY_NOT_FOUND_BY_ADMIN_ID(sub));
 
 		return userCompany?.company;
 	}

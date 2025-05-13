@@ -37,8 +37,16 @@ const getFieldComponent = (
 	field: PolicyCategoryField,
 ) => {
 	const dictionary = {
-		string: <CompleteFormFieldInput key={key} control={control} {...field} />,
+		string: (
+			<CompleteFormFieldInput
+				key={key}
+				control={control}
+				{...field}
+				type="text"
+			/>
+		),
 		text: <CompleteFormFieldInput key={key} control={control} {...field} />,
+		number: <CompleteFormFieldInput key={key} control={control} {...field} />,
 		select: <CompleteFormFieldSelect key={key} control={control} {...field} />,
 	};
 
