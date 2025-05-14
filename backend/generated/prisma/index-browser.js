@@ -138,6 +138,8 @@ exports.Prisma.PolicyScalarFieldEnum = {
   description: 'description',
   price: 'price',
   options: 'options',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   companyId: 'companyId',
   categoryId: 'categoryId'
 };

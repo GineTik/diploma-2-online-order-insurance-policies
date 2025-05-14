@@ -21,6 +21,7 @@ type ApproveDialogProps = {
 	cancelText?: string;
 	confirmVariant?: 'default' | 'destructive';
 	confirmIsLoading?: boolean;
+	preventDefault?: boolean;
 };
 
 export const ApproveDialog = ({
@@ -32,10 +33,16 @@ export const ApproveDialog = ({
 	cancelText = 'Скасувати',
 	confirmVariant = 'default',
 	confirmIsLoading = false,
+	preventDefault = false,
 }: ApproveDialogProps) => {
 	return (
 		<AlertDialog>
-			<AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+			<AlertDialogTrigger
+				asChild
+				onSelect={(e) => preventDefault && e.preventDefault()}
+			>
+				{children}
+			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>{title}</AlertDialogTitle>

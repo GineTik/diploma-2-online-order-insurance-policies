@@ -5,9 +5,11 @@ import { getPolicies } from '../policies.services';
 import { PolicyFilters } from '../policies.types';
 
 export const usePolicies = (filters?: PolicyFilters) => {
+	const mappedFilters = mapEmptyFiltersToUndefined(filters ?? {});
+
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['policies', filters],
-		queryFn: async () => await getPolicies(filters ?? {}),
+		queryKey: ['policies', mappedFilters],
+		queryFn: async () => await getPolicies(mappedFilters),
 	});
 
 	return {
@@ -15,4 +17,13 @@ export const usePolicies = (filters?: PolicyFilters) => {
 		isPoliciesLoading: isLoading,
 		policiesError: error,
 	};
+};
+
+const mapEmptyFiltersToUndefined = (filters: PolicyFilters) => {
+	return Object.fromEntries(
+		Object.entries(filters).map(([key, value]) => [
+			key,
+			value === '' ? undefined : value,
+		]),
+	) as PolicyFilters;
 };

@@ -28,7 +28,11 @@ export const PolicyList = ({ filters, notFoundMessage }: PolicyListProps) => {
 	return (
 		<div className="space-y-2">
 			{policies?.map((policy) => (
-				<PolicyCard key={policy.id} policy={policy} />
+				<PolicyCard
+					key={policy.id}
+					policy={policy}
+					haveCategoryBadge={!filters?.categorySlug}
+				/>
 			))}
 		</div>
 	);

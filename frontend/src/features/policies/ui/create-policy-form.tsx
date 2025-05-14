@@ -14,7 +14,7 @@ import {
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { CreatePolicy } from '@/entities/policies';
+import { CreatePolicy, policySchema } from '@/entities/policies';
 import { useCreatePolicy } from '../hooks/use-create-policy';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -27,7 +27,7 @@ export const CreatePolicyForm = () => {
 			categoryId: '',
 			slug: '',
 		},
-		resolver: zodResolver(createCategorySchema),
+		resolver: zodResolver(policySchema),
 	});
 
 	const { categories, isCategoriesLoading } = usePolicyCategories();

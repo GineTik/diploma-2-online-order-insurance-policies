@@ -17,7 +17,6 @@ import {
 	CreateCategorySchema,
 	createCategorySchema,
 } from '@/entities/policy-categories';
-import { toast } from 'sonner';
 
 export const CreatePolicyCategoryForm = () => {
 	const form = useForm<CreateCategorySchema>({
@@ -34,7 +33,6 @@ export const CreatePolicyCategoryForm = () => {
 	const submit = form.handleSubmit((data) => {
 		createCategory(data);
 		form.reset();
-		toast.success('Категорія створена успішно');
 	});
 
 	return (

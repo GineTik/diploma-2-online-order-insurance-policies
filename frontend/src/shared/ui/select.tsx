@@ -10,11 +10,8 @@ import { FormLabel } from './form';
 import { FormItem } from './form';
 import { Control, Path } from 'react-hook-form';
 import { FormField } from './form';
-import { PolicyCategoryField } from '@/entities/policy-categories';
-
-export const CompleteFormFieldSelect = <
-	T extends Record<string, string | number | undefined>,
->({
+import { FieldItem } from './form';
+export const CompleteFormFieldSelect = <T extends object>({
 	control,
 	name,
 	label,
@@ -22,7 +19,8 @@ export const CompleteFormFieldSelect = <
 	placeholder,
 }: {
 	control: Control<T>;
-} & Omit<PolicyCategoryField, 'type'>) => {
+	values?: { value: string; label: string }[];
+} & Omit<FieldItem<T>, 'type'>) => {
 	return (
 		<FormField
 			control={control}

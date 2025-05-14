@@ -5,10 +5,12 @@ import {
 	POLICY_ALREADY_EXISTS,
 	POLICY_NOT_FOUND_ERROR,
 	USER_HAS_NO_COMPANY,
+	USER_IS_NOT_POLICY_OWNER,
 } from '@shared/errors';
 import { CategoriesService } from './categories';
 import { CreatePolicyDto } from './dtos/create-policy.dto';
 import { CompaniesService } from '@modules/companies';
+import { Policy, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class PoliciesService {
@@ -35,6 +37,7 @@ export class PoliciesService {
 						contains: search,
 						mode: 'insensitive',
 					},
+					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
 				},
 				orderBy: {
 					price:
@@ -43,6 +46,11 @@ export class PoliciesService {
 								? 'asc'
 								: 'desc'
 							: undefined,
+					version: 'desc',
+				},
+				distinct: ['slug'],
+				include: {
+					category: true,
 				},
 			})
 			.catch((err) => {
@@ -53,7 +61,10 @@ export class PoliciesService {
 	async getLastVersion(slug: string) {
 		return await this.prisma.policy
 			.findFirst({
-				where: { slug },
+				where: {
+					slug,
+					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+				},
 				orderBy: { version: 'desc' },
 			})
 			.catch((err) => {
@@ -97,5 +108,52 @@ export class PoliciesService {
 				},
 			},
 		});
+	}
+
+	async update(dto: CreatePolicyDto, userId: string, oldSlug: string) {
+		const policies = await this.getAllVersionsBySlug(oldSlug);
+		if (policies.length === 0) {
+			throw new BadRequestException(POLICY_NOT_FOUND_ERROR(dto.slug));
+		}
+
+		const lastVersion = policies.sort((a, b) => b.version - a.version)[0];
+
+		if (!(await this.userIsPolicyOwner(userId, lastVersion))) {
+			throw new BadRequestException(USER_IS_NOT_POLICY_OWNER(userId));
+		}
+
+		if (oldSlug !== dto.slug) {
+			await this.prisma.policy.updateMany({
+				where: { slug: oldSlug },
+				data: { slug: dto.slug },
+			});
+		}
+
+		await this.prisma.policy.create({
+			data: {
+				...dto,
+				version: lastVersion.version + 1,
+				companyId: lastVersion.companyId,
+			},
+		});
+	}
+
+	async getAllVersionsBySlug(slug: string) {
+		return await this.prisma.policy.findMany({
+			where: { slug },
+			orderBy: { version: 'desc' },
+		});
+	}
+
+	async delete(slug: string) {
+		return await this.prisma.policy.updateMany({
+			where: { slug },
+			data: { isDeleted: true, deletedAt: new Date() },
+		});
+	}
+
+	private async userIsPolicyOwner(userId: string, policy: Policy) {
+		const company = await this.companyService.getByAdminSub(userId);
+		return company?.id === policy.companyId;
 	}
 }

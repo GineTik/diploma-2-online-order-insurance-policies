@@ -9,4 +9,5 @@ export type CompanyFormSchema = z.infer<typeof companyFormSchema>;
 export type Company = {
 	id: string;
 	name: string;
+	policiesCount: number;
 };

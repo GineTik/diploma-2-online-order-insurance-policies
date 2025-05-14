@@ -43,13 +43,15 @@ model UserCompany {
 }
 
 model Policy {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   slug        String
-  version     Int      @default(1)
+  version     Int       @default(1)
   name        String
   description String
   price       Float
   options     String[]
+  isDeleted   Boolean?  @default(false)
+  deletedAt   DateTime?
 
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @db.ObjectId

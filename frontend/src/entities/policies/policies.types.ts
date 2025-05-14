@@ -11,6 +11,11 @@ export type Policy = {
 	createdAt: Date;
 	updatedAt: Date;
 	categoryId: string;
+	companyId: string;
+	category: {
+		name: string;
+		slug: string;
+	};
 };
 
 export type CreatePolicy = {
@@ -20,6 +25,10 @@ export type CreatePolicy = {
 	price: number;
 	categoryId: string;
 };
+
+export type UpdatePolicy = {
+	oldSlug: string;
+} & CreatePolicy;
 
 export type PolicyFilters = {
 	companyId?: string;
@@ -38,6 +47,8 @@ export const policySchema = z.object({
 		})
 		.min(1),
 	description: z.string().min(1),
+	price: z.coerce.number().min(1),
+	categoryId: z.string().min(1),
 });
 
 export type PolicyForm = z.infer<typeof policySchema>;

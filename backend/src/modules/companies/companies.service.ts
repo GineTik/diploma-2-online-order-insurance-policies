@@ -12,7 +12,22 @@ export class CompaniesService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getFiltered() {
-		return await this.prisma.company.findMany();
+		const companies = await this.prisma.company.findMany({
+			include: {
+				policies: {
+					where: {
+						OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+					},
+					orderBy: { version: 'desc' },
+					distinct: ['slug'],
+				},
+			},
+		});
+
+		return companies.map((company) => ({
+			...company,
+			policiesCount: company.policies.length,
+		}));
 	}
 
 	async getOne(id: string) {

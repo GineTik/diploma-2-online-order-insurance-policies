@@ -5,12 +5,14 @@ import {
 	Get,
 	Param,
 	Post,
+	Put,
 	Query,
 } from '@nestjs/common';
 import { PoliciesService } from './policies.service';
 import { CreatePolicyDto } from './dtos/create-policy.dto';
 import { Auth, UserId } from '@shared/auth';
 import { PolicySort } from './dtos/policy-filters.dto';
+import { publicDecrypt } from 'crypto';
 @Controller('policies')
 export class PoliciesController {
 	constructor(private readonly policiesService: PoliciesService) {}
@@ -40,15 +42,29 @@ export class PoliciesController {
 		return await this.policiesService.getCategory(slug);
 	}
 
+	@Get(':slug/versions')
+	async getVersions(@Param('slug') slug: string) {
+		return await this.policiesService.getAllVersionsBySlug(slug);
+	}
+
 	@Post()
 	@Auth()
 	async create(@Body() body: CreatePolicyDto, @UserId() userId: string) {
 		return await this.policiesService.create(body, userId);
 	}
 
-	@Post(':slug/order')
-	async order() {}
+	@Put(':slug')
+	@Auth()
+	async update(
+		@Body() body: CreatePolicyDto,
+		@Param('slug') slug: string,
+		@UserId() userId: string,
+	) {
+		return await this.policiesService.update(body, userId, slug);
+	}
 
 	@Delete(':slug')
-	async delete() {}
+	async delete(@Param('slug') slug: string) {
+		return await this.policiesService.delete(slug);
+	}
 }

@@ -9,6 +9,7 @@ import {
 	FormLabel,
 	FormControl,
 	FormMessage,
+	FieldItem,
 } from './form';
 
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
@@ -24,16 +25,14 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
 	);
 }
 
-export const CompleteFormFieldTextarea = <
-	T extends Record<string, string | number | string[] | undefined>,
->({
+export const CompleteFormFieldTextarea = <T extends object>({
 	control,
 	name,
 	label,
 	placeholder,
 }: {
 	control: Control<T>;
-} & Omit<PolicyCategoryField, 'type'>) => {
+} & Omit<FieldItem<T>, 'type'>) => {
 	return (
 		<FormField
 			control={control}

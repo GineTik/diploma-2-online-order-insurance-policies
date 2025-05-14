@@ -21,7 +21,7 @@ export default function CompanyPage() {
 	return (
 		<div className="space-y-4 mx-auto max-w-[800px] w-full">
 			<Card className="p-0">
-				<CardContent className="*:px-10 *:py-6 divide-y divide-accent flex-1">
+				<CardContent className="*:px-2 md:*:px-10 *:py-6 divide-y divide-accent flex-1">
 					{isCompanyLoading && (
 						<Loader2 className="size-5 mx-auto animate-spin" />
 					)}

@@ -4438,6 +4438,8 @@ export namespace Prisma {
     name: string | null
     description: string | null
     price: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
     companyId: string | null
     categoryId: string | null
   }
@@ -4449,6 +4451,8 @@ export namespace Prisma {
     name: string | null
     description: string | null
     price: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
     companyId: string | null
     categoryId: string | null
   }
@@ -4461,6 +4465,8 @@ export namespace Prisma {
     description: number
     price: number
     options: number
+    isDeleted: number
+    deletedAt: number
     companyId: number
     categoryId: number
     _all: number
@@ -4484,6 +4490,8 @@ export namespace Prisma {
     name?: true
     description?: true
     price?: true
+    isDeleted?: true
+    deletedAt?: true
     companyId?: true
     categoryId?: true
   }
@@ -4495,6 +4503,8 @@ export namespace Prisma {
     name?: true
     description?: true
     price?: true
+    isDeleted?: true
+    deletedAt?: true
     companyId?: true
     categoryId?: true
   }
@@ -4507,6 +4517,8 @@ export namespace Prisma {
     description?: true
     price?: true
     options?: true
+    isDeleted?: true
+    deletedAt?: true
     companyId?: true
     categoryId?: true
     _all?: true
@@ -4606,6 +4618,8 @@ export namespace Prisma {
     description: string
     price: number
     options: string[]
+    isDeleted: boolean | null
+    deletedAt: Date | null
     companyId: string
     categoryId: string
     _count: PolicyCountAggregateOutputType | null
@@ -4637,6 +4651,8 @@ export namespace Prisma {
     description?: boolean
     price?: boolean
     options?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
     companyId?: boolean
     categoryId?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -4655,11 +4671,13 @@ export namespace Prisma {
     description?: boolean
     price?: boolean
     options?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
     companyId?: boolean
     categoryId?: boolean
   }
 
-  export type PolicyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "version" | "name" | "description" | "price" | "options" | "companyId" | "categoryId", ExtArgs["result"]["policy"]>
+  export type PolicyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "version" | "name" | "description" | "price" | "options" | "isDeleted" | "deletedAt" | "companyId" | "categoryId", ExtArgs["result"]["policy"]>
   export type PolicyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     category?: boolean | PolicyCategoryDefaultArgs<ExtArgs>
@@ -4682,6 +4700,8 @@ export namespace Prisma {
       description: string
       price: number
       options: string[]
+      isDeleted: boolean | null
+      deletedAt: Date | null
       companyId: string
       categoryId: string
     }, ExtArgs["result"]["policy"]>
@@ -5086,6 +5106,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Policy", 'String'>
     readonly price: FieldRef<"Policy", 'Float'>
     readonly options: FieldRef<"Policy", 'String[]'>
+    readonly isDeleted: FieldRef<"Policy", 'Boolean'>
+    readonly deletedAt: FieldRef<"Policy", 'DateTime'>
     readonly companyId: FieldRef<"Policy", 'String'>
     readonly categoryId: FieldRef<"Policy", 'String'>
   }
@@ -7582,6 +7604,8 @@ export namespace Prisma {
     description: 'description',
     price: 'price',
     options: 'options',
+    isDeleted: 'isDeleted',
+    deletedAt: 'deletedAt',
     companyId: 'companyId',
     categoryId: 'categoryId'
   };
@@ -7684,20 +7708,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'OrderStatus'
-   */
-  export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'OrderStatus[]'
-   */
-  export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -7708,6 +7718,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OrderStatus'
+   */
+  export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OrderStatus[]'
+   */
+  export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
     
   /**
    * Deep Input Types
@@ -7864,6 +7888,8 @@ export namespace Prisma {
     description?: StringFilter<"Policy"> | string
     price?: FloatFilter<"Policy"> | number
     options?: StringNullableListFilter<"Policy">
+    isDeleted?: BoolNullableFilter<"Policy"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"Policy"> | Date | string | null
     companyId?: StringFilter<"Policy"> | string
     categoryId?: StringFilter<"Policy"> | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -7879,6 +7905,8 @@ export namespace Prisma {
     description?: SortOrder
     price?: SortOrder
     options?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
     companyId?: SortOrder
     categoryId?: SortOrder
     company?: CompanyOrderByWithRelationInput
@@ -7898,6 +7926,8 @@ export namespace Prisma {
     description?: StringFilter<"Policy"> | string
     price?: FloatFilter<"Policy"> | number
     options?: StringNullableListFilter<"Policy">
+    isDeleted?: BoolNullableFilter<"Policy"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"Policy"> | Date | string | null
     companyId?: StringFilter<"Policy"> | string
     categoryId?: StringFilter<"Policy"> | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -7913,6 +7943,8 @@ export namespace Prisma {
     description?: SortOrder
     price?: SortOrder
     options?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
     companyId?: SortOrder
     categoryId?: SortOrder
     _count?: PolicyCountOrderByAggregateInput
@@ -7933,6 +7965,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Policy"> | string
     price?: FloatWithAggregatesFilter<"Policy"> | number
     options?: StringNullableListFilter<"Policy">
+    isDeleted?: BoolNullableWithAggregatesFilter<"Policy"> | boolean | null
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Policy"> | Date | string | null
     companyId?: StringWithAggregatesFilter<"Policy"> | string
     categoryId?: StringWithAggregatesFilter<"Policy"> | string
   }
@@ -8191,6 +8225,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     company: CompanyCreateNestedOneWithoutPoliciesInput
     category: PolicyCategoryCreateNestedOneWithoutPoliciesInput
     orders?: OrderCreateNestedManyWithoutPolicyInput
@@ -8204,6 +8240,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     companyId: string
     categoryId: string
     orders?: OrderUncheckedCreateNestedManyWithoutPolicyInput
@@ -8216,6 +8254,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     company?: CompanyUpdateOneRequiredWithoutPoliciesNestedInput
     category?: PolicyCategoryUpdateOneRequiredWithoutPoliciesNestedInput
     orders?: OrderUpdateManyWithoutPolicyNestedInput
@@ -8228,6 +8268,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     companyId?: StringFieldUpdateOperationsInput | string
     categoryId?: StringFieldUpdateOperationsInput | string
     orders?: OrderUncheckedUpdateManyWithoutPolicyNestedInput
@@ -8241,6 +8283,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     companyId: string
     categoryId: string
   }
@@ -8252,6 +8296,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PolicyUncheckedUpdateManyInput = {
@@ -8261,6 +8307,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     companyId?: StringFieldUpdateOperationsInput | string
     categoryId?: StringFieldUpdateOperationsInput | string
   }
@@ -8546,6 +8594,24 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    isSet?: boolean
+  }
+
   export type PolicyCategoryScalarRelationFilter = {
     is?: PolicyCategoryWhereInput
     isNot?: PolicyCategoryWhereInput
@@ -8565,6 +8631,8 @@ export namespace Prisma {
     description?: SortOrder
     price?: SortOrder
     options?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
     companyId?: SortOrder
     categoryId?: SortOrder
   }
@@ -8581,6 +8649,8 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     price?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
     companyId?: SortOrder
     categoryId?: SortOrder
   }
@@ -8592,6 +8662,8 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     price?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
     companyId?: SortOrder
     categoryId?: SortOrder
   }
@@ -8631,6 +8703,30 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type PolicyCategoryCountOrderByAggregateInput = {
@@ -8997,6 +9093,16 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+    unset?: boolean
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+    unset?: boolean
+  }
+
   export type CompanyUpdateOneRequiredWithoutPoliciesNestedInput = {
     create?: XOR<CompanyCreateWithoutPoliciesInput, CompanyUncheckedCreateWithoutPoliciesInput>
     connectOrCreate?: CompanyCreateOrConnectWithoutPoliciesInput
@@ -9185,6 +9291,24 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    isSet?: boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9215,6 +9339,42 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
@@ -9392,6 +9552,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     category: PolicyCategoryCreateNestedOneWithoutPoliciesInput
     orders?: OrderCreateNestedManyWithoutPolicyInput
   }
@@ -9404,6 +9566,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     categoryId: string
     orders?: OrderUncheckedCreateNestedManyWithoutPolicyInput
   }
@@ -9460,6 +9624,8 @@ export namespace Prisma {
     description?: StringFilter<"Policy"> | string
     price?: FloatFilter<"Policy"> | number
     options?: StringNullableListFilter<"Policy">
+    isDeleted?: BoolNullableFilter<"Policy"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"Policy"> | Date | string | null
     companyId?: StringFilter<"Policy"> | string
     categoryId?: StringFilter<"Policy"> | string
   }
@@ -9669,6 +9835,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     company: CompanyCreateNestedOneWithoutPoliciesInput
     orders?: OrderCreateNestedManyWithoutPolicyInput
   }
@@ -9681,6 +9849,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     companyId: string
     orders?: OrderUncheckedCreateNestedManyWithoutPolicyInput
   }
@@ -9718,6 +9888,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     company: CompanyCreateNestedOneWithoutPoliciesInput
     category: PolicyCategoryCreateNestedOneWithoutPoliciesInput
   }
@@ -9730,6 +9902,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     companyId: string
     categoryId: string
   }
@@ -9774,6 +9948,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     company?: CompanyUpdateOneRequiredWithoutPoliciesNestedInput
     category?: PolicyCategoryUpdateOneRequiredWithoutPoliciesNestedInput
   }
@@ -9785,6 +9961,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     companyId?: StringFieldUpdateOperationsInput | string
     categoryId?: StringFieldUpdateOperationsInput | string
   }
@@ -9880,6 +10058,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     categoryId: string
   }
 
@@ -9905,6 +10085,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     category?: PolicyCategoryUpdateOneRequiredWithoutPoliciesNestedInput
     orders?: OrderUpdateManyWithoutPolicyNestedInput
   }
@@ -9916,6 +10098,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
     orders?: OrderUncheckedUpdateManyWithoutPolicyNestedInput
   }
@@ -9927,6 +10111,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -9967,6 +10153,8 @@ export namespace Prisma {
     description: string
     price: number
     options?: PolicyCreateoptionsInput | string[]
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
     companyId: string
   }
 
@@ -9977,6 +10165,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     company?: CompanyUpdateOneRequiredWithoutPoliciesNestedInput
     orders?: OrderUpdateManyWithoutPolicyNestedInput
   }
@@ -9988,6 +10178,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     companyId?: StringFieldUpdateOperationsInput | string
     orders?: OrderUncheckedUpdateManyWithoutPolicyNestedInput
   }
@@ -9999,6 +10191,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     options?: PolicyUpdateoptionsInput | string[]
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     companyId?: StringFieldUpdateOperationsInput | string
   }
 

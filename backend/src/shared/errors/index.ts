@@ -24,3 +24,6 @@ export const USER_HAS_NO_COMPANY = (userId: string) =>
 
 export const POLICY_ALREADY_EXISTS = (slug: string) =>
 	`Policy already exists by ${slug}`;
+
+export const USER_IS_NOT_POLICY_OWNER = (userId: string) =>
+	`User is not policy owner by ${userId}`;

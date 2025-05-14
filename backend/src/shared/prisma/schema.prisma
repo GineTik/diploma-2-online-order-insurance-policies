@@ -50,6 +50,8 @@ model Policy {
   description String
   price     Float
   options   String[]
+  isDeleted Boolean? @default(false)
+  deletedAt DateTime?
 	
   company   Company  @relation(fields: [companyId], references: [id])
 	companyId String   @db.ObjectId

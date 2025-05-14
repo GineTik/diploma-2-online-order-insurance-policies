@@ -8,21 +8,20 @@ import { OrderAction } from './order-action';
 
 export const OrderForm = () => {
 	const params = useParams<{ slug: string }>();
+	const { category } = usePolicyCategory();
 	const form = useForm<Record<string, string>>({
-		defaultValues: {},
+		defaultValues: Object.fromEntries(
+			(category.fields || []).map((field) => [field.name, '']),
+		),
 	});
 
-	const { category } = usePolicyCategory();
-
 	return (
-		<>
-			<OrderFormInputs
-				form={form}
-				fields={category.fields}
-				actions={
-					<OrderAction slug={params?.slug} handleSubmit={form.handleSubmit} />
-				}
-			/>
-		</>
+		<OrderFormInputs
+			form={form}
+			fields={category.fields}
+			actions={
+				<OrderAction slug={params?.slug} handleSubmit={form.handleSubmit} />
+			}
+		/>
 	);
 };
