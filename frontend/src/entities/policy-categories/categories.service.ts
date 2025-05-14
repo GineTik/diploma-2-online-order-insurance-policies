@@ -70,3 +70,21 @@ export const createPolicyCategory = async (
 		getAuthHeaders(token),
 	);
 };
+
+export const updatePolicyCategory = async (
+	category: PolicyCategory,
+	token: AuthToken,
+) => {
+	return await api.put(
+		`/categories/${category.id}`,
+		mapPolicyCategorySchemaToRequest(category),
+		getAuthHeaders(token),
+	);
+};
+
+export const deletePolicyCategory = async (
+	categoryId: string,
+	token: AuthToken,
+) => {
+	return await api.delete(`/categories/${categoryId}`, getAuthHeaders(token));
+};

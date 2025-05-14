@@ -3,7 +3,7 @@ import { Button } from '@/shared/ui';
 
 export const CustomSignUpButton = () => {
 	return (
-		<Button variant="default" size="sm">
+		<Button variant="default" size="sm" asChild>
 			<SignUpButton />
 		</Button>
 	);

@@ -5,7 +5,6 @@ export type PolicyCategory = {
 	name: string;
 	slug: string;
 	description: string;
-	price: number;
 	fields: PolicyCategoryField[];
 };
 
@@ -24,8 +23,6 @@ export const createCategorySchema = z.object({
 	name: z.string().min(1),
 	slug: z.string().min(1),
 	description: z.string().min(1),
-	price: z.coerce.number().min(1),
-	categoryId: z.string().min(1),
 });
 
 export type CreateCategorySchema = z.infer<typeof createCategorySchema>;

@@ -12,3 +12,5 @@ export * from './textarea';
 export * from './tooltip';
 export * from './card';
 export * from './dropdown-menu';
+export * from './alert-dialog';
+export * from './approve-dialog';

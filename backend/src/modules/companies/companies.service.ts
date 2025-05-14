@@ -16,9 +16,24 @@ export class CompaniesService {
 	}
 
 	async getOne(id: string) {
-		return await this.prisma.company.findUnique({
+		const { users, ...company } = await this.prisma.company.findUnique({
 			where: { id },
+			include: {
+				users: {
+					include: {
+						user: true,
+					},
+					where: {
+						isAdmin: true,
+					},
+				},
+			},
 		});
+
+		return {
+			...company,
+			admin: users[0].user,
+		};
 	}
 
 	async getByAdminSub(sub: string) {
@@ -31,6 +46,7 @@ export class CompaniesService {
 			},
 			include: {
 				company: true,
+				user: true,
 			},
 		});
 

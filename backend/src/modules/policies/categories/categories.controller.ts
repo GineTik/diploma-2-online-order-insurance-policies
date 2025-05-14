@@ -39,11 +39,7 @@ export class CategoriesController {
 	@Put(':id')
 	@Auth()
 	@Permission(PERMISSIONS.MANAGE_POLICY_CATEGORY)
-	async update(
-		@Param('id') id: string,
-		@Body() dto: UpdateCategoryDto,
-		@UserId() userId: string,
-	) {
+	async update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
 		return await this.categoriesService.update(id, dto);
 	}
 }

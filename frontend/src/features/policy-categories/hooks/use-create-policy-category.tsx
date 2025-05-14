@@ -13,8 +13,8 @@ export const useCreatePolicyCategory = () => {
 		mutationKey: ['create-policy-category'],
 		mutationFn: async (category: CreateCategorySchema) =>
 			await createPolicyCategory(category, await getToken()),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
 				queryKey: ['policy-categories'],
 			});
 		},

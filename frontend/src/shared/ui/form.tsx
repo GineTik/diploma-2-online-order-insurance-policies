@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import {
+	Control,
 	Controller,
 	FormProvider,
 	useFormContext,
@@ -17,6 +18,14 @@ import { cn } from '@/shared/lib/utils';
 import { Label } from '@/shared/ui/label';
 
 const Form = FormProvider;
+
+export type FieldItem<T extends FieldValues> = {
+	control: Control<T>;
+	name: string;
+	label?: string;
+	placeholder?: string;
+	type?: string;
+};
 
 type FormFieldContextValue<
 	TFieldValues extends FieldValues = FieldValues,

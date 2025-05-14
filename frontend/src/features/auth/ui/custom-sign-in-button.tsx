@@ -3,7 +3,7 @@ import { SignInButton } from '@clerk/nextjs';
 
 export const CustomSignInButton = () => {
 	return (
-		<Button variant="card" size="sm">
+		<Button variant="card" size="sm" asChild>
 			<SignInButton />
 		</Button>
 	);

@@ -9,4 +9,21 @@ export class UpdateCategoryDto {
 	@IsString()
 	@IsOptional()
 	name: string;
+
+	@ApiProperty({
+		description: 'The slug of the category',
+		example: 'health-insurance',
+	})
+	@IsString()
+	@IsOptional()
+	slug: string;
+
+	@ApiProperty({
+		description: 'The description of the category',
+		example:
+			'Health insurance is a type of insurance that covers medical expenses.',
+	})
+	@IsString()
+	@IsOptional()
+	description: string;
 }

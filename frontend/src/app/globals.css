@@ -36,6 +36,7 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-border: oklch(0.87 0 0);
   --sidebar-ring: oklch(0.87 0.07 7.09);
+  --font-heading: 'Gilroy-Bold', sans-serif;
   --font-sans: Poppins, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: Roboto Mono, monospace;
@@ -83,6 +84,7 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-border: oklch(0.39 0 0);
   --sidebar-ring: oklch(0.80 0.14 349.23);
+  --font-heading: 'Gilroy-Bold', sans-serif;
   --font-sans: Poppins, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: Roboto Mono, monospace;
@@ -131,6 +133,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --font-heading: var(--font-heading);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
