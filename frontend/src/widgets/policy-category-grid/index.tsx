@@ -7,7 +7,6 @@ import { cn } from '@/shared/lib/utils';
 import { CarIcon } from 'lucide-react';
 
 export const PolicyCategoryGrid = () => {
-	const barge = 10;
 	const { categories } = usePolicyCategories();
 
 	return (
@@ -17,7 +16,6 @@ export const PolicyCategoryGrid = () => {
 					<AccentPolicyCategoryCard
 						key={category.id}
 						category={category}
-						badge={`${barge} пропозицій`}
 						className={cn('bg-gradient-to-r', {
 							'from-blue-300 to-blue-600 xl:col-span-2': index == 0,
 							'from-red-300 to-rose-400': index == 1,

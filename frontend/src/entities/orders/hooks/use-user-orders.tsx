@@ -2,14 +2,15 @@
 
 import { useAuth } from '@clerk/nextjs';
 import { useQuery } from '@tanstack/react-query';
-import { getUserOrders } from '../orders.services';
+import { getOrders } from '../orders.services';
+import { OrderFilters } from '../orders.types';
 
-export const useUserOrders = () => {
+export const useOrders = (filters?: OrderFilters) => {
 	const { getToken } = useAuth();
 
 	const { data, isLoading } = useQuery({
-		queryKey: ['user-orders'],
-		queryFn: async () => await getUserOrders(await getToken()),
+		queryKey: ['orders', filters],
+		queryFn: async () => await getOrders(await getToken(), filters),
 	});
 
 	return {

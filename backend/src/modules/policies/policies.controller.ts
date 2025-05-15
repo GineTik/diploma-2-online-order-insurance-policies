@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { PoliciesService } from './policies.service';
 import { CreatePolicyDto } from './dtos/create-policy.dto';
-import { Auth, UserId } from '@shared/auth';
+import { Auth, UserSub } from '@shared/auth';
 import { PolicySort } from './dtos/policy-filters.dto';
 import { publicDecrypt } from 'crypto';
 @Controller('policies')
@@ -49,7 +49,7 @@ export class PoliciesController {
 
 	@Post()
 	@Auth()
-	async create(@Body() body: CreatePolicyDto, @UserId() userId: string) {
+	async create(@Body() body: CreatePolicyDto, @UserSub() userId: string) {
 		return await this.policiesService.create(body, userId);
 	}
 
@@ -58,7 +58,7 @@ export class PoliciesController {
 	async update(
 		@Body() body: CreatePolicyDto,
 		@Param('slug') slug: string,
-		@UserId() userId: string,
+		@UserSub() userId: string,
 	) {
 		return await this.policiesService.update(body, userId, slug);
 	}

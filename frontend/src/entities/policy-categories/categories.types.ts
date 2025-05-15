@@ -6,6 +6,7 @@ export type PolicyCategory = {
 	slug: string;
 	description: string;
 	fields: PolicyCategoryField[];
+	policiesCount: number;
 };
 
 export type PolicyCategoryField = {

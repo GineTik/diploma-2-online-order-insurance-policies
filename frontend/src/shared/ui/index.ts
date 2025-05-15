@@ -14,3 +14,4 @@ export * from './card';
 export * from './dropdown-menu';
 export * from './alert-dialog';
 export * from './approve-dialog';
+export * from './breadcrumb';

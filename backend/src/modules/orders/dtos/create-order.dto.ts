@@ -19,7 +19,7 @@ export class CreateOrderDto {
 	@IsNotEmpty()
 	@ValidateNested({ each: true })
 	@Type(() => FieldValueDto)
-	information: FieldValueDto[];
+	informations: FieldValueDto[];
 }
 
 export class FieldValueDto {

@@ -8,16 +8,17 @@ import {
 	Query,
 } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
-import { Auth, UserId } from '@shared/auth';
+import { Auth, UserSub } from '@shared/auth';
 import { CreateCompanyDto } from './dtos/create-company.dto';
+import { CompanyFiltersDto } from './dtos/company-filters.dto';
 
 @Controller('companies')
 export class CompaniesController {
 	constructor(private readonly companiesService: CompaniesService) {}
 
 	@Get()
-	async getFiltered() {
-		return await this.companiesService.getFiltered();
+	async getFiltered(@Query() filters: CompanyFiltersDto) {
+		return await this.companiesService.getFiltered(filters);
 	}
 
 	@Get(':id')
@@ -27,13 +28,13 @@ export class CompaniesController {
 
 	@Post()
 	@Auth()
-	async create(@Body() body: CreateCompanyDto, @UserId() userId: string) {
+	async create(@Body() body: CreateCompanyDto, @UserSub() userId: string) {
 		return await this.companiesService.create(userId, body);
 	}
 
 	@Delete(':id')
 	@Auth()
-	async delete(@Param('id') id: string, @UserId() userId: string) {
+	async delete(@Param('id') id: string, @UserSub() userId: string) {
 		return await this.companiesService.delete(id, userId);
 	}
 }

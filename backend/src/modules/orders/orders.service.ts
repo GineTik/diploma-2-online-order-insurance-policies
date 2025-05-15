@@ -7,7 +7,11 @@ import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
 import { Order } from 'generated/prisma';
-import { ORDER_NOT_FOUND, USER_NOT_FOUND } from '@shared/errors';
+import {
+	COMPANY_NOT_FOUND,
+	USER_IS_NOT_POLICY_OWNER,
+	USER_NOT_FOUND,
+} from '@shared/errors';
 import { FORBIDDEN_GENERATE_PDF } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
@@ -39,11 +43,30 @@ export class OrdersService {
 							company: true,
 						},
 					},
+					informations: true,
 				},
 			})
 			.catch(() => {
 				return [];
 			});
+	}
+
+	async approveOrder(orderId: string, userId: string) {
+		await this.throwIfUserHaveNotPermission(userId, orderId);
+
+		return await this.prisma.order.update({
+			where: { id: orderId },
+			data: { status: 'COMPLETED' },
+		});
+	}
+
+	async cancelOrder(orderId: string, userId: string) {
+		await this.throwIfUserHaveNotPermission(userId, orderId);
+
+		return await this.prisma.order.update({
+			where: { id: orderId },
+			data: { status: 'CANCELLED' },
+		});
 	}
 
 	async create(dto: CreateOrderDto, userSub: string) {
@@ -58,6 +81,9 @@ export class OrdersService {
 
 		return await this.prisma.order.create({
 			data: {
+				informations: {
+					create: dto.informations,
+				},
 				policy: {
 					connect: {
 						id: lastVersionPolicy.id,
@@ -86,5 +112,27 @@ export class OrdersService {
 
 	private async isUserOwner(userId: string, order: Order) {
 		return order.userId === userId;
+	}
+
+	private async throwIfUserHaveNotPermission(userSub: string, orderId: string) {
+		const order = await this.prisma.order.findUnique({
+			where: { id: orderId },
+		});
+
+		const userCompany = await this.prisma.userCompany.findFirst({
+			where: {
+				user: {
+					sub: userSub,
+				},
+				company: {
+					id: order.policyCompanyId,
+				},
+				isAdmin: true,
+			},
+		});
+
+		if (!userCompany) {
+			throw new BadRequestException(USER_IS_NOT_POLICY_OWNER(userSub));
+		}
 	}
 }

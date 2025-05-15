@@ -11,7 +11,7 @@ import { Skeleton } from '@/shared/ui/skeleton';
 import { ArrowDown01 } from 'lucide-react';
 import Link from 'next/link';
 
-export const ProfileDropdown = () => {
+export const NavigationDropdown = () => {
 	const { company, isCompanyLoading } = useUserCompany();
 
 	return (
@@ -26,15 +26,26 @@ export const ProfileDropdown = () => {
 				<DropdownMenuItem>
 					<Link href={ROUTES.ORDERS}>Ваші замовлення</Link>
 				</DropdownMenuItem>
-				<DropdownMenuItem>
-					{isCompanyLoading ? (
-						<Skeleton className="w-26 h-8 rounded-md" />
-					) : company == undefined ? (
+				{isCompanyLoading ? (
+					<Skeleton className="w-26 h-8 rounded-md" />
+				) : company == undefined ? (
+					<DropdownMenuItem>
 						<Link href={ROUTES.CREATE_COMPANY}>Створити компанію</Link>
-					) : (
-						<Link href={ROUTES.COMPANY_PROFILE(company.id)}>Ваша компанія</Link>
-					)}
-				</DropdownMenuItem>
+					</DropdownMenuItem>
+				) : (
+					<>
+						<DropdownMenuItem>
+							<Link href={ROUTES.COMPANY_PROFILE(company.id)}>
+								Ваша компанія
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href={ROUTES.COMPANY_ORDERS(company.id)}>
+								Замовлення компанії
+							</Link>
+						</DropdownMenuItem>
+					</>
+				)}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

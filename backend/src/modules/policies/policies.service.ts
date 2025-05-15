@@ -12,6 +12,17 @@ import { CreatePolicyDto } from './dtos/create-policy.dto';
 import { CompaniesService } from '@modules/companies';
 import { Policy, Prisma } from 'generated/prisma';
 
+const mapPolicySortToString = (sort: PolicySort) => {
+	switch (sort) {
+		case PolicySort.PRICE_ASC:
+			return 'asc';
+		case PolicySort.PRICE_DESC:
+			return 'desc';
+		default:
+			return undefined;
+	}
+};
+
 @Injectable()
 export class PoliciesService {
 	constructor(
@@ -39,15 +50,14 @@ export class PoliciesService {
 					},
 					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
 				},
-				orderBy: {
-					price:
-						sort !== undefined
-							? sort === PolicySort.PRICE_ASC
-								? 'asc'
-								: 'desc'
-							: undefined,
-					version: 'desc',
-				},
+				orderBy: [
+					{
+						price: mapPolicySortToString(sort),
+					},
+					{
+						version: 'desc',
+					},
+				],
 				distinct: ['slug'],
 				include: {
 					category: true,

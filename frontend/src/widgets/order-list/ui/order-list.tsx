@@ -1,11 +1,16 @@
 'use client';
 
 import { OrderCard } from './order-card';
-import { useUserOrders } from '@/entities/orders/hooks/use-user-orders';
+import { OrderFilters, useOrders } from '@/entities/orders';
 import { Loader2 } from 'lucide-react';
 
-export const OrderList = () => {
-	const { orders, isOrdersLoading } = useUserOrders();
+type OrderListProps = {
+	filters?: OrderFilters;
+	companyView?: boolean;
+};
+
+export const OrderList = ({ filters, companyView }: OrderListProps) => {
+	const { orders, isOrdersLoading } = useOrders(filters);
 
 	return (
 		<div className="space-y-4">
@@ -16,7 +21,7 @@ export const OrderList = () => {
 			)}
 
 			{orders?.map((order) => (
-				<OrderCard key={order.id} order={order} />
+				<OrderCard key={order.id} order={order} companyView={companyView} />
 			))}
 		</div>
 	);

@@ -17,7 +17,7 @@ export const OrderAction = ({ slug, handleSubmit }: OrderActionProps) => {
 		(data: Record<string, string>) => {
 			order({
 				policySlug: slug,
-				information: Object.keys(data).map((key) => ({
+				informations: Object.keys(data).map((key) => ({
 					key,
 					value: data[key],
 				})),

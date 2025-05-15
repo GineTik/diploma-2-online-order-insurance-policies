@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { cn } from '@/shared/lib/utils';
-import { PolicyCategoryField } from '@/entities/policy-categories';
 import { Control, Path } from 'react-hook-form';
 import {
 	FormField,

@@ -3,7 +3,7 @@
 import { AuthToken } from '@/shared/auth/types';
 import { getAuthHeaders } from '@/shared/auth/utils';
 import { api } from '@/shared/http-client/api';
-import { CompanyFormSchema, Company } from './companies.types';
+import { CompanyFormSchema, Company, CompanyFilters } from './companies.types';
 
 export const getUserCompany = async (token: AuthToken) => {
 	return await api.get(`users/company`, getAuthHeaders(token));
@@ -20,6 +20,8 @@ export const createCompany = async (
 	return await api.post('/companies', data, getAuthHeaders(token));
 };
 
-export const getAllCompanies = async () => {
-	return await api.get<Company[]>('/companies');
+export const getAllCompanies = async (filters: CompanyFilters) => {
+	return await api.get<Company[]>('/companies', {
+		params: filters,
+	});
 };

@@ -8,6 +8,8 @@ import { cn } from '@/shared/lib/utils';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/shared/ui/tooltip';
 import { Toaster } from '@/shared/ui';
+import { Suspense } from 'react';
+import { Loader2 } from 'lucide-react';
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
@@ -40,15 +42,17 @@ export default function RootLayout({
 					`${geistSans.variable} ${geistMono.variable} antialiased`,
 				)}
 			>
-				<TooltipProvider>
-					<QueryClientProvider client={queryClient}>
-						<ClerkProvider>
-							<Header />
-							{children}
-							<Toaster />
-						</ClerkProvider>
-					</QueryClientProvider>
-				</TooltipProvider>
+				<Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+					<TooltipProvider>
+						<QueryClientProvider client={queryClient}>
+							<ClerkProvider>
+								<Header />
+								{children}
+								<Toaster />
+							</ClerkProvider>
+						</QueryClientProvider>
+					</TooltipProvider>
+				</Suspense>
 			</body>
 		</html>
 	);

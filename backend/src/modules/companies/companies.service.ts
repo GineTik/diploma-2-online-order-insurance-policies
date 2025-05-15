@@ -6,13 +6,20 @@ import {
 	USER_ALREADY_HAVE_COMPANY,
 	COMPANY_NOT_FOUND_BY_ADMIN_ID,
 } from '@shared/errors';
+import { CompanyFiltersDto } from './dtos/company-filters.dto';
 
 @Injectable()
 export class CompaniesService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getFiltered() {
+	async getFiltered({ search }: CompanyFiltersDto) {
 		const companies = await this.prisma.company.findMany({
+			where: {
+				name: {
+					contains: search,
+					mode: 'insensitive',
+				},
+			},
 			include: {
 				policies: {
 					where: {

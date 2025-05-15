@@ -1,4 +1,5 @@
 import {
+	ApproveDialog,
 	Badge,
 	Button,
 	Tooltip,
@@ -12,17 +13,28 @@ import { format } from 'date-fns';
 import { Order } from '@/entities/orders';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/constants/routes';
+import { useUpdateOrder } from '../hooks/use-update-order';
 
 type OrderItemProps = {
 	order: Order;
+	companyView?: boolean;
 };
 
 export const OrderCard = (props: OrderItemProps) => {
+	const { companyView } = props;
+
 	return (
 		<Card className="divide-y divide-border *:py-3 py-0">
 			<ItemHeader {...props} />
 			<PoliceDetails {...props} />
-			<ItemFooter {...props} />
+			{companyView ? (
+				<CompanyActionsFooter
+					orderStatus={props.order.status}
+					orderId={props.order.id}
+				/>
+			) : (
+				<ItemFooter {...props} />
+			)}
 		</Card>
 	);
 };
@@ -66,10 +78,19 @@ const PoliceDetails = ({ order: { policy } }: OrderItemProps) => {
 
 const ItemFooter = ({ order: { policy, status } }: OrderItemProps) => {
 	return (
-		<CardFooter className="flex md:items-center gap-2 md:flex-row flex-col">
+		<CardFooter className="flex items-start md:items-center gap-2 md:flex-row flex-col">
 			{status === 'COMPLETED' && <ActiveDownloadButton />}
 			{status === 'PENDING' && (
 				<InactiveDownloadButton companyName={policy.company.name} />
+			)}
+			{status === 'CANCELLED' && (
+				<div className="space-y-1 md:max-w-1/2">
+					<Badge variant="destructive">Вам відхилено страхування</Badge>
+					<p className="text-sm text-muted-foreground">
+						Зв&apos;яжіться з компанією {policy.company.name} для отримання
+						додаткової інформації
+					</p>
+				</div>
 			)}
 
 			<p className="text-sm text-muted-foreground">
@@ -119,5 +140,49 @@ const InactiveDownloadButton = ({ companyName }: { companyName: string }) => {
 				</p>
 			</TooltipContent>
 		</Tooltip>
+	);
+};
+
+const CompanyActionsFooter = ({
+	orderStatus,
+	orderId,
+}: {
+	orderStatus: string;
+	orderId: string;
+}) => {
+	const { updateOrder, isUpdating } = useUpdateOrder();
+
+	return (
+		<CardFooter className="flex gap-2">
+			{orderStatus === 'PENDING' ? (
+				<>
+					<ApproveDialog
+						title="Погодження замовлення"
+						description="Ви впевнені, що хочете погодити це замовлення?"
+						onConfirm={() => {
+							updateOrder({ orderId, status: 'approve' });
+						}}
+						confirmText="Погодити"
+						confirmIsLoading={isUpdating}
+					>
+						<Button variant="secondary">Погодити</Button>
+					</ApproveDialog>
+					<ApproveDialog
+						title="Відхилення замовлення"
+						description="Ви впевнені, що хочете відхилити це замовлення?"
+						onConfirm={() => {
+							updateOrder({ orderId, status: 'cancel' });
+						}}
+						confirmText="Відхилити"
+						confirmVariant="destructive"
+						confirmIsLoading={isUpdating}
+					>
+						<Button variant="destructive">Відхилити</Button>
+					</ApproveDialog>
+				</>
+			) : (
+				<p className="text-sm text-muted-foreground">Погоджено</p>
+			)}
+		</CardFooter>
 	);
 };

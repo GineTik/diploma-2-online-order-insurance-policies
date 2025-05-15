@@ -4,8 +4,20 @@ import { usePolicy } from '@/entities/policies';
 import { useParams } from 'next/navigation';
 import { H2 } from '@/shared/ui/headings';
 import { OrderForm } from '@/features/order';
-import { Loader2 } from 'lucide-react';
+import { HomeIcon, Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/shared/ui/card';
+
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from '@/shared/ui';
+import { ROUTES } from '@/shared/constants/routes';
+import { usePolicyCategory } from '@/entities/policy-categories';
+import { Skeleton } from '@/shared/ui/skeleton';
 
 export default function PolicyPage() {
 	const params = useParams<{ slug: string }>();
@@ -22,14 +34,57 @@ export default function PolicyPage() {
 	return (
 		<Card className="space-y-2 max-w-[1000px] mx-auto w-full p-0">
 			<CardContent className="*:px-10 *:py-5 divide-y divide-border">
-				<div className="">
+				<div className="space-y-1">
+					<PolicyBreadcrumbs
+						categoryId={policy.categoryId}
+						policyName={policy.name}
+					/>
 					<H2>{policy.name}</H2>
 					<p>{policy.description}</p>
 				</div>
 				<div className="">
-					<OrderForm />
+					<OrderForm categoryId={policy.categoryId} />
 				</div>
 			</CardContent>
 		</Card>
 	);
 }
+
+const PolicyBreadcrumbs = ({
+	categoryId,
+	policyName,
+}: {
+	categoryId: string;
+	policyName: string;
+}) => {
+	const { category, isLoadingCategory } = usePolicyCategory(categoryId);
+
+	return (
+		<Breadcrumb className="*:text-[12px] [&_svg]:size-4 bg-background rounded-full px-3 py-1 inline-flex mb-2">
+			<BreadcrumbList>
+				<BreadcrumbItem>
+					<BreadcrumbLink
+						href={ROUTES.HOME}
+						className="flex items-center gap-2"
+					>
+						<HomeIcon className="" />
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbLink href={ROUTES.POLICY_LIST(category?.slug ?? '')}>
+						{isLoadingCategory ? (
+							<Skeleton className="w-20 h-4" />
+						) : (
+							category?.name
+						)}
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem>
+					<BreadcrumbPage>{policyName}</BreadcrumbPage>
+				</BreadcrumbItem>
+			</BreadcrumbList>
+		</Breadcrumb>
+	);
+};

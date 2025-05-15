@@ -162,6 +162,13 @@ exports.Prisma.OrderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OrderInformationScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  orderId: 'orderId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -183,7 +190,8 @@ exports.Prisma.ModelName = {
   UserCompany: 'UserCompany',
   Policy: 'Policy',
   PolicyCategory: 'PolicyCategory',
-  Order: 'Order'
+  Order: 'Order',
+  OrderInformation: 'OrderInformation'
 };
 
 /**

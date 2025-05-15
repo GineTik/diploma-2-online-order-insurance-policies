@@ -23,7 +23,7 @@ export default function Page() {
 			sort: sort.currentValue,
 			search: search.currentValue,
 		});
-	}, [search.currentValue, sort.currentValue]);
+	}, [search.currentValue, sort.currentValue, params.category]);
 
 	return (
 		<div className="space-y-2 max-w-[800px] mx-auto w-full">

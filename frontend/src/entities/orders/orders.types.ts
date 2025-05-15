@@ -1,6 +1,6 @@
 export type OrderPolicy = {
 	policySlug: string;
-	information: OrderField[];
+	informations: OrderField[];
 };
 
 export type OrderField = {
@@ -24,4 +24,9 @@ export type Order = {
 		price: number;
 		version: number;
 	};
+};
+
+export type OrderFilters = {
+	companyId?: string;
+	userId?: string | null;
 };

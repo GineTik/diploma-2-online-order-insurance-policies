@@ -10,7 +10,9 @@ api.interceptors.response.use(
 		return response;
 	},
 	(error) => {
-		toast.error(error.response.data.message);
+		if (error.response.status >= 500) {
+			toast.error(error.response.data.message);
+		}
 		return Promise.reject(error);
 	},
 );

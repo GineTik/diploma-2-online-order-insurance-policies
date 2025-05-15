@@ -1,9 +1,6 @@
 'use client';
 
-import {
-	createCategorySchema,
-	usePolicyCategories,
-} from '@/entities/policy-categories';
+import { usePolicyCategories } from '@/entities/policy-categories';
 import {
 	CompleteFormFieldInput,
 	CompleteFormFieldSelect,

@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	Param,
+	Patch,
+	Post,
+	Query,
+	Res,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Auth } from '@shared/auth';
-import { UserId } from '@shared/auth';
+import { UserSub } from '@shared/auth';
 import { Response } from 'express';
 import { CreateOrderDto } from './dtos/create-order.dto';
+import { OrderFiltersDto } from './dtos/order-filters.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -11,7 +21,7 @@ export class OrdersController {
 
 	@Post()
 	@Auth()
-	async create(@Body() dto: CreateOrderDto, @UserId() userId: string) {
+	async create(@Body() dto: CreateOrderDto, @UserSub() userId: string) {
 		return await this.ordersService.create(dto, userId);
 	}
 
@@ -20,7 +30,7 @@ export class OrdersController {
 	async generatePDF(
 		@Res({ passthrough: true }) res: Response,
 		@Param('id') id: string,
-		@UserId() userId: string,
+		@UserSub() userId: string,
 	) {
 		const pdf = await this.ordersService.generatePdf(id, userId);
 
@@ -31,5 +41,23 @@ export class OrdersController {
 		});
 
 		res.end(pdf);
+	}
+
+	@Get()
+	@Auth()
+	async getOrders(@Query() filters: OrderFiltersDto) {
+		return await this.ordersService.getFiltered(filters);
+	}
+
+	@Patch(':id/approve')
+	@Auth()
+	async approveOrder(@Param('id') id: string, @UserSub() userSub: string) {
+		return await this.ordersService.approveOrder(id, userSub);
+	}
+
+	@Patch(':id/cancel')
+	@Auth()
+	async cancelOrder(@Param('id') id: string, @UserSub() userSub: string) {
+		return await this.ordersService.cancelOrder(id, userSub);
 	}
 }

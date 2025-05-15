@@ -88,9 +88,20 @@ model Order {
 	policySlug      String
 	policyVersion   Int
 
+  informations     OrderInformation[]
+
   user            User   @relation(fields: [userId], references: [id])
 	userId          String @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model OrderInformation {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String
+  value     String
+
+  order     Order   @relation(fields: [orderId], references: [id])
+	orderId   String @db.ObjectId
 }

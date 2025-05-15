@@ -1,11 +1,14 @@
-import { PolicyCategory } from '../categories.types';
+import { PolicyCategoryField } from '../categories.types';
+import { usePolicyCategories } from './use-policy-categories';
 
-export const usePolicyCategory = () => {
+export const usePolicyCategory = (categoryId: string) => {
+	const { categories, isCategoriesLoading } = usePolicyCategories();
+
+	const category = categories?.find((category) => category.id === categoryId);
+
 	return {
 		category: {
-			name: 'Автогражданка',
-			slug: 'auto-insurance',
-			description: 'Автогражданка',
+			...category,
 			fields: [
 				{
 					name: 'car-type',
@@ -51,7 +54,8 @@ export const usePolicyCategory = () => {
 					placeholder: 'АК 9265 АК',
 					type: 'string',
 				},
-			],
-		} as PolicyCategory,
+			] as PolicyCategoryField[],
+		},
+		isLoadingCategory: isCategoriesLoading,
 	};
 };

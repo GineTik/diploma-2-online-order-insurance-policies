@@ -152,7 +152,7 @@ const Content = ({ policy, haveCategoryBadge }: PolicyCardProps) => {
 			{haveCategoryBadge && (
 				<Badge
 					variant="outline"
-					className="bg-background hover:opacity-80 duration-100"
+					className="bg-background hover:opacity-80 duration-100 rounded-full"
 					asChild
 				>
 					<Link href={ROUTES.POLICY_LIST(policy.category.slug)}>

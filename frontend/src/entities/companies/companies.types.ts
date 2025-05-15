@@ -11,3 +11,7 @@ export type Company = {
 	name: string;
 	policiesCount: number;
 };
+
+export type CompanyFilters = {
+	search?: string;
+};

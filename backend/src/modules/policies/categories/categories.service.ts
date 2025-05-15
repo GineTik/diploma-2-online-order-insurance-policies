@@ -9,7 +9,21 @@ export class CategoriesService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll() {
-		return await this.prisma.policyCategory.findMany();
+		const categories = await this.prisma.policyCategory.findMany({
+			include: {
+				policies: {
+					where: {
+						OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+					},
+					distinct: ['slug'],
+				},
+			},
+		});
+
+		return categories.map(({ policies, ...category }) => ({
+			...category,
+			policiesCount: policies.length,
+		}));
 	}
 
 	async getById(id: string) {

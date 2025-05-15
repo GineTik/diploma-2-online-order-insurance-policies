@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { OrdersService } from '@modules/orders';
-import { UserId, Auth } from '@shared/auth';
+import { UserSub, Auth } from '@shared/auth';
 
 @Controller()
 export class UserOrderController {
@@ -8,7 +8,7 @@ export class UserOrderController {
 
 	@Get('users/orders')
 	@Auth()
-	async getUserOrders(@UserId() userId: string) {
+	async getUserOrders(@UserSub() userId: string) {
 		return await this.ordersService.getFiltered({ userId });
 	}
 }

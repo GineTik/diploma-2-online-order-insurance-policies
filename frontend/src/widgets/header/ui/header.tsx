@@ -3,7 +3,7 @@
 import { CustomSignInButton, CustomSignUpButton } from '@/features/auth';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Navbar } from './navbar';
-import { ProfileDropdown } from './profile-dropdown';
+import { NavigationDropdown } from './navigation-dropdown';
 
 export const Header = () => {
 	return (
@@ -14,7 +14,7 @@ export const Header = () => {
 			</div>
 			<div className="flex items-center gap-2 ml-auto">
 				<SignedIn>
-					<ProfileDropdown />
+					<NavigationDropdown />
 					<UserButton />
 				</SignedIn>
 				<SignedOut>

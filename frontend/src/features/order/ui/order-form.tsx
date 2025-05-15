@@ -1,17 +1,17 @@
 'use client';
 
 import { usePolicyCategory } from '@/entities/policy-categories';
-import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { OrderFormInputs } from './order-form-inputs';
 import { OrderAction } from './order-action';
+import { useParams } from 'next/navigation';
 
-export const OrderForm = () => {
+export const OrderForm = ({ categoryId }: { categoryId: string }) => {
 	const params = useParams<{ slug: string }>();
-	const { category } = usePolicyCategory();
+	const { category } = usePolicyCategory(categoryId);
 	const form = useForm<Record<string, string>>({
 		defaultValues: Object.fromEntries(
-			(category.fields || []).map((field) => [field.name, '']),
+			(category?.fields || []).map((field) => [field.name, '']),
 		),
 	});
 

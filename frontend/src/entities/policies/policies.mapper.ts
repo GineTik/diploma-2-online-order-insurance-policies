@@ -11,8 +11,5 @@ export const mapFromPolicySchemaToCreateRequest = (policy: CreatePolicy) => {
 };
 
 export const mapFromPolicySchemaToUpdateRequest = (policy: UpdatePolicy) => {
-	return {
-		...mapFromPolicySchemaToCreateRequest(policy),
-		id: policy.id,
-	} as Policy;
+	return mapFromPolicySchemaToCreateRequest(policy);
 };

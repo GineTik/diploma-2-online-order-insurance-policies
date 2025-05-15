@@ -1,12 +1,16 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getAllCompanies } from '@/entities/companies';
+import { CompanyFilters, getAllCompanies } from '@/entities/companies';
 
-export const useCompanies = () => {
+type UseCompaniesProps = {
+	filters: CompanyFilters;
+};
+
+export const useCompanies = ({ filters }: UseCompaniesProps) => {
 	const { data, isLoading } = useQuery({
-		queryKey: ['companies'],
-		queryFn: getAllCompanies,
+		queryKey: ['companies', filters],
+		queryFn: async () => await getAllCompanies(filters),
 	});
 
 	return {
