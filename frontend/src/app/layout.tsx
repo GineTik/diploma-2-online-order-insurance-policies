@@ -20,7 +20,16 @@ const geistMono = Geist_Mono({
 	subsets: ['latin'],
 });
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: (failureCount) => {
+				const maxRetries = 1;
+				return failureCount < maxRetries;
+			},
+		},
+	},
+});
 
 export default function RootLayout({
 	children,

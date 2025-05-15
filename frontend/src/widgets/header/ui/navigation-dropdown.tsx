@@ -27,7 +27,7 @@ export const NavigationDropdown = () => {
 					<Link href={ROUTES.ORDERS}>Ваші замовлення</Link>
 				</DropdownMenuItem>
 				{isCompanyLoading ? (
-					<Skeleton className="w-26 h-8 rounded-md" />
+					<Skeleton className="w-full h-8 rounded-md" />
 				) : company == undefined ? (
 					<DropdownMenuItem>
 						<Link href={ROUTES.CREATE_COMPANY}>Створити компанію</Link>
