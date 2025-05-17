@@ -7,6 +7,7 @@ export const mapFromPolicySchemaToCreateRequest = (policy: CreatePolicy) => {
 		price: Number(policy.price),
 		categoryId: policy.categoryId,
 		slug: policy.slug,
+		options: policy.options,
 	} as Policy;
 };
 

@@ -1,5 +1,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 export const useCustomSearchParam = (key: string) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -15,6 +16,10 @@ export const useCustomSearchParam = (key: string) => {
 		router.replace(`?${params.toString()}`);
 		setCurrentValue(value);
 	};
+
+	useEffect(() => {
+		setCurrentValue(searchParams.get(key) || '');
+	}, [searchParams, key]);
 
 	return {
 		currentValue,

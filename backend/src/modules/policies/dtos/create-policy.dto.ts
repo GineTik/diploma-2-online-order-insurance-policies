@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class CreatePolicyDto {
 	@IsString()
@@ -15,4 +15,8 @@ export class CreatePolicyDto {
 
 	@IsString()
 	categoryId: string;
+
+	@IsArray()
+	@IsString({ each: true })
+	options: string[];
 }

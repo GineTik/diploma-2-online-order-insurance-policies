@@ -14,6 +14,8 @@ import { useForm } from 'react-hook-form';
 import { CreatePolicy, policySchema } from '@/entities/policies';
 import { useCreatePolicy } from '../hooks/use-create-policy';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FormFieldMultiInput } from '@/shared/ui/multy-input';
+import { toast } from 'sonner';
 
 export const CreatePolicyForm = () => {
 	const form = useForm<CreatePolicy>({
@@ -23,16 +25,23 @@ export const CreatePolicyForm = () => {
 			price: 0,
 			categoryId: '',
 			slug: '',
+			options: [''],
 		},
 		resolver: zodResolver(policySchema),
 	});
 
 	const { categories, isCategoriesLoading } = usePolicyCategories();
-	const { createPolicy, isCreatingPolicy } = useCreatePolicy();
+	const { createPolicy, isCreatingPolicy } = useCreatePolicy({
+		onSuccess: () => {
+			form.reset();
+		},
+		onError: (error) => {
+			toast.error(error.response?.data.message ?? 'Щось пішло не так');
+		},
+	});
 
 	const submit = (data: CreatePolicy) => {
 		createPolicy(data);
-		form.reset();
 	};
 
 	return (
@@ -58,6 +67,15 @@ export const CreatePolicyForm = () => {
 					name="description"
 					label="Опис"
 					placeholder="Опис полісу"
+				/>
+				<FormFieldMultiInput
+					control={form.control}
+					name="options"
+					label="Опції"
+					subLabel="Додайте поля для полісу"
+					tooltipText="Поля для полісу"
+					buttonText="Додати поле"
+					defaultValues={form.getValues('options')}
 				/>
 				<div className="flex items-start gap-4 *:w-full">
 					<CompleteFormFieldInput

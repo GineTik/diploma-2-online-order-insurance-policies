@@ -9,4 +9,6 @@ export const ROUTES = {
 	SUCCESS_ORDER: (slug: string) => `/policies/${slug}/success`,
 	ORDERS: '/orders',
 	CATEGORIES: '/categories',
+	DOWNLOAD_ORDER_PDF: (id: string) =>
+		`${process.env.NEXT_PUBLIC_API_URL}/orders/${id}/generate/pdf`,
 };

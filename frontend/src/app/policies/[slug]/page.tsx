@@ -4,7 +4,7 @@ import { usePolicy } from '@/entities/policies';
 import { useParams } from 'next/navigation';
 import { H2 } from '@/shared/ui/headings';
 import { OrderForm } from '@/features/order';
-import { HomeIcon, Loader2 } from 'lucide-react';
+import { CheckIcon, HomeIcon, Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/shared/ui/card';
 
 import {
@@ -45,6 +45,19 @@ export default function PolicyPage() {
 				<div className="">
 					<OrderForm categoryId={policy.categoryId} />
 				</div>
+				{policy.options.length !== 0 && (
+					<div className="">
+						<H2 className="mb-3">Що включає страхування</H2>
+						<ul className="space-y-1 list-none">
+							{policy.options.map((option) => (
+								<li key={option} className="flex items-center gap-2 text-sm">
+									<CheckIcon className="size-4 text-emerald-500" />
+									{option}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);

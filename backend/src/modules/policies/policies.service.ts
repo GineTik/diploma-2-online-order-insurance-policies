@@ -105,7 +105,7 @@ export class PoliciesService {
 				description: dto.description,
 				price: dto.price,
 				version: 0,
-				options: [],
+				options: dto.options,
 				company: {
 					connect: {
 						id: company.id,

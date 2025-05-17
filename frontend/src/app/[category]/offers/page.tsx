@@ -18,12 +18,12 @@ export default function Page() {
 	});
 
 	useEffect(() => {
-		setFilters({
-			categorySlug: params.category,
+		setFilters((old) => ({
+			...old,
 			sort: sort.currentValue,
 			search: search.currentValue,
-		});
-	}, [search.currentValue, sort.currentValue, params.category]);
+		}));
+	}, [search.currentValue, sort.currentValue]);
 
 	return (
 		<div className="space-y-2 max-w-[800px] mx-auto w-full">

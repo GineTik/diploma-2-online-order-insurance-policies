@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
 export const api = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 api.interceptors.response.use(

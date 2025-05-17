@@ -1,19 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import PDFDocument from 'pdfkit';
+import * as PDFKit from 'pdfkit';
+import { Response } from 'express';
 
 @Injectable()
 export class PdfGeneratorService {
-	async generatePdf(data: Record<string, any>): Promise<Buffer> {
+	async generatePdf(
+		filename: string,
+		data: Record<string, any>,
+		res: Response,
+	): Promise<Buffer> {
 		return new Promise((resolve, reject) => {
 			try {
-				const doc = new PDFDocument();
-				const chunks: Buffer[] = [];
+				const doc = new PDFKit();
+				const stream = res.writeHead(200, {
+					'Content-Type': 'application/pdf',
+					'Content-disposition': `attachment;filename=${filename}.pdf`,
+				});
 
 				// Collect PDF chunks
-				doc.on('data', (chunk) => chunks.push(chunk));
+				doc.on('data', (chunk) => stream.write(chunk));
 
 				// Resolve with the complete PDF buffer when done
-				doc.on('end', () => resolve(Buffer.concat(chunks)));
+				doc.on('end', () => stream.end());
 
 				// Add content to the PDF
 				doc.fontSize(16).text('Generated Document', { align: 'center' });

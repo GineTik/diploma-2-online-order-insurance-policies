@@ -26,13 +26,11 @@ export class OrdersController {
 	}
 
 	@Get(':id/generate/pdf')
-	@Auth()
 	async generatePDF(
 		@Res({ passthrough: true }) res: Response,
 		@Param('id') id: string,
-		@UserSub() userId: string,
 	) {
-		const pdf = await this.ordersService.generatePdf(id, userId);
+		const pdf = await this.ordersService.generatePdf(id, res);
 
 		res.set({
 			'Content-Type': 'application/pdf',

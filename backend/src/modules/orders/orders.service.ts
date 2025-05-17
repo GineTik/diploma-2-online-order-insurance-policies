@@ -1,21 +1,14 @@
-import {
-	BadRequestException,
-	ForbiddenException,
-	Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
 import { Order } from 'generated/prisma';
-import {
-	COMPANY_NOT_FOUND,
-	USER_IS_NOT_POLICY_OWNER,
-	USER_NOT_FOUND,
-} from '@shared/errors';
-import { FORBIDDEN_GENERATE_PDF } from '@shared/errors';
+import { USER_IS_NOT_POLICY_OWNER, USER_NOT_FOUND } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
 import { UsersService } from '@modules/users';
+import { Response } from 'express';
+
 @Injectable()
 export class OrdersService {
 	constructor(
@@ -44,6 +37,9 @@ export class OrdersService {
 						},
 					},
 					informations: true,
+				},
+				orderBy: {
+					createdAt: 'desc',
 				},
 			})
 			.catch(() => {
@@ -98,16 +94,24 @@ export class OrdersService {
 		});
 	}
 
-	async generatePdf(orderId: string, userId: string) {
-		const order = await this.prisma.order.findUnique({
-			where: { id: orderId },
-		});
+	async generatePdf(orderId: string, res: Response) {
+		const { id, userId, createdAt, updatedAt, ...order } =
+			await this.prisma.order.findUnique({
+				where: { id: orderId },
+				include: {
+					policy: true,
+				},
+			});
 
-		if (!this.isUserOwner(userId, order)) {
-			throw new ForbiddenException(FORBIDDEN_GENERATE_PDF);
-		}
-
-		return await this.pdfGenerator.generatePdf(order);
+		return await this.pdfGenerator.generatePdf(
+			`order-#${id}`,
+			{
+				...order,
+				createdAt: createdAt.toISOString(),
+				updatedAt: updatedAt.toISOString(),
+			},
+			res,
+		);
 	}
 
 	private async isUserOwner(userId: string, order: Order) {

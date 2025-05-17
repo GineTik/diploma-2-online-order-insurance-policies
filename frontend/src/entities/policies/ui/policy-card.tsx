@@ -39,6 +39,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePolicyCategories } from '@/entities/policy-categories';
 import { useUpdatePolicy } from '@/entities/policies/hooks/use-update-policy';
 import { useDeletePolicy } from '../hooks/use-delete-policy';
+import { FormFieldMultiInput } from '@/shared/ui/multy-input';
 
 type PolicyCardProps = {
 	policy: Policy;
@@ -140,7 +141,7 @@ const Content = ({ policy, haveCategoryBadge }: PolicyCardProps) => {
 			<CardContent className="flex gap-2">
 				<div className="">
 					<ul className="space-y-1 list-none">
-						{['Обов’язковий', 'Необов’язковий'].map((option) => (
+						{policy.options.map((option) => (
 							<li key={option} className="flex items-center gap-2 text-sm">
 								<CheckIcon className="size-4 text-emerald-500" />
 								{option}
@@ -182,6 +183,7 @@ const EditingForm = ({
 			slug: policy.slug,
 			price: policy.price,
 			categoryId: policy.categoryId,
+			options: policy.options,
 		},
 		resolver: zodResolver(policySchema),
 	});
@@ -226,6 +228,14 @@ const EditingForm = ({
 							label: category.name,
 							value: category.id,
 						}))}
+					/>
+					<FormFieldMultiInput
+						control={form.control}
+						name="options"
+						label="Опції"
+						subLabel="Додайте поля для полісу"
+						tooltipText="Поля для полісу"
+						defaultValues={policy.options}
 					/>
 				</CardContent>
 				<CardFooter className="mt-3 gap-2">

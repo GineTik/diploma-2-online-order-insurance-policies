@@ -24,6 +24,7 @@ export type CreatePolicy = {
 	description: string;
 	price: number;
 	categoryId: string;
+	options: string[];
 };
 
 export type UpdatePolicy = {
@@ -49,6 +50,7 @@ export const policySchema = z.object({
 	description: z.string().min(1),
 	price: z.coerce.number().min(1),
 	categoryId: z.string().min(1),
+	options: z.array(z.string()).min(1),
 });
 
 export type PolicyForm = z.infer<typeof policySchema>;

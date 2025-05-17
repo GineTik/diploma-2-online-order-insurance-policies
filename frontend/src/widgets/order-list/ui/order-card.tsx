@@ -76,10 +76,10 @@ const PoliceDetails = ({ order: { policy } }: OrderItemProps) => {
 	);
 };
 
-const ItemFooter = ({ order: { policy, status } }: OrderItemProps) => {
+const ItemFooter = ({ order: { policy, status, id } }: OrderItemProps) => {
 	return (
 		<CardFooter className="flex items-start md:items-center gap-2 md:flex-row flex-col">
-			{status === 'COMPLETED' && <ActiveDownloadButton />}
+			{status === 'COMPLETED' && <ActiveDownloadButton orderId={id} />}
 			{status === 'PENDING' && (
 				<InactiveDownloadButton companyName={policy.company.name} />
 			)}
@@ -108,13 +108,15 @@ const ItemFooter = ({ order: { policy, status } }: OrderItemProps) => {
 	);
 };
 
-const ActiveDownloadButton = () => {
+const ActiveDownloadButton = ({ orderId }: { orderId: string }) => {
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
-				<Button variant="secondary">
-					<DownloadIcon className="size-4 mr-2" />
-					Завантажити документ
+				<Button variant="secondary" asChild>
+					<Link href={ROUTES.DOWNLOAD_ORDER_PDF(orderId)} download>
+						<DownloadIcon className="size-4 mr-2" />
+						Завантажити документ
+					</Link>
 				</Button>
 			</TooltipTrigger>
 			<TooltipContent>
