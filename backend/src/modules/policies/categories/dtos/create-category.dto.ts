@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsString, IsArray, ValidateNested } from 'class-validator';
+import { CategoryFieldDto } from './category-field.dto';
+import { Type } from 'class-transformer';
 
 export class CreateCategoryDto {
 	@ApiProperty({
@@ -14,4 +16,9 @@ export class CreateCategoryDto {
 
 	@IsString()
 	description: string;
+
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => CategoryFieldDto)
+	fields: CategoryFieldDto[];
 }

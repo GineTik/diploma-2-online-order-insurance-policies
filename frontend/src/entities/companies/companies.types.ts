@@ -6,6 +6,10 @@ export const companyFormSchema = z.object({
 
 export type CompanyFormSchema = z.infer<typeof companyFormSchema>;
 
+export const updateCompanySchema = companyFormSchema;
+
+export type UpdateCompanySchema = z.infer<typeof updateCompanySchema>;
+
 export type Company = {
 	id: string;
 	name: string;

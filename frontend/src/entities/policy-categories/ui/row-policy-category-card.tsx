@@ -12,6 +12,7 @@ import {
 	CompleteFormFieldInput,
 	Form,
 	LoadingButton,
+	FormFieldMultiFieldInput,
 } from '@/shared/ui';
 import {
 	PolicyCategory,
@@ -108,6 +109,7 @@ const EditingForm = ({
 			slug: category.slug,
 			name: category.name,
 			description: category.description,
+			fields: category.fields,
 		},
 		resolver: zodResolver(createCategorySchema),
 	});
@@ -142,10 +144,17 @@ const EditingForm = ({
 							name="slug"
 							label="Slug"
 						/>
+						<FormFieldMultiFieldInput
+							control={form.control}
+							name="fields"
+							formLabel="Поля"
+							buttonText="Додати поле"
+						/>
 					</div>
 				</CardHeader>
 				<CardFooter className="mt-3 gap-2">
 					<LoadingButton
+						className="grow"
 						variant="secondary"
 						size="sm"
 						onSubmit={submit}
@@ -154,7 +163,12 @@ const EditingForm = ({
 						<SaveIcon className="size-4" />
 						Зберегти
 					</LoadingButton>
-					<Button variant="outline" size="sm" onSubmit={() => cancelEditing()}>
+					<Button
+						className="grow"
+						variant="outline"
+						size="sm"
+						onClick={() => cancelEditing()}
+					>
 						<XIcon className="size-4" />
 						Скасувати
 					</Button>

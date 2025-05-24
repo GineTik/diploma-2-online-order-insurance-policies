@@ -15,3 +15,8 @@ export * from './dropdown-menu';
 export * from './alert-dialog';
 export * from './approve-dialog';
 export * from './breadcrumb';
+export {
+	type FieldItem as MultiFieldItem,
+	FormFieldMultiFieldInput,
+	MultiFieldInput,
+} from './multi-field-input';

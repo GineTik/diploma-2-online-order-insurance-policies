@@ -30,3 +30,11 @@ export const H3 = ({ children, className, ...props }: HeadingProps) => {
 		</h3>
 	);
 };
+
+export const H4 = ({ children, className, ...props }: HeadingProps) => {
+	return (
+		<h3 className={cn('text-[14px] font-normal', className)} {...props}>
+			{children}
+		</h3>
+	);
+};

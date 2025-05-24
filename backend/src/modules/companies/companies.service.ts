@@ -1,12 +1,18 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { PrismaService } from '@shared/prisma';
 import {
-	USER_NOT_FOUND,
+	USER_NOT_FOUND_BY_ID,
 	USER_ALREADY_HAVE_COMPANY,
 	COMPANY_NOT_FOUND_BY_ADMIN_ID,
+	USER_NOT_FOUND,
 } from '@shared/errors';
 import { CompanyFiltersDto } from './dtos/company-filters.dto';
+import { UpdateCompanyDto } from './dtos/update-company.dto';
 
 @Injectable()
 export class CompaniesService {
@@ -19,6 +25,7 @@ export class CompaniesService {
 					contains: search,
 					mode: 'insensitive',
 				},
+				OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
 			},
 			include: {
 				policies: {
@@ -38,8 +45,11 @@ export class CompaniesService {
 	}
 
 	async getOne(id: string) {
-		const { users, ...company } = await this.prisma.company.findUnique({
-			where: { id },
+		const companyData = await this.prisma.company.findUnique({
+			where: {
+				id,
+				OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+			},
 			include: {
 				users: {
 					include: {
@@ -52,8 +62,22 @@ export class CompaniesService {
 			},
 		});
 
+		if (!companyData) {
+			throw new NotFoundException(
+				`Company with ID ${id} not found or has been deleted.`,
+			);
+		}
+
+		const { users, ...companyDetails } = companyData;
+
+		if (!users || users.length === 0 || !users[0]?.user) {
+			throw new NotFoundException(
+				`Admin user not found for company with ID ${id}.`,
+			);
+		}
+
 		return {
-			...company,
+			...companyDetails,
 			admin: users[0].user,
 		};
 	}
@@ -65,6 +89,9 @@ export class CompaniesService {
 					sub,
 				},
 				isAdmin: true,
+				company: {
+					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+				},
 			},
 			include: {
 				company: true,
@@ -86,7 +113,7 @@ export class CompaniesService {
 		});
 
 		if (!user) {
-			throw new BadRequestException(USER_NOT_FOUND(clerkId));
+			throw new BadRequestException(USER_NOT_FOUND_BY_ID(clerkId));
 		}
 		if (await this.isUserHaveCompany(user.id)) {
 			throw new BadRequestException(USER_ALREADY_HAVE_COMPANY);
@@ -109,15 +136,40 @@ export class CompaniesService {
 		return company;
 	}
 
-	async delete(companyId: string, userId: string) {
-		if (!(await this.userIsCompanyAdmin(userId, companyId))) {
-			throw new BadRequestException(USER_NOT_FOUND(userId));
+	async delete(companyId: string, userSub: string) {
+		if (!(await this.userIsCompanyAdminByUserSub(userSub, companyId))) {
+			throw new BadRequestException(USER_NOT_FOUND);
 		}
 
-		return await this.prisma.company.delete({
-			where: {
-				id: companyId,
-			},
+		return await this.prisma.$transaction(async (tx) => {
+			await tx.policy.updateMany({
+				where: {
+					companyId,
+				},
+				data: {
+					isDeleted: true,
+				},
+			});
+
+			return await tx.company.update({
+				where: {
+					id: companyId,
+				},
+				data: {
+					isDeleted: true,
+				},
+			});
+		});
+	}
+
+	async update(companyId: string, body: UpdateCompanyDto, userSub: string) {
+		if (!(await this.userIsCompanyAdminByUserSub(userSub, companyId))) {
+			throw new BadRequestException(USER_NOT_FOUND);
+		}
+
+		return await this.prisma.company.update({
+			where: { id: companyId },
+			data: body,
 		});
 	}
 
@@ -136,16 +188,24 @@ export class CompaniesService {
 			where: {
 				userId,
 				isAdmin: true,
+				company: {
+					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+				},
 			},
 		});
 
 		return !!user;
 	}
 
-	private async userIsCompanyAdmin(userId: string, companyId: string) {
+	private async userIsCompanyAdminByUserSub(
+		userSub: string,
+		companyId: string,
+	) {
 		const userCompany = await this.prisma.userCompany.findFirst({
 			where: {
-				userId,
+				user: {
+					sub: userSub,
+				},
 				companyId,
 				isAdmin: true,
 			},

@@ -29,8 +29,10 @@ export const CompleteFormFieldTextarea = <T extends object>({
 	name,
 	label,
 	placeholder,
+	className,
 }: {
 	control: Control<T>;
+	className?: string;
 } & Omit<FieldItem<T>, 'type'>) => {
 	return (
 		<FormField
@@ -40,7 +42,11 @@ export const CompleteFormFieldTextarea = <T extends object>({
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
-						<Textarea {...field} placeholder={placeholder} className="w-full" />
+						<Textarea
+							{...field}
+							placeholder={placeholder}
+							className={cn('w-full', className)}
+						/>
 					</FormControl>
 					<FormMessage />
 				</FormItem>

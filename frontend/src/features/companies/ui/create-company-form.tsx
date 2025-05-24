@@ -15,8 +15,11 @@ import {
 import { Card, CardContent } from '@/shared/ui';
 import { CompanyFormSchema, companyFormSchema } from '@/entities/companies';
 import { useCreateCompany } from '../hooks/use-create-company';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const CreateCompanyForm = () => {
+	const router = useRouter();
 	const form = useForm<CompanyFormSchema>({
 		resolver: zodResolver(companyFormSchema),
 		defaultValues: {
@@ -25,6 +28,11 @@ export const CreateCompanyForm = () => {
 	});
 
 	const { createCompany, isCreatingLoading } = useCreateCompany();
+
+	const submit = form.handleSubmit((data) => {
+		createCompany(data);
+		router.push(ROUTES.HOME);
+	});
 
 	return (
 		<Form {...form}>
@@ -47,7 +55,7 @@ export const CreateCompanyForm = () => {
 						variant={'secondary'}
 						className="w-full"
 						isLoading={isCreatingLoading}
-						onClick={form.handleSubmit((data) => createCompany(data))}
+						onClick={submit}
 					>
 						Створити
 					</LoadingButton>

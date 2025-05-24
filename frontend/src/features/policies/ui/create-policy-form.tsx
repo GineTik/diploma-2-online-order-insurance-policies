@@ -71,10 +71,7 @@ export const CreatePolicyForm = () => {
 				<FormFieldMultiInput
 					control={form.control}
 					name="options"
-					label="Опції"
-					subLabel="Додайте поля для полісу"
-					tooltipText="Поля для полісу"
-					buttonText="Додати поле"
+					label="Переваги"
 					defaultValues={form.getValues('options')}
 				/>
 				<div className="flex items-start gap-4 *:w-full">

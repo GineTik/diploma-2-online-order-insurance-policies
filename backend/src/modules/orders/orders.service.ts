@@ -3,7 +3,7 @@ import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
 import { Order } from 'generated/prisma';
-import { USER_IS_NOT_POLICY_OWNER, USER_NOT_FOUND } from '@shared/errors';
+import { USER_IS_NOT_POLICY_OWNER, USER_NOT_FOUND_BY_ID } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
 import { UsersService } from '@modules/users';
@@ -19,15 +19,12 @@ export class OrdersService {
 	) {}
 
 	async getFiltered({ userId, companyId }: OrderFiltersDto) {
-		const user = await this.usersService.getBySub(userId);
-		if (!user) {
-			throw new BadRequestException(USER_NOT_FOUND);
-		}
-
 		return await this.prisma.order
 			.findMany({
 				where: {
-					userId: user.id,
+					user: {
+						sub: userId,
+					},
 					policyCompanyId: companyId,
 				},
 				include: {
@@ -72,7 +69,7 @@ export class OrdersService {
 
 		const user = await this.usersService.getBySub(userSub);
 		if (!user) {
-			throw new BadRequestException(USER_NOT_FOUND);
+			throw new BadRequestException(USER_NOT_FOUND_BY_ID);
 		}
 
 		return await this.prisma.order.create({

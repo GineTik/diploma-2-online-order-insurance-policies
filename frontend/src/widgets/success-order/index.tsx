@@ -1,5 +1,7 @@
+import { ROUTES } from '@/shared/constants/routes';
 import { Button, H2 } from '@/shared/ui';
 import { Card, CardContent } from '@/shared/ui/card';
+import Link from 'next/link';
 
 export const SuccessOrder = () => {
 	return (
@@ -9,8 +11,8 @@ export const SuccessOrder = () => {
 				<p className="text-sm text-muted-foreground">
 					Ваше замовлення буде оброблено протягом 10 хвилин.
 				</p>
-				<Button variant="link" className="w-full font-bold">
-					До ваших замовлень
+				<Button variant="link" className="w-full font-bold" asChild>
+					<Link href={ROUTES.ORDERS}>До ваших замовлень</Link>
 				</Button>
 			</CardContent>
 		</Card>

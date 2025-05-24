@@ -25,7 +25,8 @@ model User {
 model Company {
 	id        String   @id @default(auto()) @map("_id") @db.ObjectId
 	name      String
-
+  isDeleted Boolean? @default(false)
+  
   users     UserCompany[]
   policies  Policy[]
 }
@@ -69,6 +70,7 @@ model PolicyCategory {
 	name      String
   slug      String
 	description String
+	fields    Json?
 	
   policies  Policy[]
 }

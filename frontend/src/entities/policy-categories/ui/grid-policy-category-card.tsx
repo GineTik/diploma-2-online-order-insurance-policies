@@ -15,8 +15,8 @@ export const GridPolicyCategoryCard = ({
 }: GridPolicyCategoryCardProps) => {
 	return (
 		<Link href={ROUTES.POLICY_LIST(category.slug)}>
-			<Card className="rounded-xl hover:scale-[103%] transition-all duration-300">
-				<CardContent className="flex gap-4 items-center">
+			<Card className="rounded-xl hover:scale-[103%] transition-all duration-300 h-full">
+				<CardContent className="flex gap-4 items-center h-full">
 					<div className="rounded-md bg-background p-2">{icon}</div>
 					<div>
 						<H3 className="leading-tight">{category.name}</H3>

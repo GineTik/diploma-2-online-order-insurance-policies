@@ -233,8 +233,6 @@ const EditingForm = ({
 						control={form.control}
 						name="options"
 						label="Опції"
-						subLabel="Додайте поля для полісу"
-						tooltipText="Поля для полісу"
 						defaultValues={policy.options}
 					/>
 				</CardContent>

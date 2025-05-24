@@ -286,8 +286,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -2572,16 +2572,19 @@ export namespace Prisma {
   export type CompanyMinAggregateOutputType = {
     id: string | null
     name: string | null
+    isDeleted: boolean | null
   }
 
   export type CompanyMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    isDeleted: boolean | null
   }
 
   export type CompanyCountAggregateOutputType = {
     id: number
     name: number
+    isDeleted: number
     _all: number
   }
 
@@ -2589,16 +2592,19 @@ export namespace Prisma {
   export type CompanyMinAggregateInputType = {
     id?: true
     name?: true
+    isDeleted?: true
   }
 
   export type CompanyMaxAggregateInputType = {
     id?: true
     name?: true
+    isDeleted?: true
   }
 
   export type CompanyCountAggregateInputType = {
     id?: true
     name?: true
+    isDeleted?: true
     _all?: true
   }
 
@@ -2677,6 +2683,7 @@ export namespace Prisma {
   export type CompanyGroupByOutputType = {
     id: string
     name: string
+    isDeleted: boolean | null
     _count: CompanyCountAggregateOutputType | null
     _min: CompanyMinAggregateOutputType | null
     _max: CompanyMaxAggregateOutputType | null
@@ -2699,6 +2706,7 @@ export namespace Prisma {
   export type CompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isDeleted?: boolean
     users?: boolean | Company$usersArgs<ExtArgs>
     policies?: boolean | Company$policiesArgs<ExtArgs>
     _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2709,9 +2717,10 @@ export namespace Prisma {
   export type CompanySelectScalar = {
     id?: boolean
     name?: boolean
+    isDeleted?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "isDeleted", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Company$usersArgs<ExtArgs>
     policies?: boolean | Company$policiesArgs<ExtArgs>
@@ -2727,6 +2736,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      isDeleted: boolean | null
     }, ExtArgs["result"]["company"]>
     composites: {}
   }
@@ -3123,6 +3133,7 @@ export namespace Prisma {
   interface CompanyFieldRefs {
     readonly id: FieldRef<"Company", 'String'>
     readonly name: FieldRef<"Company", 'String'>
+    readonly isDeleted: FieldRef<"Company", 'Boolean'>
   }
     
 
@@ -5673,6 +5684,7 @@ export namespace Prisma {
     name: number
     slug: number
     description: number
+    fields: number
     _all: number
   }
 
@@ -5696,6 +5708,7 @@ export namespace Prisma {
     name?: true
     slug?: true
     description?: true
+    fields?: true
     _all?: true
   }
 
@@ -5776,6 +5789,7 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields: JsonValue | null
     _count: PolicyCategoryCountAggregateOutputType | null
     _min: PolicyCategoryMinAggregateOutputType | null
     _max: PolicyCategoryMaxAggregateOutputType | null
@@ -5800,6 +5814,7 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     description?: boolean
+    fields?: boolean
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["policyCategory"]>
@@ -5811,9 +5826,10 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     description?: boolean
+    fields?: boolean
   }
 
-  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description", ExtArgs["result"]["policyCategory"]>
+  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "fields", ExtArgs["result"]["policyCategory"]>
   export type PolicyCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -5829,6 +5845,7 @@ export namespace Prisma {
       name: string
       slug: string
       description: string
+      fields: Prisma.JsonValue | null
     }, ExtArgs["result"]["policyCategory"]>
     composites: {}
   }
@@ -6226,6 +6243,7 @@ export namespace Prisma {
     readonly name: FieldRef<"PolicyCategory", 'String'>
     readonly slug: FieldRef<"PolicyCategory", 'String'>
     readonly description: FieldRef<"PolicyCategory", 'String'>
+    readonly fields: FieldRef<"PolicyCategory", 'Json'>
   }
     
 
@@ -8700,7 +8718,8 @@ export namespace Prisma {
 
   export const CompanyScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    isDeleted: 'isDeleted'
   };
 
   export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
@@ -8737,7 +8756,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     slug: 'slug',
-    description: 'description'
+    description: 'description',
+    fields: 'fields'
   };
 
   export type PolicyCategoryScalarFieldEnum = (typeof PolicyCategoryScalarFieldEnum)[keyof typeof PolicyCategoryScalarFieldEnum]
@@ -8852,6 +8872,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
    * Reference to a field of type 'OrderStatus'
    */
   export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
@@ -8917,6 +8944,7 @@ export namespace Prisma {
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     id?: StringFilter<"Company"> | string
     name?: StringFilter<"Company"> | string
+    isDeleted?: BoolNullableFilter<"Company"> | boolean | null
     users?: UserCompanyListRelationFilter
     policies?: PolicyListRelationFilter
   }
@@ -8924,6 +8952,7 @@ export namespace Prisma {
   export type CompanyOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    isDeleted?: SortOrder
     users?: UserCompanyOrderByRelationAggregateInput
     policies?: PolicyOrderByRelationAggregateInput
   }
@@ -8934,6 +8963,7 @@ export namespace Prisma {
     OR?: CompanyWhereInput[]
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     name?: StringFilter<"Company"> | string
+    isDeleted?: BoolNullableFilter<"Company"> | boolean | null
     users?: UserCompanyListRelationFilter
     policies?: PolicyListRelationFilter
   }, "id">
@@ -8941,6 +8971,7 @@ export namespace Prisma {
   export type CompanyOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    isDeleted?: SortOrder
     _count?: CompanyCountOrderByAggregateInput
     _max?: CompanyMaxOrderByAggregateInput
     _min?: CompanyMinOrderByAggregateInput
@@ -8952,6 +8983,7 @@ export namespace Prisma {
     NOT?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Company"> | string
     name?: StringWithAggregatesFilter<"Company"> | string
+    isDeleted?: BoolNullableWithAggregatesFilter<"Company"> | boolean | null
   }
 
   export type UserCompanyWhereInput = {
@@ -9109,6 +9141,7 @@ export namespace Prisma {
     name?: StringFilter<"PolicyCategory"> | string
     slug?: StringFilter<"PolicyCategory"> | string
     description?: StringFilter<"PolicyCategory"> | string
+    fields?: JsonNullableFilter<"PolicyCategory">
     policies?: PolicyListRelationFilter
   }
 
@@ -9117,6 +9150,7 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+    fields?: SortOrder
     policies?: PolicyOrderByRelationAggregateInput
   }
 
@@ -9128,6 +9162,7 @@ export namespace Prisma {
     name?: StringFilter<"PolicyCategory"> | string
     slug?: StringFilter<"PolicyCategory"> | string
     description?: StringFilter<"PolicyCategory"> | string
+    fields?: JsonNullableFilter<"PolicyCategory">
     policies?: PolicyListRelationFilter
   }, "id">
 
@@ -9136,6 +9171,7 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+    fields?: SortOrder
     _count?: PolicyCategoryCountOrderByAggregateInput
     _max?: PolicyCategoryMaxOrderByAggregateInput
     _min?: PolicyCategoryMinOrderByAggregateInput
@@ -9149,6 +9185,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"PolicyCategory"> | string
     slug?: StringWithAggregatesFilter<"PolicyCategory"> | string
     description?: StringWithAggregatesFilter<"PolicyCategory"> | string
+    fields?: JsonNullableWithAggregatesFilter<"PolicyCategory">
   }
 
   export type OrderWhereInput = {
@@ -9321,6 +9358,7 @@ export namespace Prisma {
   export type CompanyCreateInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     users?: UserCompanyCreateNestedManyWithoutCompanyInput
     policies?: PolicyCreateNestedManyWithoutCompanyInput
   }
@@ -9328,18 +9366,21 @@ export namespace Prisma {
   export type CompanyUncheckedCreateInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     users?: UserCompanyUncheckedCreateNestedManyWithoutCompanyInput
     policies?: PolicyUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     users?: UserCompanyUpdateManyWithoutCompanyNestedInput
     policies?: PolicyUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     users?: UserCompanyUncheckedUpdateManyWithoutCompanyNestedInput
     policies?: PolicyUncheckedUpdateManyWithoutCompanyNestedInput
   }
@@ -9347,14 +9388,17 @@ export namespace Prisma {
   export type CompanyCreateManyInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
   }
 
   export type CompanyUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CompanyUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserCompanyCreateInput = {
@@ -9501,6 +9545,7 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields?: InputJsonValue | null
     policies?: PolicyCreateNestedManyWithoutCategoryInput
   }
 
@@ -9509,6 +9554,7 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields?: InputJsonValue | null
     policies?: PolicyUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -9516,6 +9562,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
     policies?: PolicyUpdateManyWithoutCategoryNestedInput
   }
 
@@ -9523,6 +9570,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
     policies?: PolicyUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -9531,18 +9579,21 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields?: InputJsonValue | null
   }
 
   export type PolicyCategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
   }
 
   export type PolicyCategoryUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
   }
 
   export type OrderCreateInput = {
@@ -9726,6 +9777,12 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
+  }
+
   export type PolicyListRelationFilter = {
     every?: PolicyWhereInput
     some?: PolicyWhereInput
@@ -9739,16 +9796,28 @@ export namespace Prisma {
   export type CompanyCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isDeleted?: SortOrder
   }
 
   export type CompanyMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isDeleted?: SortOrder
   }
 
   export type CompanyMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isDeleted?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -9823,12 +9892,6 @@ export namespace Prisma {
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
-  }
-
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-    isSet?: boolean
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -9936,15 +9999,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-    isSet?: boolean
-  }
-
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -9959,12 +10013,25 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
     isSet?: boolean
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    isSet?: boolean
+  }
 
   export type PolicyCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+    fields?: SortOrder
   }
 
   export type PolicyCategoryMaxOrderByAggregateInput = {
@@ -9979,6 +10046,21 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type EnumOrderStatusFilter<$PrismaModel = never> = {
@@ -10221,6 +10303,11 @@ export namespace Prisma {
     connect?: PolicyWhereUniqueInput | PolicyWhereUniqueInput[]
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+    unset?: boolean
+  }
+
   export type UserCompanyUpdateManyWithoutCompanyNestedInput = {
     create?: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput> | UserCompanyCreateWithoutCompanyInput[] | UserCompanyUncheckedCreateWithoutCompanyInput[]
     connectOrCreate?: UserCompanyCreateOrConnectWithoutCompanyInput | UserCompanyCreateOrConnectWithoutCompanyInput[]
@@ -10358,11 +10445,6 @@ export namespace Prisma {
   export type PolicyUpdateoptionsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
-    unset?: boolean
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -10590,6 +10672,33 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -10612,12 +10721,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-    isSet?: boolean
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -10664,27 +10767,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-    isSet?: boolean
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-    isSet?: boolean
-  }
-
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -10697,6 +10779,18 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
     isSet?: boolean
   }
 
@@ -10975,12 +11069,14 @@ export namespace Prisma {
   export type CompanyCreateWithoutUsersInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     policies?: PolicyCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutUsersInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     policies?: PolicyUncheckedCreateNestedManyWithoutCompanyInput
   }
 
@@ -11023,23 +11119,27 @@ export namespace Prisma {
 
   export type CompanyUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     policies?: PolicyUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     policies?: PolicyUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyCreateWithoutPoliciesInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     users?: UserCompanyCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutPoliciesInput = {
     id?: string
     name: string
+    isDeleted?: boolean | null
     users?: UserCompanyUncheckedCreateNestedManyWithoutCompanyInput
   }
 
@@ -11053,6 +11153,7 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields?: InputJsonValue | null
   }
 
   export type PolicyCategoryUncheckedCreateWithoutPoliciesInput = {
@@ -11060,6 +11161,7 @@ export namespace Prisma {
     name: string
     slug: string
     description: string
+    fields?: InputJsonValue | null
   }
 
   export type PolicyCategoryCreateOrConnectWithoutPoliciesInput = {
@@ -11107,11 +11209,13 @@ export namespace Prisma {
 
   export type CompanyUpdateWithoutPoliciesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     users?: UserCompanyUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutPoliciesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     users?: UserCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
@@ -11130,12 +11234,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
   }
 
   export type PolicyCategoryUncheckedUpdateWithoutPoliciesInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    fields?: InputJsonValue | InputJsonValue | null
   }
 
   export type OrderUpsertWithWhereUniqueWithoutPolicyInput = {

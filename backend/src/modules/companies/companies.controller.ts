@@ -4,13 +4,16 @@ import {
 	Delete,
 	Get,
 	Param,
+	Patch,
 	Post,
+	Put,
 	Query,
 } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Auth, UserSub } from '@shared/auth';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { CompanyFiltersDto } from './dtos/company-filters.dto';
+import { UpdateCompanyDto } from './dtos/update-company.dto';
 
 @Controller('companies')
 export class CompaniesController {
@@ -34,7 +37,17 @@ export class CompaniesController {
 
 	@Delete(':id')
 	@Auth()
-	async delete(@Param('id') id: string, @UserSub() userId: string) {
-		return await this.companiesService.delete(id, userId);
+	async delete(@Param('id') id: string, @UserSub() userSub: string) {
+		return await this.companiesService.delete(id, userSub);
+	}
+
+	@Put(':id')
+	@Auth()
+	async update(
+		@Param('id') id: string,
+		@Body() body: UpdateCompanyDto,
+		@UserSub() userSub: string,
+	) {
+		return await this.companiesService.update(id, body, userSub);
 	}
 }

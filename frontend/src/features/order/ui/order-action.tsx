@@ -4,26 +4,32 @@ import { useOrderPolicy } from '@/entities/orders';
 import { LoadingButton } from '@/shared/ui';
 import { useCallback } from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { PolicyFormFieldWithNameValue } from '..';
 
 type OrderActionProps = {
 	slug: string;
 	handleSubmit: UseFormHandleSubmit<Record<string, string>>;
+	fields: PolicyFormFieldWithNameValue[];
 };
 
-export const OrderAction = ({ slug, handleSubmit }: OrderActionProps) => {
+export const OrderAction = ({
+	slug,
+	handleSubmit,
+	fields,
+}: OrderActionProps) => {
 	const { order, isOrderLoading } = useOrderPolicy();
 
 	const submit = useCallback(
 		(data: Record<string, string>) => {
 			order({
 				policySlug: slug,
-				informations: Object.keys(data).map((key) => ({
-					key,
-					value: data[key],
+				informations: Object.entries(data).map(([name, value]) => ({
+					key: fields.find((field) => field.name === name)?.label ?? '',
+					value: value,
 				})),
 			});
 		},
-		[order, slug],
+		[order, slug, fields],
 	);
 
 	return (

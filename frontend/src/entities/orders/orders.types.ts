@@ -1,3 +1,5 @@
+import { PolicyCategoryField } from '../policy-categories';
+
 export type OrderPolicy = {
 	policySlug: string;
 	informations: OrderField[];
@@ -24,6 +26,10 @@ export type Order = {
 		price: number;
 		version: number;
 	};
+	informations: {
+		key: string;
+		value: string;
+	}[];
 };
 
 export type OrderFilters = {

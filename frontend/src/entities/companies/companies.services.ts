@@ -25,3 +25,15 @@ export const getAllCompanies = async (filters: CompanyFilters) => {
 		params: filters,
 	});
 };
+
+export const deleteCompany = async (id: string, token: AuthToken) => {
+	return await api.delete(`companies/${id}`, getAuthHeaders(token));
+};
+
+export const updateCompany = async (
+	id: string,
+	data: CompanyFormSchema,
+	token: AuthToken,
+) => {
+	return await api.put(`companies/${id}`, data, getAuthHeaders(token));
+};

@@ -7,7 +7,7 @@ import {
 	TooltipTrigger,
 } from '@/shared/ui';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
-import { H3 } from '@/shared/ui/headings';
+import { H2, H3, H4 } from '@/shared/ui/headings';
 import { CheckIcon, DownloadIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Order } from '@/entities/orders';
@@ -27,6 +27,7 @@ export const OrderCard = (props: OrderItemProps) => {
 		<Card className="divide-y divide-border *:py-3 py-0">
 			<ItemHeader {...props} />
 			<PoliceDetails {...props} />
+			<OrderDetails {...props} />
 			{companyView ? (
 				<CompanyActionsFooter
 					orderStatus={props.order.status}
@@ -186,5 +187,26 @@ const CompanyActionsFooter = ({
 				<p className="text-sm text-muted-foreground">Погоджено</p>
 			)}
 		</CardFooter>
+	);
+};
+
+const OrderDetails = ({ order: { informations } }: OrderItemProps) => {
+	return (
+		<div>
+			<H4 className="mb-2">Деталі замовлення</H4>
+			<table className="w-full text-sm bg-background rounded-lg">
+				<tbody className="">
+					{informations?.map((field, index) => (
+						<tr
+							key={index}
+							className="grid grid-cols-2 py-1.5 px-3 first:pt-3 last:pb-3 border-b not-[:last-child]:border-black/10"
+						>
+							<td className="">{field.key}</td>
+							<td className="">{field.value}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };

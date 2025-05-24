@@ -8,7 +8,7 @@ import {
 	Put,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { Auth, Permission, UserSub } from '@shared/auth';
+import { Auth, Permission } from '@shared/auth';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
 import { PERMISSIONS } from '@shared/auth';
@@ -25,14 +25,14 @@ export class CategoriesController {
 	@Post()
 	@Auth()
 	@Permission(PERMISSIONS.MANAGE_POLICY_CATEGORY)
-	async create(@Body() dto: CreateCategoryDto, @UserSub() userId: string) {
+	async create(@Body() dto: CreateCategoryDto) {
 		return await this.categoriesService.create(dto);
 	}
 
 	@Delete(':id')
 	@Auth()
 	@Permission(PERMISSIONS.MANAGE_POLICY_CATEGORY)
-	async delete(@Param('id') id: string, @UserSub() userId: string) {
+	async delete(@Param('id') id: string) {
 		return await this.categoriesService.delete(id);
 	}
 

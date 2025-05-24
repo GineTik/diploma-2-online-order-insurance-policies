@@ -3,12 +3,10 @@ import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { TrashIcon } from 'lucide-react';
 import { FormField, FormLabel } from './form';
-import { Control, FieldValues, Path } from 'react-hook-form';
+import { Control, Path } from 'react-hook-form';
 
 interface FormFieldMultiInputProps<T extends object> {
 	label: string;
-	subLabel: string;
-	tooltipText: string;
 	buttonText?: string;
 	defaultValues?: string[];
 	control: Control<T>;
@@ -17,8 +15,6 @@ interface FormFieldMultiInputProps<T extends object> {
 
 export const FormFieldMultiInput = <T extends object>({
 	label,
-	subLabel,
-	tooltipText,
 	buttonText = 'Додати',
 	defaultValues = [''],
 	control,
@@ -31,8 +27,6 @@ export const FormFieldMultiInput = <T extends object>({
 			render={({ field }) => (
 				<MultiInput
 					label={label}
-					subLabel={subLabel}
-					tooltipText={tooltipText}
 					buttonText={buttonText}
 					defaultValues={defaultValues}
 					{...field}
@@ -42,10 +36,8 @@ export const FormFieldMultiInput = <T extends object>({
 	);
 };
 
-interface MultiInputProps<T extends object> {
-	label: string;
-	subLabel: string;
-	tooltipText: string;
+interface MultiInputProps {
+	label?: string;
 	buttonText: string;
 	defaultValues?: string[];
 	value?: string[];
@@ -54,20 +46,18 @@ interface MultiInputProps<T extends object> {
 
 export const MultiInput = ({
 	label,
-	subLabel,
-	tooltipText,
 	buttonText,
 	onChange,
 	defaultValues = [''],
 	value,
-}: MultiInputProps<FieldValues>) => {
+}: MultiInputProps) => {
 	const [items, setItems] = useState<string[]>(defaultValues);
 	const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 	const prevItemsLengthRef = useRef(items.length);
 
 	useEffect(() => {
 		setItems(value || defaultValues);
-	}, [value]);
+	}, [value, defaultValues]);
 
 	useEffect(() => {
 		// Synchronize inputRefs array length with items length
@@ -81,7 +71,7 @@ export const MultiInput = ({
 			}
 		}
 		prevItemsLengthRef.current = items.length; // Update for the next render
-	}, [items]);
+	}, [items, defaultValues]);
 
 	const handleAddItem = () => {
 		setItems((prevItems) => [...prevItems, '']);
@@ -102,7 +92,7 @@ export const MultiInput = ({
 
 	return (
 		<div className="space-y-3">
-			<FormLabel>{label}</FormLabel>
+			{label && <FormLabel>{label}</FormLabel>}
 			{items?.map((item, index) => (
 				<div key={index} className="flex items-center space-x-2">
 					<div className="flex-grow">

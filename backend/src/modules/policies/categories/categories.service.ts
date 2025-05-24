@@ -3,6 +3,7 @@ import { PrismaService } from '@shared/prisma';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
 import { CATEGORY_NOT_FOUND_ERROR } from '@shared/errors';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class CategoriesService {
@@ -46,6 +47,7 @@ export class CategoriesService {
 		return await this.prisma.policyCategory.create({
 			data: {
 				...dto,
+				fields: dto?.fields as unknown as Prisma.JsonArray,
 			},
 		});
 	}
@@ -61,6 +63,7 @@ export class CategoriesService {
 			where: { id },
 			data: {
 				...dto,
+				fields: dto?.fields as unknown as Prisma.JsonArray,
 			},
 		});
 	}

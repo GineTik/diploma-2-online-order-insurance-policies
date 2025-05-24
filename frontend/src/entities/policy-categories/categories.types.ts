@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { FieldType, fieldTypes } from '@/shared/types';
 
 export type PolicyCategory = {
 	id: string;
@@ -10,20 +11,28 @@ export type PolicyCategory = {
 };
 
 export type PolicyCategoryField = {
-	name: string;
 	label: string;
 	placeholder: string;
-	type: 'string' | 'text' | 'select' | 'number';
-	values?: {
-		label: string;
-		value: string;
-	}[];
+	type: FieldType;
+	values?: string[];
+};
+
+export type PolicyCategoryFormField = PolicyCategoryField & {
+	value: string;
 };
 
 export const createCategorySchema = z.object({
 	name: z.string().min(1),
 	slug: z.string().min(1),
 	description: z.string().min(1),
+	fields: z.array(
+		z.object({
+			label: z.string().min(1),
+			placeholder: z.string().min(1),
+			type: z.enum(fieldTypes),
+			values: z.array(z.string()).optional(),
+		}),
+	),
 });
 
 export type CreateCategorySchema = z.infer<typeof createCategorySchema>;

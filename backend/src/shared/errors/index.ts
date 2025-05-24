@@ -12,7 +12,10 @@ export const FORBIDDEN_GENERATE_PDF =
 
 export const USER_ALREADY_HAVE_COMPANY = 'User already have a company';
 
-export const USER_NOT_FOUND = (userId: string) => `User not found by ${userId}`;
+export const USER_NOT_FOUND_BY_ID = (userId: string) =>
+	`User not found by ${userId}`;
+
+export const USER_NOT_FOUND = `User not found by`;
 
 export const ORDER_NOT_FOUND = 'Order not found';
 

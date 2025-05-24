@@ -1,13 +1,14 @@
-import { CompleteFormFieldInput } from '@/shared/ui/input';
+import { CompleteFormFieldInput, CompleteFormFieldTextarea } from '@/shared/ui';
 import { Control, UseFormReturn } from 'react-hook-form';
 import { Form } from '@/shared/ui/form';
 import { H3 } from '@/shared/ui/headings';
 import { CompleteFormFieldSelect } from '@/shared/ui/select';
 import { PolicyCategoryField } from '@/entities/policy-categories';
+import { cn } from '@/shared/lib/utils';
 
 type OrderFormInputsProps = {
 	form: UseFormReturn<Record<string, string>>;
-	fields: PolicyCategoryField[];
+	fields: (PolicyCategoryField & { name: string })[];
 	actions: React.ReactNode;
 };
 
@@ -20,10 +21,17 @@ export const OrderFormInputs = ({
 		<div className="space-y-4 p-5 rounded-md bg-background">
 			<H3>Параметри вашого полісу</H3>
 			<Form {...form}>
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-					{fields.map((field, index) =>
-						getFieldComponent(index.toString(), form.control, field),
-					)}
+				<div className="flex items-start gap-4 flex-wrap">
+					{fields.map((field) => (
+						<div
+							key={field.name}
+							className={cn('w-full lg:w-1/4 grow', {
+								'lg:w-full': field.type === 'text',
+							})}
+						>
+							{getFieldComponent(field.name, form.control, field)}
+						</div>
+					))}
 				</div>
 				{actions}
 			</Form>
@@ -32,22 +40,49 @@ export const OrderFormInputs = ({
 };
 
 const getFieldComponent = <T extends Record<string, string>>(
-	key: string,
+	name: string,
 	control: Control<T>,
 	field: PolicyCategoryField,
 ) => {
 	const dictionary = {
 		string: (
 			<CompleteFormFieldInput
-				key={key}
+				key={name}
 				control={control}
+				name={name}
 				{...field}
 				type="text"
 			/>
 		),
-		text: <CompleteFormFieldInput key={key} control={control} {...field} />,
-		number: <CompleteFormFieldInput key={key} control={control} {...field} />,
-		select: <CompleteFormFieldSelect key={key} control={control} {...field} />,
+		text: (
+			<CompleteFormFieldTextarea
+				className="lg:col-span-3"
+				key={name}
+				control={control}
+				name={name}
+				{...field}
+			/>
+		),
+		number: (
+			<CompleteFormFieldInput
+				key={name}
+				control={control}
+				name={name}
+				{...field}
+			/>
+		),
+		select: (
+			<CompleteFormFieldSelect
+				key={name}
+				control={control}
+				name={name}
+				{...field}
+				values={field.values?.map((value) => ({
+					value,
+					label: value,
+				}))}
+			/>
+		),
 	};
 
 	return dictionary[field.type] ?? null;
