@@ -1,6 +1,17 @@
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+	IsArray,
+	IsBoolean,
+	IsNotEmpty,
+	IsString,
+	Validate,
+	ValidateNested,
+	ValidationArguments,
+	ValidatorConstraint,
+	ValidatorConstraintInterface,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { IsStringOrBoolean } from '@shared/validators';
 
 export class CreateOrderDto {
 	@ApiProperty({
@@ -27,7 +38,7 @@ export class FieldValueDto {
 	@IsNotEmpty()
 	key: string;
 
-	@IsString()
+	@Validate(IsStringOrBoolean)
 	@IsNotEmpty()
-	value: string;
+	value: string | boolean;
 }

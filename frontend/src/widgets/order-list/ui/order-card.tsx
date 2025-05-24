@@ -7,7 +7,7 @@ import {
 	TooltipTrigger,
 } from '@/shared/ui';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
-import { H2, H3, H4 } from '@/shared/ui/headings';
+import { H3, H4 } from '@/shared/ui/headings';
 import { CheckIcon, DownloadIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Order } from '@/entities/orders';
@@ -202,7 +202,11 @@ const OrderDetails = ({ order: { informations } }: OrderItemProps) => {
 							className="grid grid-cols-2 py-1.5 px-3 first:pt-3 last:pb-3 border-b not-[:last-child]:border-black/10"
 						>
 							<td className="">{field.key}</td>
-							<td className="">{field.value}</td>
+							<td className="">
+								{typeof field.value === 'string' && field.value}
+								{typeof field.value === 'boolean' &&
+									(field.value ? 'Так' : 'Ні')}
+							</td>
 						</tr>
 					))}
 				</tbody>

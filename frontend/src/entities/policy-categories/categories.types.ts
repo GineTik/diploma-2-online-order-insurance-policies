@@ -12,7 +12,7 @@ export type PolicyCategory = {
 
 export type PolicyCategoryField = {
 	label: string;
-	placeholder: string;
+	placeholder?: string;
 	type: FieldType;
 	values?: string[];
 };
@@ -28,9 +28,9 @@ export const createCategorySchema = z.object({
 	fields: z.array(
 		z.object({
 			label: z.string().min(1),
-			placeholder: z.string().min(1),
 			type: z.enum(fieldTypes),
 			values: z.array(z.string()).optional(),
+			placeholder: z.string().optional(),
 		}),
 	),
 });

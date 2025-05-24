@@ -42,6 +42,7 @@ interface MultiInputProps {
 	defaultValues?: string[];
 	value?: string[];
 	onChange: (values: string[]) => void;
+	error?: string;
 }
 
 export const MultiInput = ({
@@ -50,6 +51,7 @@ export const MultiInput = ({
 	onChange,
 	defaultValues = [''],
 	value,
+	error,
 }: MultiInputProps) => {
 	const [items, setItems] = useState<string[]>(defaultValues);
 	const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
@@ -161,6 +163,9 @@ export const MultiInput = ({
 			>
 				{buttonText}
 			</Button>
+			{error && (
+				<p className="text-sm font-medium text-destructive mt-1">{error}</p>
+			)}
 		</div>
 	);
 };

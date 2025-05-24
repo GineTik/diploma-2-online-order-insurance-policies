@@ -35,7 +35,7 @@ export const CompleteFormFieldSelect = <T extends object>({
 							onValueChange={field.onChange}
 							name={field.name}
 						>
-							<SelectTrigger className="w-full">
+							<SelectTrigger className="w-full truncate">
 								<SelectValue placeholder={placeholder} />
 							</SelectTrigger>
 							<SelectContent>

@@ -11,8 +11,8 @@ import {
 	SelectValue,
 } from '@/shared/ui/select';
 import { TrashIcon, PlusIcon } from 'lucide-react';
-import { FormField, FormLabel } from './form';
-import { Control, Path } from 'react-hook-form';
+import { FormField, FormLabel, FormMessage } from './form';
+import { Control, Path, FieldError } from 'react-hook-form';
 import { MultiInput } from './multy-input';
 import { FieldType } from '@/shared/types';
 
@@ -37,6 +37,9 @@ interface MultiFieldInputProps {
 	buttonText?: string;
 	defaultItems?: FieldItem[];
 	onChange: (items: FieldItem[]) => void;
+	itemErrors?: Array<
+		Partial<Record<keyof Omit<FieldItem, 'id'>, FieldError>> | undefined
+	>;
 }
 
 export const MultiFieldInput = ({
@@ -44,8 +47,8 @@ export const MultiFieldInput = ({
 	buttonText = 'Додати властивість',
 	defaultItems = [createNewField()],
 	onChange,
+	itemErrors,
 }: MultiFieldInputProps) => {
-	console.log(defaultItems);
 	const [items, setItems] = useState<FieldItem[]>(
 		defaultItems?.map((i) => ({
 			...i,
@@ -96,45 +99,56 @@ export const MultiFieldInput = ({
 		<div className="space-y-4">
 			<FormLabel>{componentLabel}</FormLabel>
 			<div className="space-y-4 bg-background p-2 rounded-md divide-y divide-card">
-				{items?.map((item, index) => (
-					<div key={index} className="flex gap-1 pb-3">
-						<div className="flex flex-wrap items-end gap-2">
-							<SelectTypeForField
-								item={item}
-								handleItemChange={handleItemChange}
-							/>
+				{items?.map((item, index) => {
+					const currentItemError = itemErrors?.[index];
+					return (
+						<div key={index} className="flex gap-1 pb-3">
+							<div className="flex flex-wrap gap-2 items-start">
+								<SelectTypeForField
+									item={item}
+									handleItemChange={handleItemChange}
+									error={currentItemError?.type}
+								/>
 
-							<NameFormField item={item} handleItemChange={handleItemChange} />
+								<NameFormField
+									item={item}
+									handleItemChange={handleItemChange}
+									error={currentItemError?.label}
+								/>
 
-							<div className="min-w-[150px] w-full">
-								{item.type === 'select' ? (
-									<OptionsFormField
-										item={item}
-										handleItemChange={handleItemChange}
-									/>
-								) : (
-									<PlaceholderFormField
-										item={item}
-										handleItemChange={handleItemChange}
-									/>
+								<div className="min-w-[150px] w-full">
+									{item.type === 'select' && (
+										<OptionsFormField
+											item={item}
+											handleItemChange={handleItemChange}
+											error={currentItemError?.values}
+										/>
+									)}
+									{item.type !== 'select' && item.type !== 'boolean' && (
+										<PlaceholderFormField
+											item={item}
+											handleItemChange={handleItemChange}
+											error={currentItemError?.placeholder}
+										/>
+									)}
+								</div>
+							</div>
+							<div className="mt-5">
+								{items.length > 1 && (
+									<Button
+										variant="destructiveGhost"
+										size="icon"
+										onClick={() => handleRemoveItem(item.id)}
+										className=""
+										type="button"
+									>
+										<TrashIcon className="w-4 h-4" />
+									</Button>
 								)}
 							</div>
 						</div>
-						<div className="mt-5">
-							{items.length > 1 && (
-								<Button
-									variant="destructiveGhost"
-									size="icon"
-									onClick={() => handleRemoveItem(item.id)}
-									className=""
-									type="button"
-								>
-									<TrashIcon className="w-4 h-4" />
-								</Button>
-							)}
-						</div>
-					</div>
-				))}
+					);
+				})}
 				<Button
 					onClick={handleAddItem}
 					variant="outline"
@@ -146,6 +160,7 @@ export const MultiFieldInput = ({
 					{buttonText}
 				</Button>
 			</div>
+			<FormMessage />
 		</div>
 	);
 };
@@ -167,14 +182,18 @@ export const FormFieldMultiFieldInput = <T extends object>({
 		<FormField
 			control={control}
 			name={name}
-			render={({ field }) => (
+			render={({ field, formState }) => (
 				<div className="space-y-2">
 					<MultiFieldInput
 						componentLabel={formLabel}
 						buttonText={buttonText}
 						defaultItems={field.value}
+						itemErrors={
+							formState.errors[name as keyof typeof formState.errors] as any
+						}
 						{...field}
 					/>
+					<FormMessage />
 				</div>
 			)}
 		/>
@@ -184,9 +203,11 @@ export const FormFieldMultiFieldInput = <T extends object>({
 const SelectTypeForField = ({
 	item,
 	handleItemChange,
+	error,
 }: {
 	item: FieldItem;
 	handleItemChange: (id: string, updatedProperties: Partial<FieldItem>) => void;
+	error?: FieldError;
 }) => {
 	return (
 		<div className="flex-1 min-w-[120px] grow">
@@ -207,8 +228,15 @@ const SelectTypeForField = ({
 					<SelectItem value="text">Текст</SelectItem>
 					<SelectItem value="number">Число</SelectItem>
 					<SelectItem value="select">Вибір</SelectItem>
+					<SelectItem value="car-number">Номер авто</SelectItem>
+					<SelectItem value="boolean">Логічне (так/ні)</SelectItem>
 				</SelectContent>
 			</Select>
+			{error?.message && (
+				<p className="text-sm font-medium text-destructive mt-1">
+					{error.message}
+				</p>
+			)}
 		</div>
 	);
 };
@@ -216,9 +244,11 @@ const SelectTypeForField = ({
 const NameFormField = ({
 	item,
 	handleItemChange,
+	error,
 }: {
 	item: FieldItem;
 	handleItemChange: (id: string, updatedProperties: Partial<FieldItem>) => void;
+	error?: FieldError;
 }) => {
 	return (
 		<div className="flex-1 min-w-[150px] grow">
@@ -232,6 +262,11 @@ const NameFormField = ({
 				placeholder="Введіть назву"
 				className="mt-1"
 			/>
+			{error?.message && (
+				<p className="text-sm font-medium text-destructive mt-1">
+					{error.message}
+				</p>
+			)}
 		</div>
 	);
 };
@@ -239,9 +274,11 @@ const NameFormField = ({
 const PlaceholderFormField = ({
 	item,
 	handleItemChange,
+	error,
 }: {
 	item: FieldItem;
 	handleItemChange: (id: string, updatedProperties: Partial<FieldItem>) => void;
+	error?: FieldError;
 }) => {
 	return (
 		<>
@@ -262,6 +299,11 @@ const PlaceholderFormField = ({
 				placeholder="Введіть підказку"
 				className="mt-1"
 			/>
+			{error?.message && (
+				<p className="text-sm font-medium text-destructive mt-1">
+					{error.message}
+				</p>
+			)}
 		</>
 	);
 };
@@ -269,9 +311,11 @@ const PlaceholderFormField = ({
 const OptionsFormField = ({
 	item,
 	handleItemChange,
+	error,
 }: {
 	item: FieldItem;
 	handleItemChange: (id: string, updatedProperties: Partial<FieldItem>) => void;
+	error?: FieldError;
 }) => {
 	return (
 		<div className="w-full space-y-1">
@@ -286,6 +330,7 @@ const OptionsFormField = ({
 						values: e,
 					});
 				}}
+				error={error?.message}
 			/>
 		</div>
 	);

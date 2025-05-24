@@ -1,5 +1,3 @@
-import { PolicyCategoryField } from '../policy-categories';
-
 export type OrderPolicy = {
 	policySlug: string;
 	informations: OrderField[];
@@ -28,7 +26,7 @@ export type Order = {
 	};
 	informations: {
 		key: string;
-		value: string;
+		value: string | boolean;
 	}[];
 };
 

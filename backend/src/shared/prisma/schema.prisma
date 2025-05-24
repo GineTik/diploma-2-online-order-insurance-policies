@@ -102,7 +102,7 @@ model Order {
 model OrderInformation {
 	id        String   @id @default(auto()) @map("_id") @db.ObjectId
   key       String
-  value     String
+  value     Json
 
   order     Order   @relation(fields: [orderId], references: [id])
 	orderId   String @db.ObjectId

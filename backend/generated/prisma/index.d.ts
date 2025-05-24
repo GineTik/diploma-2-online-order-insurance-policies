@@ -7749,14 +7749,12 @@ export namespace Prisma {
   export type OrderInformationMinAggregateOutputType = {
     id: string | null
     key: string | null
-    value: string | null
     orderId: string | null
   }
 
   export type OrderInformationMaxAggregateOutputType = {
     id: string | null
     key: string | null
-    value: string | null
     orderId: string | null
   }
 
@@ -7772,14 +7770,12 @@ export namespace Prisma {
   export type OrderInformationMinAggregateInputType = {
     id?: true
     key?: true
-    value?: true
     orderId?: true
   }
 
   export type OrderInformationMaxAggregateInputType = {
     id?: true
     key?: true
-    value?: true
     orderId?: true
   }
 
@@ -7866,7 +7862,7 @@ export namespace Prisma {
   export type OrderInformationGroupByOutputType = {
     id: string
     key: string
-    value: string
+    value: JsonValue
     orderId: string
     _count: OrderInformationCountAggregateOutputType | null
     _min: OrderInformationMinAggregateOutputType | null
@@ -7917,7 +7913,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       key: string
-      value: string
+      value: Prisma.JsonValue
       orderId: string
     }, ExtArgs["result"]["orderInformation"]>
     composites: {}
@@ -8314,7 +8310,7 @@ export namespace Prisma {
   interface OrderInformationFieldRefs {
     readonly id: FieldRef<"OrderInformation", 'String'>
     readonly key: FieldRef<"OrderInformation", 'String'>
-    readonly value: FieldRef<"OrderInformation", 'String'>
+    readonly value: FieldRef<"OrderInformation", 'Json'>
     readonly orderId: FieldRef<"OrderInformation", 'String'>
   }
     
@@ -9272,7 +9268,7 @@ export namespace Prisma {
     NOT?: OrderInformationWhereInput | OrderInformationWhereInput[]
     id?: StringFilter<"OrderInformation"> | string
     key?: StringFilter<"OrderInformation"> | string
-    value?: StringFilter<"OrderInformation"> | string
+    value?: JsonFilter<"OrderInformation">
     orderId?: StringFilter<"OrderInformation"> | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
   }
@@ -9291,7 +9287,7 @@ export namespace Prisma {
     OR?: OrderInformationWhereInput[]
     NOT?: OrderInformationWhereInput | OrderInformationWhereInput[]
     key?: StringFilter<"OrderInformation"> | string
-    value?: StringFilter<"OrderInformation"> | string
+    value?: JsonFilter<"OrderInformation">
     orderId?: StringFilter<"OrderInformation"> | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
   }, "id">
@@ -9312,7 +9308,7 @@ export namespace Prisma {
     NOT?: OrderInformationScalarWhereWithAggregatesInput | OrderInformationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"OrderInformation"> | string
     key?: StringWithAggregatesFilter<"OrderInformation"> | string
-    value?: StringWithAggregatesFilter<"OrderInformation"> | string
+    value?: JsonWithAggregatesFilter<"OrderInformation">
     orderId?: StringWithAggregatesFilter<"OrderInformation"> | string
   }
 
@@ -9668,44 +9664,44 @@ export namespace Prisma {
   export type OrderInformationCreateInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
     order: OrderCreateNestedOneWithoutInformationsInput
   }
 
   export type OrderInformationUncheckedCreateInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
     orderId: string
   }
 
   export type OrderInformationUpdateInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
     order?: OrderUpdateOneRequiredWithoutInformationsNestedInput
   }
 
   export type OrderInformationUncheckedUpdateInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
     orderId?: StringFieldUpdateOperationsInput | string
   }
 
   export type OrderInformationCreateManyInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
     orderId: string
   }
 
   export type OrderInformationUpdateManyMutationInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
   }
 
   export type OrderInformationUncheckedUpdateManyInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
     orderId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10160,6 +10156,17 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+  }
 
   export type OrderScalarRelationFilter = {
     is?: OrderWhereInput
@@ -10176,15 +10183,27 @@ export namespace Prisma {
   export type OrderInformationMaxOrderByAggregateInput = {
     id?: SortOrder
     key?: SortOrder
-    value?: SortOrder
     orderId?: SortOrder
   }
 
   export type OrderInformationMinOrderByAggregateInput = {
     id?: SortOrder
     key?: SortOrder
-    value?: SortOrder
     orderId?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type UserCompanyCreateNestedManyWithoutUserInput = {
@@ -10835,6 +10854,17 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+  }
 
   export type UserCompanyCreateWithoutUserInput = {
     id?: string
@@ -11349,13 +11379,13 @@ export namespace Prisma {
   export type OrderInformationCreateWithoutOrderInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
   }
 
   export type OrderInformationUncheckedCreateWithoutOrderInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
   }
 
   export type OrderInformationCreateOrConnectWithoutOrderInput = {
@@ -11443,7 +11473,7 @@ export namespace Prisma {
     NOT?: OrderInformationScalarWhereInput | OrderInformationScalarWhereInput[]
     id?: StringFilter<"OrderInformation"> | string
     key?: StringFilter<"OrderInformation"> | string
-    value?: StringFilter<"OrderInformation"> | string
+    value?: JsonFilter<"OrderInformation">
     orderId?: StringFilter<"OrderInformation"> | string
   }
 
@@ -11737,22 +11767,22 @@ export namespace Prisma {
   export type OrderInformationCreateManyOrderInput = {
     id?: string
     key: string
-    value: string
+    value: InputJsonValue
   }
 
   export type OrderInformationUpdateWithoutOrderInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
   }
 
   export type OrderInformationUncheckedUpdateWithoutOrderInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
   }
 
   export type OrderInformationUncheckedUpdateManyWithoutOrderInput = {
     key?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
+    value?: InputJsonValue | InputJsonValue
   }
 
 
