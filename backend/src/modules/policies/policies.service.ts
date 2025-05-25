@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PolicyFiltersDto, PolicySort } from './dtos/policy-filters.dto';
-import { PrismaService } from '@shared/prisma';
+import { isNotDeleted, PrismaService } from '@shared/prisma';
 import {
 	POLICY_ALREADY_EXISTS,
 	POLICY_NOT_FOUND_ERROR,
@@ -48,7 +48,7 @@ export class PoliciesService {
 						contains: search,
 						mode: 'insensitive',
 					},
-					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+					...isNotDeleted,
 				},
 				orderBy: [
 					{
@@ -73,7 +73,7 @@ export class PoliciesService {
 			.findFirst({
 				where: {
 					slug,
-					OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+					...isNotDeleted,
 				},
 				orderBy: { version: 'desc' },
 			})

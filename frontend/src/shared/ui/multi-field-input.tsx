@@ -24,7 +24,7 @@ export interface FieldItem {
 	values?: string[];
 }
 
-const createNewField = (): FieldItem => ({
+export const createNewField = (): FieldItem => ({
 	id: crypto.randomUUID(),
 	type: 'string',
 	label: '',
@@ -32,14 +32,16 @@ const createNewField = (): FieldItem => ({
 	values: [],
 });
 
+type ItemErrors = Array<
+	Partial<Record<keyof Omit<FieldItem, 'id'>, FieldError>> | undefined
+>;
+
 interface MultiFieldInputProps {
 	componentLabel: string;
 	buttonText?: string;
 	defaultItems?: FieldItem[];
 	onChange: (items: FieldItem[]) => void;
-	itemErrors?: Array<
-		Partial<Record<keyof Omit<FieldItem, 'id'>, FieldError>> | undefined
-	>;
+	itemErrors?: ItemErrors;
 }
 
 export const MultiFieldInput = ({
@@ -189,7 +191,9 @@ export const FormFieldMultiFieldInput = <T extends object>({
 						buttonText={buttonText}
 						defaultItems={field.value}
 						itemErrors={
-							formState.errors[name as keyof typeof formState.errors] as any
+							formState.errors[
+								name as keyof typeof formState.errors
+							] as ItemErrors
 						}
 						{...field}
 					/>

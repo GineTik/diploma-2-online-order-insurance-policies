@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from '@shared/prisma';
+import { isNotDeleted, PrismaService } from '@shared/prisma';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
 import { CATEGORY_NOT_FOUND_ERROR } from '@shared/errors';
@@ -11,10 +11,13 @@ export class CategoriesService {
 
 	async getAll() {
 		const categories = await this.prisma.policyCategory.findMany({
+			where: {
+				...isNotDeleted,
+			},
 			include: {
 				policies: {
 					where: {
-						OR: [{ isDeleted: false }, { isDeleted: { isSet: false } }],
+						...isNotDeleted,
 					},
 					distinct: ['slug'],
 				},
@@ -30,7 +33,7 @@ export class CategoriesService {
 	async getById(id: string) {
 		return await this.prisma.policyCategory
 			.findUnique({
-				where: { id },
+				where: { id, ...isNotDeleted },
 			})
 			.catch((err) => {
 				throw new BadRequestException(CATEGORY_NOT_FOUND_ERROR(id));
@@ -52,9 +55,21 @@ export class CategoriesService {
 		});
 	}
 
-	async delete(id: string) {
-		return await this.prisma.policyCategory.delete({
-			where: { id },
+	async delete(id: string, moveToCategoryId: string) {
+		return await this.prisma.$transaction(async (tx) => {
+			await tx.policyCategory.update({
+				where: { id },
+				data: {
+					isDeleted: true,
+				},
+			});
+
+			await tx.policy.updateMany({
+				where: { categoryId: id },
+				data: {
+					categoryId: moveToCategoryId,
+				},
+			});
 		});
 	}
 
@@ -72,6 +87,7 @@ export class CategoriesService {
 		return await this.prisma.policyCategory.findFirst({
 			where: {
 				slug,
+				...isNotDeleted,
 			},
 		});
 	}

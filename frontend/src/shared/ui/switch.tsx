@@ -5,7 +5,7 @@ import * as SwitchPrimitive from '@radix-ui/react-switch';
 
 import { cn } from '@/shared/lib/utils';
 import { Control, Path } from 'react-hook-form';
-import { FormControl, FormDescription, FormLabel } from './form';
+import { FormControl, FormLabel } from './form';
 import { FormField, FormItem } from './form';
 
 function Switch({

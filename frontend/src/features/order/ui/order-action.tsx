@@ -2,7 +2,7 @@
 
 import { useOrderPolicy } from '@/entities/orders';
 import { LoadingButton } from '@/shared/ui';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { PolicyFormFieldWithNameValue } from '..';
 
@@ -17,12 +17,7 @@ export const OrderAction = ({
 	handleSubmit,
 	fields,
 }: OrderActionProps) => {
-	const { order, isOrderLoading, parsedOrderErrors } = useOrderPolicy();
-	useEffect(() => {
-		if (parsedOrderErrors) {
-			console.log(parsedOrderErrors);
-		}
-	}, [parsedOrderErrors]);
+	const { order, isOrderLoading } = useOrderPolicy();
 
 	const submit = useCallback(
 		(data: Record<string, string>) => {

@@ -13,20 +13,32 @@ import {
 	Form,
 	LoadingButton,
 	FormFieldMultiFieldInput,
+	AlertDialog,
+	AlertDialogTrigger,
+	AlertDialogContent,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	CompleteFormFieldSelect,
 } from '@/shared/ui';
 import {
 	PolicyCategory,
 	CreateCategorySchema,
 	createCategorySchema,
+	DeleteCategorySchema,
+	deleteCategorySchema,
 } from '../categories.types';
-import { EllipsisVertical, SaveIcon, XIcon } from 'lucide-react';
+import { EllipsisVertical, Loader2, SaveIcon, XIcon } from 'lucide-react';
 import { PERMISSIONS, UnderPermission } from '@/shared/auth';
-import { ApproveDialog } from '@/shared/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateCategory } from '../hooks/use-update-category';
 import { useDeleteCategory } from '../hooks/use-delete-category';
+import { usePolicyCategories } from '../hooks/use-policy-categories';
 
 type RowPolicyCategoryCardProps = {
 	category: PolicyCategory;
@@ -36,7 +48,6 @@ export const RowPolicyCategoryCard = ({
 	category,
 }: RowPolicyCategoryCardProps) => {
 	const [isEditing, setIsEditing] = useState(false);
-	const { deleteCategory, isDeleting } = useDeleteCategory();
 
 	return (
 		<Card className="flex-row items-center justify-between gap-3">
@@ -65,23 +76,7 @@ export const RowPolicyCategoryCard = ({
 							Редагувати
 						</DropdownMenuItem>
 
-						<ApproveDialog
-							title="Видалити категорію"
-							description="Ви впевнені, що хочете видалити цю категорію?"
-							onConfirm={() => {
-								deleteCategory(category.id);
-							}}
-							confirmVariant="destructive"
-							confirmText="Видалити"
-							confirmIsLoading={isDeleting}
-						>
-							<DropdownMenuItem
-								variant="destructive"
-								onSelect={(e) => e.preventDefault()}
-							>
-								Видалити
-							</DropdownMenuItem>
-						</ApproveDialog>
+						<DeleteCategoryDropdownItemWithDialog category={category} />
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</UnderPermission>
@@ -175,5 +170,77 @@ const EditingForm = ({
 				</CardFooter>
 			</form>
 		</Form>
+	);
+};
+
+const DeleteCategoryDropdownItemWithDialog = ({
+	category,
+}: {
+	category: PolicyCategory;
+}) => {
+	const { deleteCategory, isDeleting } = useDeleteCategory(category.id);
+	const { categories, isCategoriesLoading } = usePolicyCategories();
+	const form = useForm<DeleteCategorySchema>({
+		defaultValues: {
+			moveToCategoryId: '',
+		},
+		resolver: zodResolver(deleteCategorySchema),
+	});
+	const submit = form.handleSubmit(async (data) => {
+		await deleteCategory({
+			moveToCategoryId: data.moveToCategoryId,
+		});
+	});
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild onSelect={(e) => e.preventDefault()}>
+				<DropdownMenuItem variant="destructive">Видалити</DropdownMenuItem>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Видалити категорію</AlertDialogTitle>
+					<AlertDialogDescription>
+						Ви впевнені, що хочете видалити категорію "{category.name}"? Це
+						незворотня дія! Виберіть іншу категорію, в яку будуть переміщені
+						поліси цієї категорії.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<div>
+					<Form {...form}>
+						{isCategoriesLoading ? (
+							<div className="flex items-center justify-center">
+								<Loader2 className="size-4 animate-spin" />
+							</div>
+						) : (
+							<CompleteFormFieldSelect
+								control={form.control}
+								name="moveToCategoryId"
+								label="Перемістити поліси в іншу категорію"
+								placeholder="Інша категорія"
+								values={categories
+									?.filter((c) => c.id !== category.id)
+									.map((category) => ({
+										label: category.name,
+										value: category.id,
+									}))}
+							/>
+						)}
+					</Form>
+				</div>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Скасувати</AlertDialogCancel>
+					<AlertDialogAction asChild>
+						<LoadingButton
+							variant="destructive"
+							onClick={submit}
+							isLoading={isDeleting || isCategoriesLoading}
+						>
+							Видалити категорію
+						</LoadingButton>
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };

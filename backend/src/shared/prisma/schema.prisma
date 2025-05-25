@@ -71,6 +71,7 @@ model PolicyCategory {
   slug      String
 	description String
 	fields    Json?
+  isDeleted Boolean? @default(false)
 	
   policies  Policy[]
 }

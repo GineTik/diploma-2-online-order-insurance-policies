@@ -7,8 +7,8 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
+	AlertDialog,
 } from './alert-dialog';
-import { AlertDialog } from './alert-dialog';
 import { LoadingButton } from './loading-button';
 
 type ApproveDialogProps = {

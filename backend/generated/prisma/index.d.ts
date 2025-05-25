@@ -5670,6 +5670,7 @@ export namespace Prisma {
     name: string | null
     slug: string | null
     description: string | null
+    isDeleted: boolean | null
   }
 
   export type PolicyCategoryMaxAggregateOutputType = {
@@ -5677,6 +5678,7 @@ export namespace Prisma {
     name: string | null
     slug: string | null
     description: string | null
+    isDeleted: boolean | null
   }
 
   export type PolicyCategoryCountAggregateOutputType = {
@@ -5685,6 +5687,7 @@ export namespace Prisma {
     slug: number
     description: number
     fields: number
+    isDeleted: number
     _all: number
   }
 
@@ -5694,6 +5697,7 @@ export namespace Prisma {
     name?: true
     slug?: true
     description?: true
+    isDeleted?: true
   }
 
   export type PolicyCategoryMaxAggregateInputType = {
@@ -5701,6 +5705,7 @@ export namespace Prisma {
     name?: true
     slug?: true
     description?: true
+    isDeleted?: true
   }
 
   export type PolicyCategoryCountAggregateInputType = {
@@ -5709,6 +5714,7 @@ export namespace Prisma {
     slug?: true
     description?: true
     fields?: true
+    isDeleted?: true
     _all?: true
   }
 
@@ -5790,6 +5796,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields: JsonValue | null
+    isDeleted: boolean | null
     _count: PolicyCategoryCountAggregateOutputType | null
     _min: PolicyCategoryMinAggregateOutputType | null
     _max: PolicyCategoryMaxAggregateOutputType | null
@@ -5815,6 +5822,7 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     fields?: boolean
+    isDeleted?: boolean
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["policyCategory"]>
@@ -5827,9 +5835,10 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     fields?: boolean
+    isDeleted?: boolean
   }
 
-  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "fields", ExtArgs["result"]["policyCategory"]>
+  export type PolicyCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "description" | "fields" | "isDeleted", ExtArgs["result"]["policyCategory"]>
   export type PolicyCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     policies?: boolean | PolicyCategory$policiesArgs<ExtArgs>
     _count?: boolean | PolicyCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -5846,6 +5855,7 @@ export namespace Prisma {
       slug: string
       description: string
       fields: Prisma.JsonValue | null
+      isDeleted: boolean | null
     }, ExtArgs["result"]["policyCategory"]>
     composites: {}
   }
@@ -6244,6 +6254,7 @@ export namespace Prisma {
     readonly slug: FieldRef<"PolicyCategory", 'String'>
     readonly description: FieldRef<"PolicyCategory", 'String'>
     readonly fields: FieldRef<"PolicyCategory", 'Json'>
+    readonly isDeleted: FieldRef<"PolicyCategory", 'Boolean'>
   }
     
 
@@ -8753,7 +8764,8 @@ export namespace Prisma {
     name: 'name',
     slug: 'slug',
     description: 'description',
-    fields: 'fields'
+    fields: 'fields',
+    isDeleted: 'isDeleted'
   };
 
   export type PolicyCategoryScalarFieldEnum = (typeof PolicyCategoryScalarFieldEnum)[keyof typeof PolicyCategoryScalarFieldEnum]
@@ -9138,6 +9150,7 @@ export namespace Prisma {
     slug?: StringFilter<"PolicyCategory"> | string
     description?: StringFilter<"PolicyCategory"> | string
     fields?: JsonNullableFilter<"PolicyCategory">
+    isDeleted?: BoolNullableFilter<"PolicyCategory"> | boolean | null
     policies?: PolicyListRelationFilter
   }
 
@@ -9147,6 +9160,7 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     fields?: SortOrder
+    isDeleted?: SortOrder
     policies?: PolicyOrderByRelationAggregateInput
   }
 
@@ -9159,6 +9173,7 @@ export namespace Prisma {
     slug?: StringFilter<"PolicyCategory"> | string
     description?: StringFilter<"PolicyCategory"> | string
     fields?: JsonNullableFilter<"PolicyCategory">
+    isDeleted?: BoolNullableFilter<"PolicyCategory"> | boolean | null
     policies?: PolicyListRelationFilter
   }, "id">
 
@@ -9168,6 +9183,7 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     fields?: SortOrder
+    isDeleted?: SortOrder
     _count?: PolicyCategoryCountOrderByAggregateInput
     _max?: PolicyCategoryMaxOrderByAggregateInput
     _min?: PolicyCategoryMinOrderByAggregateInput
@@ -9182,6 +9198,7 @@ export namespace Prisma {
     slug?: StringWithAggregatesFilter<"PolicyCategory"> | string
     description?: StringWithAggregatesFilter<"PolicyCategory"> | string
     fields?: JsonNullableWithAggregatesFilter<"PolicyCategory">
+    isDeleted?: BoolNullableWithAggregatesFilter<"PolicyCategory"> | boolean | null
   }
 
   export type OrderWhereInput = {
@@ -9542,6 +9559,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields?: InputJsonValue | null
+    isDeleted?: boolean | null
     policies?: PolicyCreateNestedManyWithoutCategoryInput
   }
 
@@ -9551,6 +9569,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields?: InputJsonValue | null
+    isDeleted?: boolean | null
     policies?: PolicyUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -9559,6 +9578,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     policies?: PolicyUpdateManyWithoutCategoryNestedInput
   }
 
@@ -9567,6 +9587,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     policies?: PolicyUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -9576,6 +9597,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields?: InputJsonValue | null
+    isDeleted?: boolean | null
   }
 
   export type PolicyCategoryUpdateManyMutationInput = {
@@ -9583,6 +9605,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type PolicyCategoryUncheckedUpdateManyInput = {
@@ -9590,6 +9613,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type OrderCreateInput = {
@@ -10028,6 +10052,7 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     fields?: SortOrder
+    isDeleted?: SortOrder
   }
 
   export type PolicyCategoryMaxOrderByAggregateInput = {
@@ -10035,6 +10060,7 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+    isDeleted?: SortOrder
   }
 
   export type PolicyCategoryMinOrderByAggregateInput = {
@@ -10042,6 +10068,7 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     description?: SortOrder
+    isDeleted?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -11184,6 +11211,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields?: InputJsonValue | null
+    isDeleted?: boolean | null
   }
 
   export type PolicyCategoryUncheckedCreateWithoutPoliciesInput = {
@@ -11192,6 +11220,7 @@ export namespace Prisma {
     slug: string
     description: string
     fields?: InputJsonValue | null
+    isDeleted?: boolean | null
   }
 
   export type PolicyCategoryCreateOrConnectWithoutPoliciesInput = {
@@ -11265,6 +11294,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type PolicyCategoryUncheckedUpdateWithoutPoliciesInput = {
@@ -11272,6 +11302,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     fields?: InputJsonValue | InputJsonValue | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type OrderUpsertWithWhereUniqueWithoutPolicyInput = {

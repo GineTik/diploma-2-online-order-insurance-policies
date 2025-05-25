@@ -1,5 +1,9 @@
 import { api } from '@/shared/http-client/api';
-import { CreateCategorySchema, PolicyCategory } from './categories.types';
+import {
+	CreateCategorySchema,
+	DeleteCategorySchema,
+	PolicyCategory,
+} from './categories.types';
 import { AuthToken } from '@/shared/auth/types';
 import { getAuthHeaders } from '@/shared/auth/utils';
 import { mapPolicyCategorySchemaToRequest } from './categories.mapper';
@@ -36,7 +40,13 @@ export const updatePolicyCategory = async (
 
 export const deletePolicyCategory = async (
 	categoryId: string,
+	deleteCategory: DeleteCategorySchema,
 	token: AuthToken,
 ) => {
-	return await api.delete(`/categories/${categoryId}`, getAuthHeaders(token));
+	return await api.delete(`/categories/${categoryId}`, {
+		...getAuthHeaders(token),
+		params: {
+			moveToCategoryId: deleteCategory.moveToCategoryId,
+		},
+	});
 };

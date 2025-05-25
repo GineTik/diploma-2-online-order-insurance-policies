@@ -8,6 +8,8 @@ import {
 	Card,
 	CardContent,
 	H3,
+	FormFieldMultiFieldInput,
+	createNewField,
 } from '@/shared/ui';
 import { PlusIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -24,6 +26,7 @@ export const CreatePolicyCategoryForm = () => {
 			name: '',
 			slug: '',
 			description: '',
+			fields: [createNewField()],
 		},
 		resolver: zodResolver(createCategorySchema),
 	});
@@ -59,6 +62,11 @@ export const CreatePolicyCategoryForm = () => {
 						name="description"
 						label="Опис категорії"
 						placeholder="Введіть опис категорії"
+					/>
+					<FormFieldMultiFieldInput
+						formLabel="Поля категорії"
+						control={form.control}
+						name="fields"
 					/>
 					<LoadingButton
 						isLoading={isCreatingCategory}

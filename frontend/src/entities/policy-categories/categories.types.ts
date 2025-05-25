@@ -36,3 +36,11 @@ export const createCategorySchema = z.object({
 });
 
 export type CreateCategorySchema = z.infer<typeof createCategorySchema>;
+
+export const deleteCategorySchema = z.object({
+	moveToCategoryId: z.string().min(1, {
+		message: "Вибір категорії є обов'язковим",
+	}),
+});
+
+export type DeleteCategorySchema = z.infer<typeof deleteCategorySchema>;

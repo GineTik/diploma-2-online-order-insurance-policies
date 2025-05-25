@@ -66,11 +66,12 @@ model Policy {
 }
 
 model PolicyCategory {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   slug        String
   description String
   fields      Json?
+  isDeleted   Boolean? @default(false)
 
   policies Policy[]
 }

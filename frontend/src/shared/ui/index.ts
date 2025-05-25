@@ -19,4 +19,5 @@ export {
 	type FieldItem as MultiFieldItem,
 	FormFieldMultiFieldInput,
 	MultiFieldInput,
+	createNewField,
 } from './multi-field-input';

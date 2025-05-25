@@ -6,6 +6,7 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { Auth, Permission } from '@shared/auth';
@@ -32,8 +33,11 @@ export class CategoriesController {
 	@Delete(':id')
 	@Auth()
 	@Permission(PERMISSIONS.MANAGE_POLICY_CATEGORY)
-	async delete(@Param('id') id: string) {
-		return await this.categoriesService.delete(id);
+	async delete(
+		@Param('id') id: string,
+		@Query('moveToCategoryId') moveToCategoryId: string,
+	) {
+		return await this.categoriesService.delete(id, moveToCategoryId);
 	}
 
 	@Put(':id')
