@@ -2,7 +2,7 @@ import { useAuth } from '@clerk/nextjs';
 import { useMutation } from '@tanstack/react-query';
 import { UpdateCompanySchema } from '../companies.types';
 import { updateCompany } from '../companies.services';
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 
 export const useUpdateCompany = (id: string) => {
 	const { getToken } = useAuth();

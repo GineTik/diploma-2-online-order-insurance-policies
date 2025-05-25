@@ -1,11 +1,11 @@
 'use client';
 
-import { PolicyFiltration } from '@/features/policies';
 import { PolicyList } from '@/widgets/policy-list';
-import { useParams } from 'next/navigation';
+import { PolicyFiltration } from '@/features/policies';
 import { useEffect, useState } from 'react';
-import { PolicyFilters } from '@/entities/policies';
+import { useParams } from 'next/navigation';
 import { useCustomSearchParam } from '@/shared/search-params';
+import { PolicyFilters } from '@/entities/policies';
 
 export default function Page() {
 	const params = useParams<{ category: string }>();

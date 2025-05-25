@@ -1,15 +1,8 @@
-'use client';
-
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
-import { Header } from '@/widgets/header';
+import { Providers } from './providers';
 import { cn } from '@/shared/lib/utils';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TooltipProvider } from '@/shared/ui/tooltip';
-import { Toaster } from '@/shared/ui';
-import { Suspense } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Geist, Geist_Mono } from 'next/font/google';
+
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
@@ -18,17 +11,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
 	variable: '--font-geist-mono',
 	subsets: ['latin'],
-});
-
-export const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			retry: (failureCount) => {
-				const maxRetries = 1;
-				return failureCount < maxRetries;
-			},
-		},
-	},
 });
 
 export default function RootLayout({
@@ -51,17 +33,7 @@ export default function RootLayout({
 					`${geistSans.variable} ${geistMono.variable} antialiased`,
 				)}
 			>
-				<Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
-					<TooltipProvider>
-						<QueryClientProvider client={queryClient}>
-							<ClerkProvider>
-								<Header />
-								{children}
-								<Toaster />
-							</ClerkProvider>
-						</QueryClientProvider>
-					</TooltipProvider>
-				</Suspense>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);

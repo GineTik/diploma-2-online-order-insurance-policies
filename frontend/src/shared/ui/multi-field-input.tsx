@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
 import {
+	Button,
+	Input,
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/shared/ui/select';
+} from '@/shared/ui';
 import { TrashIcon, PlusIcon } from 'lucide-react';
 import { FormField, FormLabel, FormMessage } from './form';
 import { Control, Path, FieldError } from 'react-hook-form';
@@ -142,7 +142,6 @@ export const MultiFieldInput = ({
 										size="icon"
 										onClick={() => handleRemoveItem(item.id)}
 										className=""
-										type="button"
 									>
 										<TrashIcon className="w-4 h-4" />
 									</Button>
@@ -156,7 +155,6 @@ export const MultiFieldInput = ({
 					variant="outline"
 					size="sm"
 					className="w-full"
-					type="button"
 				>
 					<PlusIcon className="w-4 h-4 mr-2" />
 					{buttonText}
@@ -323,9 +321,7 @@ const OptionsFormField = ({
 }) => {
 	return (
 		<div className="w-full space-y-1">
-			<FormLabel htmlFor={`options-${item.id}`} className="text-xs font-medium">
-				Опції
-			</FormLabel>
+			<FormLabel className="text-xs font-medium">Опції</FormLabel>
 			<MultiInput
 				buttonText="Додати опцію"
 				value={item.values}

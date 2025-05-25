@@ -1,4 +1,4 @@
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 import { UpdatePolicy } from '@/entities/policies';
 import { updatePolicy } from '@/entities/policies/policies.services';
 import { useAuth } from '@clerk/nextjs';

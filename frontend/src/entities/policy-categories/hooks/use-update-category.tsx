@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { updatePolicyCategory } from '../categories.service';
 import { useAuth } from '@clerk/nextjs';
 import { PolicyCategory } from '../categories.types';
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 
 export const useUpdateCategory = () => {
 	const { getToken } = useAuth();

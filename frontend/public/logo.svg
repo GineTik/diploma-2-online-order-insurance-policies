@@ -1,0 +1,24 @@
+<svg id="_Слой_2" data-name="Слой 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2088 2499.12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #312783;
+        stroke-miterlimit: 10;
+        stroke-width: 271.33px;
+      }
+
+      .cls-2 {
+        fill: #ffed00;
+        stroke: #312783;
+        stroke-width: 20px;
+      }
+    </style>
+  </defs>
+  <g id="insuranse">
+    <g>
+      <path class="cls-2" d="M1044,0s363.7,301.87,1013.16,361.26c0,0,306.54,1707.32-1013.16,2137.86C-275.7,2068.58,30.84,361.26,30.84,361.26,680.3,301.87,1044,0,1044,0Z"/>
+      <polyline class="cls-1" points="539.43 1119.86 906.91 1487.34 1548.57 845.67"/>
+    </g>
+  </g>
+</svg>

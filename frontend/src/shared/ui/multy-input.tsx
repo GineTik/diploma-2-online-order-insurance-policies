@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
@@ -76,7 +78,9 @@ export const MultiInput = ({
 	}, [items, defaultValues]);
 
 	const handleAddItem = () => {
-		setItems((prevItems) => [...prevItems, '']);
+		const newItems = [...items, ''];
+		setItems(newItems);
+		onChange(newItems);
 	};
 
 	const handleChange = (index: number, value: string) => {
@@ -143,9 +147,13 @@ export const MultiInput = ({
 							/>
 							{items.length > 1 && (
 								<Button
+									type="button"
 									variant="outline"
 									size="icon"
-									onClick={() => handleRemoveItem(index)}
+									onClick={(e) => {
+										e.preventDefault();
+										handleRemoveItem(index);
+									}}
 									className="ml-2"
 								>
 									<TrashIcon className="w-4 h-4" />
@@ -156,7 +164,11 @@ export const MultiInput = ({
 				</div>
 			))}
 			<Button
-				onClick={handleAddItem}
+				type="button"
+				onClick={(e) => {
+					e.preventDefault();
+					handleAddItem();
+				}}
 				variant="outline"
 				size="sm"
 				className="self-end whitespace-nowrap w-full"

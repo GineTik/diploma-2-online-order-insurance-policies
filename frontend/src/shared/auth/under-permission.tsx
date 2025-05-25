@@ -1,3 +1,5 @@
+'use client';
+
 import { useUserPermissions } from '@/entities/users';
 import { hasPermission } from './permissions';
 

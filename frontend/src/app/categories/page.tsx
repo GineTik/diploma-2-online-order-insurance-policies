@@ -1,5 +1,3 @@
-'use client';
-
 import { CreatePolicyCategoryForm } from '@/features/policy-categories';
 import { H2 } from '@/shared/ui';
 import { PolicyCategoryList } from '@/widgets/policy-category-list';

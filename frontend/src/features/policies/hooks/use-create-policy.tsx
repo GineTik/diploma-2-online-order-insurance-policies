@@ -2,7 +2,7 @@ import { CreatePolicy } from '@/entities/policies';
 import { createPolicy } from '@/entities/policies/policies.services';
 import { useAuth } from '@clerk/nextjs';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 import { AxiosError } from 'axios';
 
 type UseCreatePolicyProps = {

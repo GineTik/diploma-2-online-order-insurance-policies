@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { deletePolicyCategory } from '../categories.service';
 import { useAuth } from '@clerk/nextjs';
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 import { DeleteCategorySchema } from '../categories.types';
 
 export const useDeleteCategory = (categoryId: string) => {

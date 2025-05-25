@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@clerk/nextjs';
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 import {
 	CreateCategorySchema,
 	createPolicyCategory,

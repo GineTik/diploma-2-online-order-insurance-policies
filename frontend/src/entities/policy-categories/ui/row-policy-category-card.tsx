@@ -121,54 +121,53 @@ const EditingForm = ({
 
 	return (
 		<Form {...form}>
-			<form onSubmit={submit}>
-				<CardHeader>
-					<div className="space-y-2">
-						<CompleteFormFieldInput
-							control={form.control}
-							name="name"
-							label="Назва"
-						/>
-						<CompleteFormFieldInput
-							control={form.control}
-							name="description"
-							label="Опис"
-						/>
-						<CompleteFormFieldInput
-							control={form.control}
-							name="slug"
-							label="Slug"
-						/>
-						<FormFieldMultiFieldInput
-							control={form.control}
-							name="fields"
-							formLabel="Поля"
-							buttonText="Додати поле"
-						/>
-					</div>
-				</CardHeader>
-				<CardFooter className="mt-3 gap-2">
-					<LoadingButton
-						className="grow"
-						variant="secondary"
-						size="sm"
-						onSubmit={submit}
-						isLoading={isUpdating}
-					>
-						<SaveIcon className="size-4" />
-						Зберегти
-					</LoadingButton>
-					<Button
-						className="grow"
-						variant="outline"
-						size="sm"
-						onClick={() => cancelEditing()}
-					>
-						<XIcon className="size-4" />
-						Скасувати
-					</Button>
-				</CardFooter>
-			</form>
+			<CardHeader>
+				<div className="space-y-2">
+					<CompleteFormFieldInput
+						control={form.control}
+						name="name"
+						label="Назва"
+					/>
+					<CompleteFormFieldInput
+						control={form.control}
+						name="description"
+						label="Опис"
+					/>
+					<CompleteFormFieldInput
+						control={form.control}
+						name="slug"
+						label="Slug"
+					/>
+					<FormFieldMultiFieldInput
+						control={form.control}
+						name="fields"
+						formLabel="Поля"
+						buttonText="Додати поле"
+					/>
+				</div>
+			</CardHeader>
+			<CardFooter className="mt-3 gap-2">
+				<LoadingButton
+					className="grow"
+					variant="secondary"
+					size="sm"
+					onClick={submit}
+					isLoading={isUpdating}
+				>
+					<SaveIcon className="size-4" />
+					Зберегти
+				</LoadingButton>
+				<Button
+					type="button"
+					className="grow"
+					variant="outline"
+					size="sm"
+					onClick={() => cancelEditing()}
+				>
+					<XIcon className="size-4" />
+					Скасувати
+				</Button>
+			</CardFooter>
 		</Form>
 	);
 };
@@ -201,9 +200,9 @@ const DeleteCategoryDropdownItemWithDialog = ({
 				<AlertDialogHeader>
 					<AlertDialogTitle>Видалити категорію</AlertDialogTitle>
 					<AlertDialogDescription>
-						Ви впевнені, що хочете видалити категорію "{category.name}"? Це
-						незворотня дія! Виберіть іншу категорію, в яку будуть переміщені
-						поліси цієї категорії.
+						Ви впевнені, що хочете видалити категорію &quot;{category.name}
+						&quot;? Це незворотня дія! Виберіть іншу категорію, в яку будуть
+						переміщені поліси цієї категорії.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<div>

@@ -1,5 +1,11 @@
 import { H1 } from '@/shared/ui';
 import { PolicyCategoryGrid } from '@/widgets/policy-category-grid';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'best.finance',
+	description: 'Сервіс онлайн-страхування',
+};
 
 export default function Home() {
 	return (

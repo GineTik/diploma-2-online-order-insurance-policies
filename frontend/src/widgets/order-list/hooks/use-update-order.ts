@@ -1,6 +1,6 @@
 'use client';
 
-import { queryClient } from '@/app/layout';
+import { queryClient } from '@/app/providers';
 import { updateStatusOrder } from '@/entities/orders/orders.services';
 import { useAuth } from '@clerk/nextjs';
 import { useMutation } from '@tanstack/react-query';
