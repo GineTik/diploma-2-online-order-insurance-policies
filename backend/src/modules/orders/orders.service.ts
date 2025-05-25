@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { OrderFiltersDto } from './dtos/order-filters.dto';
 import { PrismaService } from '@shared/prisma';
 import { PdfGeneratorService } from '@shared/pdf-generator';
-import { Order } from 'generated/prisma';
+import { Order, OrderStatus } from 'generated/prisma';
 import { USER_IS_NOT_POLICY_OWNER, USER_NOT_FOUND_BY_ID } from '@shared/errors';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { PoliciesService } from '@modules/policies';
@@ -49,7 +49,7 @@ export class OrdersService {
 
 		return await this.prisma.order.update({
 			where: { id: orderId },
-			data: { status: 'COMPLETED' },
+			data: { status: OrderStatus.COMPLETED },
 		});
 	}
 
@@ -58,7 +58,7 @@ export class OrdersService {
 
 		return await this.prisma.order.update({
 			where: { id: orderId },
-			data: { status: 'CANCELLED' },
+			data: { status: OrderStatus.CANCELLED },
 		});
 	}
 
@@ -96,16 +96,46 @@ export class OrdersService {
 			await this.prisma.order.findUnique({
 				where: { id: orderId },
 				include: {
-					policy: true,
+					policy: {
+						include: {
+							company: true,
+						},
+					},
+					informations: true,
 				},
 			});
 
 		return await this.pdfGenerator.generatePdf(
 			`order-#${id}`,
 			{
-				...order,
-				createdAt: createdAt.toISOString(),
-				updatedAt: updatedAt.toISOString(),
+				header: {
+					id,
+					status: order.status,
+					orderedDate: createdAt.toISOString(),
+				},
+				policyDetails: {
+					sectionTitle: 'Поліс',
+					title: order.policy.name,
+					version: order.policy.version.toString(),
+					description: order.policy.description,
+					advantages: order.policy.options ?? [],
+				},
+				orderSummary: {
+					sectionTitle: 'Деталі замовлення',
+					details: order.informations.map((i) => ({
+						label: i.key,
+						value:
+							typeof i.value === 'string'
+								? i.value
+								: typeof i.value === 'boolean'
+									? 'Так'
+									: 'Ні',
+					})),
+				},
+				footer: {
+					orderTotal: order.policy.price.toString(),
+					companyName: order.policy.company.name,
+				},
 			},
 			res,
 		);
