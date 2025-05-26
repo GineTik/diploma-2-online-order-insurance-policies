@@ -7,3 +7,12 @@ export const fieldTypes = [
 	'car-number',
 	'boolean',
 ] as const;
+
+export const FIELD_TYPES = {
+	SELECT: 'select',
+	NUMBER: 'number',
+	STRING: 'string',
+	TEXT: 'text',
+	CAR_NUMBER: 'car-number',
+	BOOLEAN: 'boolean',
+};

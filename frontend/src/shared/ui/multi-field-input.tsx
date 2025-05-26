@@ -11,7 +11,7 @@ import {
 	SelectValue,
 } from '@/shared/ui';
 import { TrashIcon, PlusIcon } from 'lucide-react';
-import { FormField, FormLabel, FormMessage } from './form';
+import { FormDescription, FormField, FormLabel, FormMessage } from './form';
 import { Control, Path, FieldError } from 'react-hook-form';
 import { MultiInput } from './multy-input';
 import { FieldType } from '@/shared/types';
@@ -22,6 +22,7 @@ export interface FieldItem {
 	label: string;
 	placeholder?: string;
 	values?: string[];
+	price: number;
 }
 
 export const createNewField = (): FieldItem => ({
@@ -30,6 +31,7 @@ export const createNewField = (): FieldItem => ({
 	label: '',
 	placeholder: '',
 	values: [],
+	price: 0,
 });
 
 type ItemErrors = Array<
@@ -134,6 +136,14 @@ export const MultiFieldInput = ({
 										/>
 									)}
 								</div>
+
+								{item.type === 'number' && (
+									<NumberPriceFormField
+										item={item}
+										handleItemChange={handleItemChange}
+										error={currentItemError?.price}
+									/>
+								)}
 							</div>
 							<div className="mt-5">
 								{items.length > 1 && (
@@ -322,9 +332,13 @@ const OptionsFormField = ({
 	return (
 		<div className="w-full space-y-1">
 			<FormLabel className="text-xs font-medium">Опції</FormLabel>
+			<FormDescription>
+				Допишіть в кінці строки ++n (2 плюса), де n - додаткова ціна за вибір
+				цього варіанту.
+			</FormDescription>
 			<MultiInput
 				buttonText="Додати опцію"
-				value={item.values}
+				value={item.values ?? []}
 				onChange={(e) => {
 					handleItemChange(item.id, {
 						values: e,
@@ -333,5 +347,42 @@ const OptionsFormField = ({
 				error={error?.message}
 			/>
 		</div>
+	);
+};
+
+const NumberPriceFormField = ({
+	item,
+	handleItemChange,
+	error,
+}: {
+	item: FieldItem;
+	handleItemChange: (id: string, updatedProperties: Partial<FieldItem>) => void;
+	error?: FieldError;
+}) => {
+	return (
+		<>
+			<FormLabel
+				htmlFor={`placeholder-${item.id}`}
+				className="text-xs font-medium"
+			>
+				Додаткова ціна за одиницю
+			</FormLabel>
+			<Input
+				id={`placeholder-${item.id}`}
+				value={item.price ?? ''}
+				onChange={(e) => {
+					handleItemChange(item.id, {
+						price: e.target.value ? Number(e.target.value) : undefined,
+					});
+				}}
+				placeholder="Введіть ціну"
+				type="number"
+			/>
+			{error?.message && (
+				<p className="text-sm font-medium text-destructive mt-1">
+					{error.message}
+				</p>
+			)}
+		</>
 	);
 };

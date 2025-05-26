@@ -1,16 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { updatePolicyCategory } from '../categories.service';
 import { useAuth } from '@clerk/nextjs';
-import { PolicyCategory } from '../categories.types';
+import { CreateCategorySchema } from '../categories.types';
 import { queryClient } from '@/app/providers';
 
-export const useUpdateCategory = () => {
+export const useUpdateCategory = (id: string) => {
 	const { getToken } = useAuth();
 
 	const { mutateAsync, isPending } = useMutation({
 		mutationKey: ['update-category'],
-		mutationFn: async (category: PolicyCategory) =>
-			await updatePolicyCategory(category, await getToken()),
+		mutationFn: async (category: CreateCategorySchema) =>
+			await updatePolicyCategory(id, category, await getToken()),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
 				queryKey: ['policy-categories'],

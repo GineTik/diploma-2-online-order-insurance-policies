@@ -43,7 +43,10 @@ export default function PolicyPage() {
 					<p>{policy.description}</p>
 				</div>
 				<div className="">
-					<OrderForm categoryId={policy.categoryId} />
+					<OrderForm
+						categoryId={policy.categoryId}
+						policyPrice={policy.price}
+					/>
 				</div>
 				{policy.options.length !== 0 && (
 					<div className="">

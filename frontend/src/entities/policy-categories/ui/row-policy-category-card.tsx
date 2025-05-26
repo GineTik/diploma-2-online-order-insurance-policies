@@ -104,18 +104,18 @@ const EditingForm = ({
 			slug: category.slug,
 			name: category.name,
 			description: category.description,
-			fields: category.fields,
+			fields: category.fields.map((field) => ({
+				...field,
+				values: field.values?.map((value) => value.label + ' ++' + value.price),
+			})),
 		},
 		resolver: zodResolver(createCategorySchema),
 	});
 
-	const { updateCategory, isUpdating } = useUpdateCategory();
+	const { updateCategory, isUpdating } = useUpdateCategory(category.id);
 
 	const submit = form.handleSubmit(async (data) => {
-		await updateCategory({
-			...category,
-			...data,
-		});
+		await updateCategory(data);
 		cancelEditing();
 	});
 

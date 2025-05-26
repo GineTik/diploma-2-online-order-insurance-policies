@@ -13,7 +13,13 @@ import { z, ZodType } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldType } from '@/shared/types';
 
-export const OrderForm = ({ categoryId }: { categoryId: string }) => {
+export const OrderForm = ({
+	categoryId,
+	policyPrice,
+}: {
+	categoryId: string;
+	policyPrice: number;
+}) => {
 	const params = useParams<{ slug: string }>();
 	const { category } = usePolicyCategory(categoryId);
 	const fields = category?.fields?.map((field, index) => ({
@@ -26,20 +32,30 @@ export const OrderForm = ({ categoryId }: { categoryId: string }) => {
 		return <div>No fields</div>;
 	}
 
-	return <OrderFormContent fields={fields} slug={params?.slug} />;
+	return (
+		<OrderFormContent
+			fields={fields}
+			slug={params?.slug}
+			policyPrice={policyPrice}
+		/>
+	);
 };
 
 const OrderFormContent = ({
 	fields,
 	slug,
+	policyPrice,
 }: {
 	fields: (PolicyCategoryField & { name: string; value: string })[];
 	slug: string;
+	policyPrice: number;
 }) => {
 	const schemaDictionary: Record<FieldType, ZodType> = {
 		string: z.string().min(1, { message: 'Це поле не може бути пустим' }),
 		text: z.string().min(1, { message: 'Це поле не може бути пустим' }),
-		number: z.number().min(1, { message: "Число не може бути від'ємним" }),
+		number: z.coerce.number().min(1, {
+			message: "Число не може бути від'ємним",
+		}),
 		select: z.string().min(1, { message: 'Оберіть один з варіантів' }),
 		'car-number': z.string().regex(/^[A-Z]{2}\d{4}[A-Z]{2}$/, {
 			message: 'Не вірний формат номера авто',
@@ -70,8 +86,9 @@ const OrderFormContent = ({
 			actions={
 				<OrderAction
 					slug={slug}
-					handleSubmit={form.handleSubmit}
 					fields={fields}
+					form={form}
+					policyPrice={policyPrice}
 				/>
 			}
 		/>

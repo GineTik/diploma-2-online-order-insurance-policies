@@ -17,3 +17,24 @@ export function getPolicyWord(count: number): string {
 		return 'страхових полісів';
 	}
 }
+
+export function parseToObjectWithPrice(optionLabel: string): {
+	label: string;
+	price: number;
+} {
+	// Check if string ends with ++n pattern
+	const match = optionLabel.match(/^(.+?)\+\+(\d+)$/);
+	if (match) {
+		const [, label, priceStr] = match;
+		const price = parseInt(priceStr, 10);
+		return {
+			label: label + '++' + price,
+			price: price,
+		};
+	}
+	// If no ++n pattern, use the full string as label with price 0
+	return {
+		label: optionLabel,
+		price: 0,
+	};
+}

@@ -28,11 +28,12 @@ export const createPolicyCategory = async (
 };
 
 export const updatePolicyCategory = async (
-	category: PolicyCategory,
+	id: string,
+	category: CreateCategorySchema,
 	token: AuthToken,
 ) => {
 	return await api.put(
-		`/categories/${category.id}`,
+		`/categories/${id}`,
 		mapPolicyCategorySchemaToRequest(category),
 		getAuthHeaders(token),
 	);

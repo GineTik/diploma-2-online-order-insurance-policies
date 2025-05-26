@@ -4,6 +4,11 @@ import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
 import { CATEGORY_NOT_FOUND_ERROR } from '@shared/errors';
 import { Prisma } from 'generated/prisma';
+import {
+	CategoryFieldDto,
+	FieldValueDto,
+	OldCategoryFieldDto,
+} from './dtos/category-field.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -24,10 +29,20 @@ export class CategoriesService {
 			},
 		});
 
-		return categories.map(({ policies, ...category }) => ({
-			...category,
-			policiesCount: policies.length,
-		}));
+		return categories.map(({ policies, fields, ...category }) => {
+			const typedFields = fields as unknown as (
+				| OldCategoryFieldDto
+				| CategoryFieldDto
+			)[];
+
+			const newFields = this.mapFromOldFieldDtoToNew(typedFields);
+
+			return {
+				...category,
+				policiesCount: policies.length,
+				fields: newFields,
+			};
+		});
 	}
 
 	async getById(id: string) {
@@ -50,7 +65,7 @@ export class CategoriesService {
 		return await this.prisma.policyCategory.create({
 			data: {
 				...dto,
-				fields: dto?.fields as unknown as Prisma.JsonArray,
+				fields: this.mapFields(dto?.fields) as unknown as Prisma.JsonArray,
 			},
 		});
 	}
@@ -78,7 +93,7 @@ export class CategoriesService {
 			where: { id },
 			data: {
 				...dto,
-				fields: dto?.fields as unknown as Prisma.JsonArray,
+				fields: this.mapFields(dto?.fields) as unknown as Prisma.JsonArray,
 			},
 		});
 	}
@@ -90,5 +105,52 @@ export class CategoriesService {
 				...isNotDeleted,
 			},
 		});
+	}
+
+	private mapFromOldFieldDtoToNew(
+		typedFields: (OldCategoryFieldDto | CategoryFieldDto)[],
+	) {
+		return typedFields.map((field) => {
+			if ('values' in field && Array.isArray(field.values)) {
+				const transformedValues = field.values.map((val) => {
+					if (typeof val === 'string') {
+						return { label: val, price: 0 } as FieldValueDto;
+					}
+					return val;
+				});
+
+				return {
+					...field,
+					values: transformedValues,
+				};
+			}
+			return field;
+		});
+	}
+
+	private mapFields(fields: CategoryFieldDto[]) {
+		return fields.map((field) => {
+			if (field.type === 'select') {
+				return {
+					...field,
+					price: field.price ?? 0,
+					values: field.values.map((value) =>
+						this.parseOptionToObjectWithPrice(value),
+					),
+				};
+			}
+			return {
+				...field,
+				price: field.price ?? 0,
+			};
+		});
+	}
+
+	private parseOptionToObjectWithPrice(value: string) {
+		const price = value.split('++');
+		return {
+			label: price[0].trim(),
+			price: parseInt(price[1].trim()),
+		};
 	}
 }

@@ -93,8 +93,11 @@ const getFieldComponent = <T extends object>(
 				name={name}
 				{...field}
 				values={field.values?.map((value) => ({
-					value,
-					label: value,
+					value: value.label,
+					label:
+						value.price > 0
+							? `${value.label} (+${value.price} грн)`
+							: value.label,
 				}))}
 			/>
 		),

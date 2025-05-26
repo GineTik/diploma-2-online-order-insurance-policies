@@ -14,7 +14,8 @@ export type PolicyCategoryField = {
 	label: string;
 	placeholder?: string;
 	type: FieldType;
-	values?: string[];
+	values?: { label: string; price: number }[];
+	price?: number;
 };
 
 export type PolicyCategoryFormField = PolicyCategoryField & {
@@ -31,6 +32,7 @@ export const createCategorySchema = z.object({
 			type: z.enum(fieldTypes),
 			values: z.array(z.string()).optional(),
 			placeholder: z.string().optional(),
+			price: z.coerce.number().optional(),
 		}),
 	),
 });

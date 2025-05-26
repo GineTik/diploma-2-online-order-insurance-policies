@@ -1,6 +1,8 @@
 export type OrderPolicy = {
 	policySlug: string;
 	informations: OrderField[];
+	price: number;
+	additionalPrice?: number;
 };
 
 export type OrderField = {

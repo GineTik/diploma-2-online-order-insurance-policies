@@ -12,6 +12,7 @@ export const mapPolicyCategorySchemaToRequest = (
 			placeholder: field.placeholder,
 			type: field.type,
 			values: field.values,
+			price: field.price,
 		})),
 	};
 };
