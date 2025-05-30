@@ -77,7 +77,9 @@ const PoliceDetails = ({ order: { policy } }: OrderItemProps) => {
 	);
 };
 
-const ItemFooter = ({ order: { policy, status, id } }: OrderItemProps) => {
+const ItemFooter = ({
+	order: { price, policy, status, id },
+}: OrderItemProps) => {
 	return (
 		<CardFooter className="flex items-start md:items-center gap-2 md:flex-row flex-col">
 			{status === 'COMPLETED' && <ActiveDownloadButton orderId={id} />}
@@ -95,7 +97,7 @@ const ItemFooter = ({ order: { policy, status, id } }: OrderItemProps) => {
 			)}
 
 			<p className="text-sm text-muted-foreground">
-				Сума замовлення: {policy.price} грн
+				Сума замовлення: {price ?? policy.price} грн
 			</p>
 			<p className="text-sm text-muted-foreground md:ml-auto">
 				У компанії{' '}
@@ -191,6 +193,15 @@ const CompanyActionsFooter = ({
 };
 
 const OrderDetails = ({ order: { informations } }: OrderItemProps) => {
+	const getFieldValue = (value: string | boolean | number) => {
+		switch (typeof value) {
+			case 'boolean':
+				return value ? 'Так' : 'Ні';
+			default:
+				return value;
+		}
+	};
+
 	return (
 		<div>
 			<H4 className="mb-2">Деталі замовлення</H4>
@@ -202,11 +213,7 @@ const OrderDetails = ({ order: { informations } }: OrderItemProps) => {
 							className="grid grid-cols-2 py-1.5 px-3 first:pt-3 last:pb-3 border-b not-[:last-child]:border-black/10"
 						>
 							<td className="">{field.key}</td>
-							<td className="">
-								{typeof field.value === 'string' && field.value}
-								{typeof field.value === 'boolean' &&
-									(field.value ? 'Так' : 'Ні')}
-							</td>
+							<td className="">{getFieldValue(field.value)}</td>
 						</tr>
 					))}
 				</tbody>

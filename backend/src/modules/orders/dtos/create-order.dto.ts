@@ -1,17 +1,14 @@
 import {
 	IsArray,
-	IsBoolean,
 	IsNotEmpty,
+	IsNumber,
 	IsString,
 	Validate,
 	ValidateNested,
-	ValidationArguments,
-	ValidatorConstraint,
-	ValidatorConstraintInterface,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsStringOrBoolean } from '@shared/validators';
+import { IsValidValueType } from '@shared/validators';
 
 export class CreateOrderDto {
 	@ApiProperty({
@@ -31,6 +28,14 @@ export class CreateOrderDto {
 	@ValidateNested({ each: true })
 	@Type(() => FieldValueDto)
 	informations: FieldValueDto[];
+
+	@ApiProperty({
+		description: 'The price of the policy',
+		example: 100,
+	})
+	@IsNumber()
+	@IsNotEmpty()
+	price: number;
 }
 
 export class FieldValueDto {
@@ -38,7 +43,7 @@ export class FieldValueDto {
 	@IsNotEmpty()
 	key: string;
 
-	@Validate(IsStringOrBoolean)
+	@Validate(IsValidValueType)
 	@IsNotEmpty()
-	value: string | boolean;
+	value: string | boolean | number;
 }

@@ -4,13 +4,17 @@ import {
 	ValidationArguments,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'string-or-boolean', async: false })
-export class IsStringOrBoolean implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'valid-value-type', async: false })
+export class IsValidValueType implements ValidatorConstraintInterface {
 	validate(text: any, args: ValidationArguments) {
-		return typeof text === 'boolean' || typeof text === 'string';
+		return (
+			typeof text === 'boolean' ||
+			typeof text === 'string' ||
+			typeof text === 'number'
+		);
 	}
 
 	defaultMessage(args: ValidationArguments) {
-		return '($value) must be boolean or string';
+		return '($value) must be boolean or string or number';
 	}
 }

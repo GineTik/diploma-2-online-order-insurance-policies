@@ -2,7 +2,6 @@ export type OrderPolicy = {
 	policySlug: string;
 	informations: OrderField[];
 	price: number;
-	additionalPrice?: number;
 };
 
 export type OrderField = {
@@ -14,6 +13,7 @@ export type Order = {
 	id: string;
 	status: 'PENDING' | 'COMPLETED' | 'CANCELLED';
 	createdAt: string;
+	price: number;
 	policy: {
 		company: {
 			id: string;

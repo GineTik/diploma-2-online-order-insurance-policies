@@ -70,9 +70,9 @@ model PolicyCategory {
   name        String
   slug        String
   description String
-  fields      Json?
   isDeleted   Boolean? @default(false)
 
+  fields   Json?
   policies Policy[]
 }
 
@@ -90,6 +90,8 @@ model Order {
   policyCompanyId String @db.ObjectId
   policySlug      String
   policyVersion   Int
+
+  price Float?
 
   informations OrderInformation[]
 

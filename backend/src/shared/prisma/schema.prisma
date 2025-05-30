@@ -91,6 +91,8 @@ model Order {
 	policySlug      String
 	policyVersion   Int
 
+  price           Float?
+
   informations     OrderInformation[]
 
   user            User   @relation(fields: [userId], references: [id])

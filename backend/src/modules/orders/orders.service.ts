@@ -77,6 +77,7 @@ export class OrdersService {
 				informations: {
 					create: dto.informations,
 				},
+				price: dto.price,
 				policy: {
 					connect: {
 						id: lastVersionPolicy.id,

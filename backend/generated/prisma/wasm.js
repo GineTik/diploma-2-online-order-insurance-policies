@@ -150,8 +150,8 @@ exports.Prisma.PolicyCategoryScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  fields: 'fields',
-  isDeleted: 'isDeleted'
+  isDeleted: 'isDeleted',
+  fields: 'fields'
 };
 
 exports.Prisma.OrderScalarFieldEnum = {
@@ -160,6 +160,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   policyCompanyId: 'policyCompanyId',
   policySlug: 'policySlug',
   policyVersion: 'policyVersion',
+  price: 'price',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

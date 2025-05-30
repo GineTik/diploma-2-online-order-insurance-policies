@@ -84,6 +84,11 @@ const getFieldComponent = <T extends object>(
 				control={control}
 				name={name}
 				{...field}
+				label={
+					field.price === 0
+						? field.label
+						: `${field.label} (${field.price} грн за одиницю)`
+				}
 			/>
 		),
 		select: (

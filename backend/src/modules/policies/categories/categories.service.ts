@@ -50,7 +50,7 @@ export class CategoriesService {
 			.findUnique({
 				where: { id, ...isNotDeleted },
 			})
-			.catch((err) => {
+			.catch(() => {
 				throw new BadRequestException(CATEGORY_NOT_FOUND_ERROR(id));
 			});
 	}
@@ -149,8 +149,8 @@ export class CategoriesService {
 	private parseOptionToObjectWithPrice(value: string) {
 		const price = value.split('++');
 		return {
-			label: price[0].trim(),
-			price: parseInt(price[1].trim()),
+			label: price[0]?.trim() ?? '',
+			price: parseInt(price[1]?.trim() ?? '0'),
 		};
 	}
 }
